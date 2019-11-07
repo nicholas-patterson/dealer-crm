@@ -3,7 +3,7 @@
   top: 0;
   background-color: #1a445a;
   width: 100%;
-  padding: 2.2rem 5rem;
+  padding: 2rem 5rem;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
 
   &__nav {
@@ -21,6 +21,10 @@
   }
 
   &__nav__button {
+    transition: transform 110ms ease-in-out, box-shadow 110ms ease-in-out;
+
+    @include buttonHoverActiveTransform;
+
     &:not(:last-child) {
       margin-right: 2rem;
     }
@@ -45,7 +49,9 @@
 }
 
 .img-styles {
-  width: 90rem;
+  width: 80rem;
+  animation: illustrationFade 875ms ease-in-out;
+  animation-fill-mode: backwards;
 }
 
 .text-box__title {
@@ -53,7 +59,10 @@
   color: #ffffff;
   font-weight: 300;
   margin-bottom: 1.5rem;
-  text-transform: capitalize;
+  font-size: 6rem;
+  font-weight: 300;
+  line-height: 1.2;
+  // animation: titleSlide 400ms ease-in;
 }
 
 .text-box__subtext {
@@ -64,16 +73,16 @@
   font-weight: 300;
 }
 
-.text-box__btn {
-  position: absolute;
-  top: 15rem;
-  left: 0;
-  color: #fff;
-  background: #42a6d9;
-  font-size: 1.5rem;
-  padding: 1.2rem 1.6rem;
-  text-decoration: none;
-  font-weight: 300;
+.button--slide-up {
+  margin-top: 4rem;
+  animation: buttonSlideUp 580ms ease-out;
+  animation-fill-mode: backwards;
+  animation-delay: 420ms;
+  transition: background-color 100ms ease-in-out;
+
+  &:hover {
+    background-color: $primary-blue;
+  }
 }
 
 .logo {
@@ -82,27 +91,30 @@
 }
 
 .button {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   display: inline-block;
   min-width: 8rem;
   border-radius: 4px;
   padding: 1.2rem 2rem;
   color: #fff;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.58);
   text-transform: uppercase;
   text-align: center;
   font-weight: 400;
   letter-spacing: 1px;
-  transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
   cursor: pointer;
+  @include buttonBoxShadow;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.58);
+  &--get-started {
+    background-color: transparent;
+    padding: 1.3rem 2.2rem;
+    font-size: 1.8rem;
+    border: 2px solid $primary-blue;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 1px rgba($color-black, .8);
   }
 
   &--login {
-    background-color: #39c;
+    background-color: $primary-blue;
   }
 
   &--signup {

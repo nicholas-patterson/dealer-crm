@@ -22,13 +22,13 @@ const WelcomePage = () => {
         <div className="container--flex">
           <div className="text-box">
             <h2 className="text-box__title">
-              A fast, modern, and dependable crm for car dealerships.
+              A fast, modern, and dependable CRM for automotive dealerships.
             </h2>
             <p className="text-box__subtext">
               No need to be overwhelmed by overcomplicated and outdated crms, we
               are here to make your customer interaction effortless.
             </p>
-            <Link className="text-box__btn" to="/">
+            <Link className="button button--get-started button--slide-up" to="/">
               Get Started
             </Link>
           </div>

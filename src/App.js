@@ -1,7 +1,12 @@
 import React from "react";
+import WelcomePage from "./components/WelcomePage";
 
 const App = () => {
-  return <h3>Components Here</h3>;
+  return (
+    <div className="middle">
+      <WelcomePage />
+    </div>
+  );
 };
 
 export default App;

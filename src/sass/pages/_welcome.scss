@@ -1,0 +1,112 @@
+.header {
+  position: fixed;
+  top: 0;
+  background-color: #1a445a;
+  width: 100%;
+  padding: 2.2rem 5rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__nav__buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 25%;
+    min-width: 40rem;
+  }
+
+  &__nav__button {
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
+
+.container {
+  background: #242c35;
+  height: 100vh;
+  width: 80%;
+  margin: 6rem auto 0;
+  & .container--flex {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+  }
+  & .text-box {
+    height: 20rem;
+    position: relative;
+  }
+}
+
+.img-styles {
+  width: 90rem;
+}
+
+.text-box__title {
+  font-size: 3rem;
+  color: #ffffff;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  text-transform: capitalize;
+}
+
+.text-box__subtext {
+  color: #e4e4e4;
+  font-size: 1.4rem;
+  width: 50%;
+  line-height: 2rem;
+  font-weight: 300;
+}
+
+.text-box__btn {
+  position: absolute;
+  top: 15rem;
+  left: 0;
+  color: #fff;
+  background: #42a6d9;
+  font-size: 1.5rem;
+  padding: 1.2rem 1.6rem;
+  text-decoration: none;
+  font-weight: 300;
+}
+
+.logo {
+  &--small {
+  }
+}
+
+.button {
+  font-size: 1.3rem;
+  display: inline-block;
+  min-width: 8rem;
+  border-radius: 4px;
+  padding: 1.2rem 2rem;
+  color: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.58);
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 1px;
+  transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.58);
+  }
+
+  &--login {
+    background-color: #39c;
+  }
+
+  &--signup {
+    background-color: #2eb85c;
+  }
+}
+// #297aa3;

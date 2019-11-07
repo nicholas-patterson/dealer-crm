@@ -52,10 +52,13 @@
   width: 80rem;
   animation: illustrationFade 875ms ease-in-out;
   animation-fill-mode: backwards;
+
+  @media (max-width: $laptop-desktop-width) {
+    width: 60rem;
+  }
 }
 
 .text-box__title {
-  font-size: 3rem;
   color: #ffffff;
   font-weight: 300;
   margin-bottom: 1.5rem;
@@ -63,14 +66,19 @@
   font-weight: 300;
   line-height: 1.2;
   // animation: titleSlide 400ms ease-in;
+
+  @media (max-width: $laptop-desktop-width) {
+    font-size: 4rem;
+  }
 }
 
 .text-box__subtext {
   color: #e4e4e4;
-  font-size: 1.4rem;
-  width: 50%;
-  line-height: 2rem;
+  font-size: 1.6rem;
+  width: 80%;
+  line-height: 1.5;
   font-weight: 300;
+  margin-top: 3rem;
 }
 
 .button--slide-up {

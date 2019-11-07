@@ -2,7 +2,6 @@
   0% {
     opacity: 0;
     transform: scale(0);
-  
   }
   80% {
     opacity: 1;
@@ -21,7 +20,6 @@
   }
 
   100% {
-    opacity: 1;
     transform: translateX(0);
   }
 }
@@ -34,7 +32,7 @@
 
   78% {
     opacity: 1;
-    transform: translateY(-.7rem);
+    transform: translateY(-0.7rem);
   }
 
   100% {

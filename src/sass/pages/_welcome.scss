@@ -3,7 +3,7 @@
   top: 0;
   background-color: #1a445a;
   width: 100%;
-  padding: 2rem 5rem;
+  padding: 1.4rem 5rem;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
 
   &__nav {
@@ -129,4 +129,17 @@
     background-color: #2eb85c;
   }
 }
-// #297aa3;
+
+.footer {
+  width: 100%;
+  background-color: rgba($color-black, 0.2);
+  padding: 2rem 5rem;
+  text-align: center;
+  color: $color-white;
+  font-size: 1.1rem;
+
+  &__copyright,
+  &__privacy-policy {
+    padding: 0.5rem;
+  }
+}

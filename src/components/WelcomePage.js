@@ -1,5 +1,6 @@
 import React from "react";
 import illustration from "../images/Nicholas-Illustration-Rev-2.png";
+import logoSmall from "../images/AUTOACUITYLOGO-sm.png";
 import { Link } from "@reach/router";
 
 const WelcomePage = () => {
@@ -7,7 +8,13 @@ const WelcomePage = () => {
     <>
       <header className="header">
         <nav className="header__nav">
-          <div className="logo--small">Logo Here</div>
+          <div className="logo--small">
+            <img
+              src={logoSmall}
+              alt="Auto Acuit logo"
+              style={{ height: "45px" }}
+            />
+          </div>
           <div className="header__nav__buttons">
             <div className="header__nav__button">
               <div className="button button--login">Log In</div>
@@ -28,7 +35,10 @@ const WelcomePage = () => {
               No need to be overwhelmed by overcomplicated and outdated crms, we
               are here to make your customer interaction effortless.
             </p>
-            <Link className="button button--get-started button--slide-up" to="/">
+            <Link
+              className="button button--get-started button--slide-up"
+              to="/"
+            >
               Get Started
             </Link>
           </div>
@@ -41,6 +51,17 @@ const WelcomePage = () => {
           </div>
         </div>
       </div>
+      <footer className="footer">
+        <p class="footer__copyright">&copy; 2019 Auto Acuity</p>
+        <p className="footer__privacy-policy">Privacy Policy</p>
+        <p>
+          Made with{" "}
+          <span role="img" aria-label="heart emoji">
+            ❤️
+          </span>{" "}
+          by Elvis Knapman and Nicholas Patterson
+        </p>
+      </footer>
     </>
   );
 };

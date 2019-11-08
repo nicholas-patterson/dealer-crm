@@ -1,12 +1,13 @@
 import React from "react";
+import Header from "./Header";
 import illustration from "../images/Nicholas-Illustration-Rev-2.png";
-import logoSmall from "../images/AUTOACUITYLOGO-sm.png";
+// import logoSmall from "../images/AUTOACUITYLOGO-sm.png";
 import { Link } from "@reach/router";
 
 const WelcomePage = () => {
   return (
     <>
-      <header className="header">
+      {/* <header className="header">
         <nav className="header__nav">
           <div className="logo--small">
             <img
@@ -24,7 +25,8 @@ const WelcomePage = () => {
             </div>
           </div>
         </nav>
-      </header>
+      </header> */}
+      <Header />
       <div className="container">
         <div className="container--flex">
           <div className="text-box">

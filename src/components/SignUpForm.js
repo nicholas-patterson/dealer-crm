@@ -65,7 +65,24 @@ const SignUpForm = () => {
       <Header />
       <div className="wrapper">
         <div className="form">
-          <h4>Sign Up</h4>
+          <div className="form__stepper">
+            <ul className="form__stepper--unorderedlist">
+              <li
+                className={
+                  "form__stepper--item " + (currentStep === 1 ? "one" : "dark")
+                }
+              >
+                1
+              </li>
+              <li
+                className={
+                  "form__stepper--item " + (currentStep === 2 ? "two" : "dark")
+                }
+              >
+                2
+              </li>
+            </ul>
+          </div>
           {formSwitch()}
         </div>
       </div>

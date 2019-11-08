@@ -1,10 +1,15 @@
 import React from "react";
 import WelcomePage from "./components/WelcomePage";
+import SignUpForm from "./components/SignUpForm";
+import { Router } from "@reach/router";
 
 const App = () => {
   return (
     <div className="middle">
-      <WelcomePage />
+      <Router>
+        <WelcomePage default="/" />
+        <SignUpForm path="/signup" />
+      </Router>
     </div>
   );
 };

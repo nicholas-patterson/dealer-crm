@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import StepOne from "./FormSteps/StepOne";
 import StepTwo from "./FormSteps/StepTwo";
+import Logo from "./Logo/Logo";
 
 const SignUpForm = () => {
   const [form, setForm] = useState({
@@ -62,9 +63,9 @@ const SignUpForm = () => {
 
   return (
     <>
-      <Header />
       <div className="wrapper">
         <div className="form">
+          <Logo />
           <div className="form__stepper">
             <ul className="form__stepper--unorderedlist">
               <li

@@ -1,6 +1,7 @@
 import React from "react";
 import WelcomePage from "./components/WelcomePage";
 import SignUpForm from "./components/SignUpForm";
+import LoginForm from "./components/LogInForm";
 import { Router } from "@reach/router";
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
       <Router>
         <WelcomePage default="/" />
         <SignUpForm path="/signup" />
+        <LoginForm path="/login" />
       </Router>
     </div>
   );

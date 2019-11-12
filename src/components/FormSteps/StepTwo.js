@@ -34,7 +34,11 @@ const StepTwo = props => {
         placeholder="City..."
       />
 
-      <select name="state" id="dealership_state">
+      <select
+        name="dealership_state"
+        id="dealership_state"
+        onChange={props.handleChange}
+      >
         <option>State</option>
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
@@ -112,9 +116,24 @@ const StepTwo = props => {
       <button onClick={back} className="button backBtn">
         Back
       </button>
-      <button onClick={props.handleSubmit} className="button submitBtn">
-        Submit
-      </button>
+      {props.value.dealership_name.length === 0 ||
+      props.value.dealership_street.length === 0 ||
+      props.value.dealership_city.length === 0 ||
+      props.value.dealership_state.length === 0 ||
+      props.value.dealership_country.length === 0 ||
+      props.value.dealership_zipcode.length === 0 ? (
+        <button
+          disabled
+          onClick={props.handleSubmit}
+          className="button stepTwodisabledBtn"
+        >
+          Submit
+        </button>
+      ) : (
+        <button onClick={props.handleSubmit} className="button submitBtn">
+          Submit
+        </button>
+      )}
     </form>
   );
 };

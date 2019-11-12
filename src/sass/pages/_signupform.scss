@@ -80,6 +80,7 @@
     background: $background;
     letter-spacing: 0.2rem;
     color: #e4e4e4;
+    outline: none;
     &:not(last-child) {
       margin-bottom: 3rem;
     }
@@ -129,6 +130,7 @@
     background: $background;
     letter-spacing: 0.2rem;
     color: #e4e4e4;
+    outline: none;
     &:not(last-child) {
       margin-bottom: 3rem;
     }
@@ -153,6 +155,7 @@
     letter-spacing: 0.2rem;
     color: #e4e4e4;
     margin-bottom: 3rem;
+    outline: none;
   }
   & .stepTwodisabledBtn {
     display: block;

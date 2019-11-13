@@ -6,7 +6,9 @@
 
 .sidebar__link {
   width: 100%;
-  display: block;
+  display: flex;
+  align-items: center;
+
   padding: 20px 30px 20px 50px;
   font-size: 25px;
   text-transform: uppercase;
@@ -14,9 +16,15 @@
   font-weight: 400;
   margin-bottom: 30px;
   transition: background-color 150ms ease-in;
+  transition: border-right 200ms ease-out;
   cursor: pointer;
 
   &:hover {
     background-color: #495563;
+    border-right: 6px solid $primary-blue;
+  }
+
+  & .iconify {
+    margin-right: 2rem;
   }
 }

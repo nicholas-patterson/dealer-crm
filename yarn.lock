@@ -1179,6 +1179,28 @@
   dependencies:
     "@hapi/hoek" "6.x.x"
 
+"@iconify/icons-feather@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-feather/-/icons-feather-1.0.7.tgz#2bc9525cfa218fc3cb7c42074e0fda46e4b49423"
+  integrity sha512-RK8X6jFGDd3yjvzcI/fk4MJnquWs20MOyVx+2mZw8t8PUNPKVdKV/wKEX/846c3p1Wa18jbC7w3fth/DwpFGbg==
+
+"@iconify/icons-ic@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-ic/-/icons-ic-1.0.8.tgz#fbc3f7f2d12febaca8dbf74eb39dd4eea2091020"
+  integrity sha512-r/VJI2a9mMDHszAj3FtdjwpvcFBiA/w9bbpkWSZ6NpFZ7HTdC5l+s4t5NQvBUNe2Cm7XWC5FUaT2K6bt++j+ng==
+
+"@iconify/icons-si-glyph@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-si-glyph/-/icons-si-glyph-1.0.3.tgz#86be142b616db579bb4943da9529036744a3b02e"
+  integrity sha512-CiUgap+eHw25XT0E8Pa3am7ur+Oj1wwAusKnn1bb/KGLG2UKumTv4+AzXH8E6K0MBH1D3h6aySuEk0DsDFnz4g==
+
+"@iconify/react@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-1.1.1.tgz#38526508f722e0b617723d79209bb1e6d8c59c61"
+  integrity sha512-BRbPW/vkyWi6n2dHx4O8Cp0RKeI4KsxieLZ+UcyknCkk1IVxii5IassCIKHJ3jWB6s6uLAWq5EnHJniI7er9+w==
+  dependencies:
+    react "^16.8.3"
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
@@ -8895,7 +8917,7 @@ react-scripts@3.2.0:
   optionalDependencies:
     fsevents "2.0.7"
 
-react@^16.11.0:
+react@^16.11.0, react@^16.8.3:
   version "16.11.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
   integrity sha512-M5Y8yITaLmU0ynd0r1Yvfq98Rmll6q8AxaEe88c8e7LxO8fZ2cNgmFt0aGAS9wzf1Ao32NKXtCl+/tVVtkxq6g==

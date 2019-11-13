@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@iconify/icons-feather": "^1.0.7",
+    "@iconify/icons-ic": "^1.0.8",
+    "@iconify/icons-si-glyph": "^1.0.3",
+    "@iconify/react": "^1.1.1",
     "@reach/router": "^1.2.1",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",

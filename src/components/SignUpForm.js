@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Header from "./Header";
 import StepOne from "./FormSteps/StepOne";
 import StepTwo from "./FormSteps/StepTwo";
 import Logo from "./Logo/Logo";

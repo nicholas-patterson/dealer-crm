@@ -61,7 +61,7 @@ const WelcomePage = () => {
           <span role="img" aria-label="heart emoji">
             ❤️
           </span>{" "}
-          by Elvis Knapman and Nick Patterson
+          by Elvis Knapman and Nicholas Patterson
         </p>
       </footer>
     </>

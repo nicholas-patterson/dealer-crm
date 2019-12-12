@@ -1,0 +1,49 @@
+.leads-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+  justify-content: center;
+  width: 40%;
+  background: rgb(228, 226, 226);
+  height: 50rem;
+  margin: 25rem auto;
+  & input[type] {
+    width: 75%;
+    padding: 1.4rem;
+    font-size: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid $primary-blue;
+    padding-left: 4rem;
+    background: #eee;
+    letter-spacing: 0.2rem;
+    color: #e4e4e4;
+    outline: none;
+    &:not(last-child) {
+      margin-bottom: 3rem;
+    }
+  }
+  #state {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid $primary-blue;
+    padding-left: 4rem;
+    background: #eee;
+    letter-spacing: 0.2rem;
+    color: #e4e4e4;
+    margin-bottom: 3rem;
+    outline: none;
+  }
+
+  .continueBtn {
+    width: 25%;
+    display: block;
+    margin: 0 auto;
+    background: #2eb85c;
+    border: none;
+    margin-top: 3rem;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    transition: background 200ms ease-in-out;
+  }
+}

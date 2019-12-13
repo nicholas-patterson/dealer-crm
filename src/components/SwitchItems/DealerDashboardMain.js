@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 const DealerDashboardMain = props => {
   return (
@@ -14,17 +15,29 @@ const DealerDashboardMain = props => {
           <h2 className="console__heading">what would you like to do?</h2>
 
           <div className="console__controls">
-            <div className="console__control" onClick={props.leadsClick}>
+            <Link
+              to="/dealer/dash/newlead"
+              className="console__control"
+              onClick={props.leadsClick}
+            >
               <p>Add New Lead</p>
-            </div>
+            </Link>
 
-            <div className="console__control" onClick={props.salesClick}>
+            <Link
+              to="/dealer/dash/newsalesperson"
+              className="console__control"
+              onClick={props.salesClick}
+            >
               <p>Add New Salesperson</p>
-            </div>
+            </Link>
 
-            <div className="console__control" onClick={props.managerClick}>
+            <Link
+              to="/dealer/dash/newmanager"
+              className="console__control"
+              onClick={props.managerClick}
+            >
               <p>Add New Manager</p>
-            </div>
+            </Link>
           </div>
         </div>
 

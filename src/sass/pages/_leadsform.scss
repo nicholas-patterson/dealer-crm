@@ -4,17 +4,17 @@
   grid-gap: 2rem;
   justify-content: center;
   width: 40%;
-  background: rgb(228, 226, 226);
-  height: 50rem;
   margin: 25rem auto;
+  background: rgb(235, 232, 232);
+  padding: 3rem;
   & input[type] {
-    width: 75%;
+    width: 100%;
     padding: 1.4rem;
     font-size: 1.5rem;
     border-radius: 1rem;
     border: 1px solid $primary-blue;
     padding-left: 4rem;
-    background: #eee;
+    background: white;
     letter-spacing: 0.2rem;
     color: #e4e4e4;
     outline: none;
@@ -22,6 +22,22 @@
       margin-bottom: 3rem;
     }
   }
+
+  .leads-form_title {
+    grid-column: 1/3;
+    text-align: center;
+    color: black;
+    font-size: 2rem;
+  }
+
+  & input[name="dealership_name"] {
+    grid-column: 1/3;
+  }
+
+  & input[name="dealership_street"] {
+    grid-column: 1/3;
+  }
+
   #state {
     width: 100%;
     padding: 1rem;
@@ -29,21 +45,21 @@
     border-radius: 1rem;
     border: 1px solid $primary-blue;
     padding-left: 4rem;
-    background: #eee;
+    background: white;
     letter-spacing: 0.2rem;
     color: #e4e4e4;
     margin-bottom: 3rem;
     outline: none;
   }
-
-  .continueBtn {
-    width: 25%;
-    display: block;
-    margin: 0 auto;
+  .submitBtn {
     background: #2eb85c;
     border: none;
-    margin-top: 3rem;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-    transition: background 200ms ease-in-out;
+    grid-column: 1/3;
+    width: 25%;
+    margin: 0 auto;
+    padding: 1rem 3rem;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    cursor: pointer;
   }
 }

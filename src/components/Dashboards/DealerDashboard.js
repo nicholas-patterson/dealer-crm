@@ -10,7 +10,6 @@ import DealerHelpMain from "../SwitchItems/DealerHelpMain";
 import { connect } from "react-redux";
 
 const DealerDashboard = props => {
-  const [isShowing, setIsShowing] = useState("");
   const [leadInfo, setLeadInfo] = useState({
     first_name: "",
     last_name: "",
@@ -35,18 +34,6 @@ const DealerDashboard = props => {
     password: ""
   });
 
-  const leadClick = () => {
-    setIsShowing("leads");
-  };
-
-  const salesClick = () => {
-    setIsShowing("sales");
-  };
-
-  const managerClick = () => {
-    setIsShowing("manager");
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
     setLeadInfo({ ...leadInfo, [e.target.name]: e.target.value });
@@ -57,13 +44,7 @@ const DealerDashboard = props => {
   const pageSwitch = () => {
     switch (props.dash) {
       case "dashboard":
-        return (
-          <DealerDashboardMain
-            leadsClick={leadClick}
-            salesClick={salesClick}
-            managerClick={managerClick}
-          />
-        );
+        return <DealerDashboardMain />;
       case "leads":
         return <DealerLeadsMain />;
 
@@ -78,9 +59,11 @@ const DealerDashboard = props => {
     }
   };
 
+  console.log(props.location.pathname);
+
   const modalSwitch = () => {
-    switch (isShowing) {
-      case "leads":
+    switch (props.location.pathname) {
+      case "/dealer/dash/newlead":
         return (
           <Portal>
             <form className="leads-form" onSubmit={handleSubmit}>
@@ -159,7 +142,7 @@ const DealerDashboard = props => {
             </form>
           </Portal>
         );
-      case "sales":
+      case "/dealer/dash/newsalesperson":
         return (
           <Portal>
             <form onSubmit={handleSubmit}>
@@ -221,7 +204,7 @@ const DealerDashboard = props => {
             </form>
           </Portal>
         );
-      case "manager":
+      case "/dealer/dash/newmanager":
         return (
           <Portal>
             <form onSubmit={handleSubmit}>

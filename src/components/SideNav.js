@@ -8,6 +8,7 @@ import sharLogOut from "@iconify/icons-ic/sharp-log-out";
 import settingsIcon from "@iconify/icons-feather/settings";
 import { connect } from "react-redux";
 import { getDashboardLink, getLeadsLink } from "../actions";
+import { Link } from "@reach/router";
 
 const SideNav = props => {
   const handleDashboardClick = () => {
@@ -37,30 +38,66 @@ const SideNav = props => {
   return (
     <>
       <div className="sidebar__links">
-        <a href="#" onClick={handleDashboardClick} className="sidebar__link">
+        <Link
+          to="/dealer/dash"
+          onClick={handleDashboardClick}
+          className={
+            "sidebar__link " + (props.link === "dashboard" ? "border" : null)
+          }
+        >
           <Icon className="iconify" icon={outlineBubbleChart} />
           dashboard
-        </a>
-        <a href="#" className="sidebar__link" onClick={handleLeadsClick}>
+        </Link>
+        <Link
+          to="/dealer/leads"
+          className={
+            "sidebar__link " + (props.link === "leads" ? "border" : null)
+          }
+          onClick={handleLeadsClick}
+        >
           <Icon className="iconify" icon={usersIcon} />
           leads
-        </a>
-        <a href="#" className="sidebar__link" onClick={handleInventoryClick}>
+        </Link>
+        <Link
+          to="/dealer/inventory"
+          className={
+            "sidebar__link " + (props.link === "inventory" ? "border" : null)
+          }
+          onClick={handleInventoryClick}
+        >
           <Icon className="iconify" icon={carGarage} />
           inventory
-        </a>
-        <a href="#" className="sidebar__link" onClick={handleAccountClick}>
+        </Link>
+        <Link
+          to="/dealer/account"
+          className={
+            "sidebar__link " + (props.link === "account" ? "border" : null)
+          }
+          onClick={handleAccountClick}
+        >
           <Icon className="iconify" icon={settingsIcon} />
           Account
-        </a>
-        <a href="#" className="sidebar__link" onClick={handleHelpClick}>
+        </Link>
+        <Link
+          to="/dealer/help"
+          className={
+            "sidebar__link " + (props.link === "help" ? "border" : null)
+          }
+          onClick={handleHelpClick}
+        >
           <Icon className="iconify" icon={roundHelpOutline} />
           help
-        </a>
-        <a href="#" className="sidebar__link" onClick={handleLogoutClick}>
+        </Link>
+        <Link
+          to="/dealer/logout"
+          className={
+            "sidebar__link " + (props.link === "logout" ? "border" : null)
+          }
+          onClick={handleLogoutClick}
+        >
           <Icon className="iconify" icon={sharLogOut} />
           Log out
-        </a>
+        </Link>
       </div>
     </>
   );

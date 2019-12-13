@@ -7,25 +7,6 @@ import { Link } from "@reach/router";
 const WelcomePage = () => {
   return (
     <>
-      {/* <header className="header">
-        <nav className="header__nav">
-          <div className="logo--small">
-            <img
-              src={logoSmall}
-              alt="Auto Acuit logo"
-              style={{ height: "45px" }}
-            />
-          </div>
-          <div className="header__nav__buttons">
-            <div className="header__nav__button">
-              <div className="button button--login">Log In</div>
-            </div>
-            <div className="header__nav__button">
-              <div className="button button--signup">Sign Up</div>
-            </div>
-          </div>
-        </nav>
-      </header> */}
       <Header />
       <div className="container">
         <div className="container--flex">
@@ -61,7 +42,7 @@ const WelcomePage = () => {
           <span role="img" aria-label="heart emoji">
             ❤️
           </span>{" "}
-          by Elvis Knapman and Nicholas Patterson
+          Nicholas Patterson
         </p>
       </footer>
     </>

@@ -68,6 +68,9 @@
         width: 100%;
         flex-flow: column nowrap;
         margin-top: 5rem;
+        p {
+          color: white;
+        }
       }
 
       &__control {

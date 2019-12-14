@@ -19,11 +19,6 @@
   transition: border-right 200ms ease-out;
   cursor: pointer;
 
-  // &:hover {
-  //   background-color: #495563;
-  //   border-right: 6px solid $primary-blue;
-  // }
-
   & .iconify {
     margin-right: 2rem;
   }
@@ -31,5 +26,10 @@
   &.border {
     background-color: #495563;
     border-right: 6px solid $primary-blue;
+  }
+
+  @media (max-width: $laptop-desktop-width) {
+    font-size: 1.8rem;
+    padding: 20px 40px 20px 20px;
   }
 }

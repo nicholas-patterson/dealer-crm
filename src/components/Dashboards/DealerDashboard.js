@@ -33,12 +33,19 @@ const DealerDashboard = props => {
     username: "",
     password: ""
   });
-
-  const handleSubmit = e => {
-    e.preventDefault();
+  // Make seperate handleChange for each state
+  const handleChange = e => {
     setLeadInfo({ ...leadInfo, [e.target.name]: e.target.value });
     setSalesInfo({ ...salesInfo, [e.target.name]: e.target.value });
     setManagerInfo({ ...managerInfo, [e.target.name]: e.target.value });
+  };
+
+  // Make seperate handleSubmit for each form
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(leadInfo);
+    console.log(salesInfo);
+    console.log(managerInfo);
   };
 
   const pageSwitch = () => {
@@ -68,76 +75,70 @@ const DealerDashboard = props => {
           <Portal>
             <form className="leads-form" onSubmit={handleSubmit}>
               <h3 className="leads-form_title">Create A Lead..</h3>
-              <label>
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  value={leadInfo.first_name}
-                  onChange={props.handleChange}
-                  placeholder="First Name"
-                />
-              </label>
-              <label>
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  value={leadInfo.last_name}
-                  onChange={props.handleChange}
-                  placeholder="Last Name"
-                />
-              </label>
-              <label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={leadInfo.email}
-                  onChange={props.handleChange}
-                  placeholder="Email..."
-                />
-              </label>
-              <label>
-                <input
-                  type="phone"
-                  id="phone"
-                  name="phone"
-                  value={leadInfo.phone}
-                  onChange={props.handleChange}
-                  placeholder="Phone"
-                />
-              </label>
-              <label>
-                <input
-                  type="text"
-                  id="street"
-                  name="street"
-                  value={leadInfo.street}
-                  onChange={props.handleChange}
-                  placeholder="Street"
-                />
-              </label>
-              <label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={leadInfo.city}
-                  onChange={props.handleChange}
-                  placeholder="City"
-                />
-              </label>
-              <label>
-                <input
-                  type="text"
-                  id="state"
-                  name="state"
-                  value={leadInfo.state}
-                  onChange={props.handleChange}
-                  placeholder="State"
-                />
-              </label>
+
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                value={leadInfo.first_name}
+                onChange={handleChange}
+                placeholder="First Name"
+              />
+
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                value={leadInfo.last_name}
+                onChange={handleChange}
+                placeholder="Last Name"
+              />
+
+              <input
+                type="text"
+                id="street"
+                name="street"
+                value={leadInfo.street}
+                onChange={handleChange}
+                placeholder="Street"
+              />
+
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={leadInfo.city}
+                onChange={handleChange}
+                placeholder="City"
+              />
+
+              <input
+                type="text"
+                id="state"
+                name="state"
+                value={leadInfo.state}
+                onChange={handleChange}
+                placeholder="State"
+              />
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={leadInfo.email}
+                onChange={handleChange}
+                placeholder="Email..."
+              />
+
+              <input
+                type="phone"
+                id="phone"
+                name="phone"
+                value={leadInfo.phone}
+                onChange={handleChange}
+                placeholder="Phone"
+              />
+
               <button className="submitBtn">Submit</button>
             </form>
           </Portal>
@@ -145,124 +146,109 @@ const DealerDashboard = props => {
       case "/dealer/dash/newsalesperson":
         return (
           <Portal>
-            <form onSubmit={handleSubmit}>
-              <label>
-                First Name
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  value={salesInfo.first_name}
-                  onChange={props.handleChange}
-                  placeholder="First Name..."
-                />
-              </label>
-              <label>
-                Last Name
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  value={salesInfo.last_name}
-                  onChange={props.handleChange}
-                  placeholder="Last Name..."
-                />
-              </label>
-              <label>
-                Email
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={salesInfo.email}
-                  onChange={props.handleChange}
-                  placeholder="Email..."
-                />
-              </label>
-              <label>
-                Username
-                <input
-                  type="phone"
-                  id="phone"
-                  name="phone"
-                  value={salesInfo.username}
-                  onChange={props.handleChange}
-                  placeholder="Username..."
-                />
-              </label>
-              <label>
-                Password
-                <input
-                  type="text"
-                  id="password"
-                  name="street"
-                  value={salesInfo.password}
-                  onChange={props.handleChange}
-                  placeholder="Password..."
-                />
-              </label>
+            <form onSubmit={handleSubmit} className="salesperson-form">
+              <h3 className="salesperson-form__title">Add New Salesperson</h3>
+
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                value={salesInfo.first_name}
+                onChange={handleChange}
+                placeholder="First Name..."
+              />
+
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                value={salesInfo.last_name}
+                onChange={handleChange}
+                placeholder="Last Name..."
+              />
+
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={salesInfo.username}
+                onChange={handleChange}
+                placeholder="Username..."
+              />
+
+              <input
+                type="text"
+                id="password"
+                name="password"
+                value={salesInfo.password}
+                onChange={handleChange}
+                placeholder="Password..."
+              />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={salesInfo.email}
+                onChange={handleChange}
+                placeholder="Email..."
+              />
+
+              <button className="submitBtn">Submit</button>
             </form>
           </Portal>
         );
       case "/dealer/dash/newmanager":
         return (
           <Portal>
-            <form onSubmit={handleSubmit}>
-              <label>
-                First Name
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  value={managerInfo.first_name}
-                  onChange={props.handleChange}
-                  placeholder="First Name..."
-                />
-              </label>
-              <label>
-                Last Name
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  value={managerInfo.last_name}
-                  onChange={props.handleChange}
-                  placeholder="Last Name..."
-                />
-              </label>
-              <label>
-                Email
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={managerInfo.email}
-                  onChange={props.handleChange}
-                  placeholder="Email..."
-                />
-              </label>
-              <label>
-                Username
-                <input
-                  type="phone"
-                  id="phone"
-                  name="phone"
-                  value={managerInfo.username}
-                  onChange={props.handleChange}
-                  placeholder="Username..."
-                />
-              </label>
-              <label>
-                Password
-                <input
-                  type="text"
-                  id="password"
-                  name="street"
-                  value={managerInfo.password}
-                  onChange={props.handleChange}
-                  placeholder="Password..."
-                />
-              </label>
+            <form onSubmit={handleSubmit} className="manager-form">
+              <h1 className="manager-form__title">Add New Manager</h1>
+
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                value={managerInfo.first_name}
+                onChange={handleChange}
+                placeholder="First Name..."
+              />
+
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                value={managerInfo.last_name}
+                onChange={handleChange}
+                placeholder="Last Name..."
+              />
+
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={managerInfo.username}
+                onChange={handleChange}
+                placeholder="Username..."
+              />
+
+              <input
+                type="text"
+                id="password"
+                name="street"
+                value={managerInfo.password}
+                onChange={handleChange}
+                placeholder="Password..."
+              />
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={managerInfo.email}
+                onChange={handleChange}
+                placeholder="Email..."
+              />
+
+              <button className="submitBtn">Submit</button>
             </form>
           </Portal>
         );

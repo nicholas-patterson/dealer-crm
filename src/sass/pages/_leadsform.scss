@@ -16,7 +16,7 @@
     padding-left: 4rem;
     background: white;
     letter-spacing: 0.2rem;
-    color: #e4e4e4;
+    color: black;
     outline: none;
     &:not(last-child) {
       margin-bottom: 3rem;
@@ -35,6 +35,10 @@
   }
 
   & input[name="dealership_street"] {
+    grid-column: 1/3;
+  }
+
+  #street {
     grid-column: 1/3;
   }
 

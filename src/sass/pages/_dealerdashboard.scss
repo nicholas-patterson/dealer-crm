@@ -14,6 +14,9 @@
     min-width: 20rem;
     box-shadow: 1px 0 9px rgba(0, 0, 0, 0.7);
     // border-right: 2px solid rgba(0, 0, 0, 1);
+    @media (max-width: $laptop-desktop-width) {
+      min-width: 25rem;
+    }
   }
 
   .nav-bar {

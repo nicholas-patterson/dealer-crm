@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 
 const DealerDashboard = props => {
   const [leadInfo, setLeadInfo] = useState({
-    first_name: "",
+    first_name: "Nicholas",
     last_name: "",
     email: "",
     phone: "",

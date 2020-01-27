@@ -18,10 +18,10 @@ const LogInForm = props => {
   return (
     <>
       <div className="wrapper">
-        <div className="form">
+        <div className="login-form">
           <Logo />
           <div className="login-form-container">
-            <form className="stepOne">
+            <form className="login-stepOne">
               <h2 className="login-title">Account Log In</h2>
               <label htmlFor="username">
                 <i className="icon fas fa-user"></i>

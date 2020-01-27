@@ -6,7 +6,7 @@ const StepTwo = props => {
   };
 
   return (
-    <form className="stepTwo">
+    <form className="signup-stepTwo">
       <input
         type="text"
         id="dealership_name"

@@ -93,37 +93,55 @@ const DealerInventoryMain = () => {
 
       {/* Used Inventory */}
 
-      {/*
-
       <div className="used--inventory">
         <h3 className="used--inventory__title">Used Inventory</h3>
         <div className="used--inventory__form">
-          <form className="used-inventory__fields">
-            <input
-              type="text"
-              name="used_year"
-              id="used_year"
-              value={usedInventory.used_year}
-              onChange={handleUsedInventoryChange}
-            />
-            <label htmlFor="used_year">Year</label>
-
-            <input
-              type="text"
-              name="new_make"
-              id="used_make"
-              value={usedInventory.used_make}
-              onChnage={handleUsedInventoryChange}
-            />
-            <label htmlFor="used_make">Make</label>
-            <input
-              type="text"
-              name="used_model"
-              id="used_model"
-              value={usedInventory.used_model}
-              onChange={handleUsedInventoryChange}
-            />
-            <label htmlFor="used_model">Model</label>
+          <form className="used-inventory__fields form">
+            <div className="field">
+              <input
+                type="text"
+                name="used_year"
+                id="used_year"
+                autoComplete="off"
+                required
+                className="input-group"
+                value={usedInventory.used_year}
+                onChange={handleUsedInventoryChange}
+              />
+              <label htmlFor="inputField" className="label-name">
+                <span className="content-name">Year</span>
+              </label>
+            </div>
+            <div className="field">
+              <input
+                type="text"
+                name="new_make"
+                id="used_year"
+                autoComplete="off"
+                required
+                className="input-group"
+                value={usedInventory.used_make}
+                onChnage={handleUsedInventoryChange}
+              />
+              <label htmlFor="inputField" className="label-name">
+                <span className="content-name">Make</span>
+              </label>
+            </div>
+            <div className="field">
+              <input
+                type="text"
+                name="used_model"
+                id="used_model"
+                autoComplete="off"
+                required
+                className="input-group"
+                value={usedInventory.used_model}
+                onChange={handleUsedInventoryChange}
+              />
+              <label htmlFor="inputField" className="label-name">
+                <span className="content-name">Model</span>
+              </label>
+            </div>
           </form>
         </div>
         <div className="used--inventory__results">
@@ -135,7 +153,6 @@ const DealerInventoryMain = () => {
           </h2>
         </div>
       </div>
-      */}
     </>
   );
 };

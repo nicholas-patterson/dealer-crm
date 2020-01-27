@@ -32,34 +32,53 @@ const DealerInventoryMain = () => {
       <div className="new--inventory">
         <h3 className="new--inventory__title">New Inventory</h3>
         <div className="new--inventory__form">
-          <form className="new-inventory__fields">
-            <input
-              type="text"
-              name="new_year"
-              id="new_year"
-              value={newInventory.new_year}
-              onChange={handleNewInventoryChange}
-            />
-            <label htmlFor="new_year" className="label-name">
-              <span className="content-name">Year</span>
-            </label>
+          <form className="new--inventory__fields form">
+            <div className="field">
+              <input
+                type="text"
+                name="new_year"
+                id="new_year"
+                autoComplete="off"
+                required
+                className="input-group"
+                value={newInventory.new_year}
+                onChange={handleNewInventoryChange}
+              />
+              <label htmlFor="inputField" className="label-name">
+                <span className="content-name">Year</span>
+              </label>
+            </div>
 
-            <input
-              type="text"
-              name="new_make"
-              id="new_make"
-              value={newInventory.new_make}
-              onChnage={handleNewInventoryChange}
-            />
-            <label htmlFor="new_make">Make</label>
-            <input
-              type="text"
-              name="new_model"
-              id="new_model"
-              value={newInventory.new_model}
-              onChange={handleNewInventoryChange}
-            />
-            <label htmlFor="new_model">Model</label>
+            <div className="field">
+              <input
+                type="text"
+                name="new_make"
+                id="new_make"
+                autoComplete="off"
+                required
+                className="input-group"
+                value={newInventory.new_make}
+                onChnage={handleNewInventoryChange}
+              />
+              <label htmlFor="inputField" className="label-name">
+                <span className="content-name">Make</span>
+              </label>
+            </div>
+            <div className="field">
+              <input
+                type="text"
+                name="new_model"
+                id="new_model"
+                autoComplete="off"
+                required
+                className="input-group"
+                value={newInventory.new_model}
+                onChange={handleNewInventoryChange}
+              />
+              <label htmlFor="inputField" className="label-name">
+                <span className="content-name">Model</span>
+              </label>
+            </div>
           </form>
         </div>
         <div className="new--inventory__results">
@@ -73,6 +92,8 @@ const DealerInventoryMain = () => {
       </div>
 
       {/* Used Inventory */}
+
+      {/*
 
       <div className="used--inventory">
         <h3 className="used--inventory__title">Used Inventory</h3>
@@ -114,6 +135,7 @@ const DealerInventoryMain = () => {
           </h2>
         </div>
       </div>
+      */}
     </>
   );
 };

@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 
 const DealerDashboard = props => {
   const [leadInfo, setLeadInfo] = useState({
-    first_name: "Nicholas",
+    first_name: "",
     last_name: "",
     email: "",
     phone: "",
@@ -190,53 +190,87 @@ const DealerDashboard = props => {
         return (
           <Portal>
             <form onSubmit={handleSubmit} className="salesperson-form">
-              <h3 className="salesperson-form__title">Add New Salesperson</h3>
+              {/* <h3 className="salesperson-form__title">Add New Salesperson</h3> */}
 
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={salesInfo.first_name}
-                onChange={handleChange}
-                placeholder="First Name..."
-              />
+              <div className="salesperson-field">
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  autoComplete="off"
+                  required
+                  className="salesperson-group"
+                  value={salesInfo.first_name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="salesperson-label-name">
+                  <span className="salesperson-content-name">First Name</span>
+                </label>
+              </div>
+              <div className="salesperson-field">
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  autoComplete="off"
+                  required
+                  className="salesperson-group"
+                  value={salesInfo.last_name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="salesperson-label-name">
+                  <span className="salesperson-content-name">Last Name</span>
+                </label>
+              </div>
+              <div className="salesperson-field">
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  autoComplete="off"
+                  required
+                  className="salesperson-group"
+                  value={salesInfo.username}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="salesperson-label-name">
+                  <span className="salesperson-content-name">Username</span>
+                </label>
+              </div>
 
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={salesInfo.last_name}
-                onChange={handleChange}
-                placeholder="Last Name..."
-              />
+              <div className="salesperson-field">
+                <input
+                  type="text"
+                  id="password"
+                  name="password"
+                  autoComplete="off"
+                  required
+                  className="salesperson-group"
+                  value={salesInfo.password}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="salesperson-label-name">
+                  <span className="salesperson-content-name">Password</span>
+                </label>
+              </div>
 
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={salesInfo.username}
-                onChange={handleChange}
-                placeholder="Username..."
-              />
+              <div id="sales-email-column" className="salesperson-field">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  autoComplete="off"
+                  required
+                  className="salesperson-group"
+                  value={salesInfo.email}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="salesperson-label-name">
+                  <span className="salesperson-content-name">Email</span>
+                </label>
+              </div>
 
-              <input
-                type="text"
-                id="password"
-                name="password"
-                value={salesInfo.password}
-                onChange={handleChange}
-                placeholder="Password..."
-              />
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={salesInfo.email}
-                onChange={handleChange}
-                placeholder="Email..."
-              />
-
-              <button className="submitBtn">Submit</button>
+              <button className="salesperson-submitBtn">Submit</button>
             </form>
           </Portal>
         );
@@ -244,54 +278,84 @@ const DealerDashboard = props => {
         return (
           <Portal>
             <form onSubmit={handleSubmit} className="manager-form">
-              <h1 className="manager-form__title">Add New Manager</h1>
+              {/* <h1 className="manager-form__title">Add New Manager</h1> */}
 
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={managerInfo.first_name}
-                onChange={handleChange}
-                placeholder="First Name..."
-              />
-
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={managerInfo.last_name}
-                onChange={handleChange}
-                placeholder="Last Name..."
-              />
-
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={managerInfo.username}
-                onChange={handleChange}
-                placeholder="Username..."
-              />
-
-              <input
-                type="text"
-                id="password"
-                name="street"
-                value={managerInfo.password}
-                onChange={handleChange}
-                placeholder="Password..."
-              />
-
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={managerInfo.email}
-                onChange={handleChange}
-                placeholder="Email..."
-              />
-
-              <button className="submitBtn">Submit</button>
+              <div className="manager-field">
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  autoComplete="off"
+                  required
+                  className="manager-group"
+                  value={managerInfo.first_name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="manager-label-name">
+                  <span className="manager-content-name">First Name</span>
+                </label>
+              </div>
+              <div className="manager-field">
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  autoComplete="off"
+                  required
+                  className="manager-group"
+                  value={managerInfo.last_name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="manager-label-name">
+                  <span className="manager-content-name">Last Name</span>
+                </label>
+              </div>
+              <div className="manager-field">
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  autoComplete="off"
+                  required
+                  className="manager-group"
+                  value={managerInfo.username}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="manager-label-name">
+                  <span className="manager-content-name">Username</span>
+                </label>
+              </div>
+              <div className="manager-field">
+                <input
+                  type="text"
+                  id="password"
+                  name="street"
+                  autoComplete="off"
+                  required
+                  className="manager-group"
+                  value={managerInfo.password}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="manager-label-name">
+                  <span className="manager-content-name">Password</span>
+                </label>
+              </div>
+              <div id="manager-email-column" className="manager-field">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  autocomplete="off"
+                  required
+                  className="manager-group"
+                  value={managerInfo.email}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="manager-label-name">
+                  <span className="manager-content-name">Email</span>
+                </label>
+              </div>
+              <button className="manager-submitBtn">Submit</button>
             </form>
           </Portal>
         );

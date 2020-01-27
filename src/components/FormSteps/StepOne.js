@@ -6,7 +6,7 @@ const StepOne = props => {
   };
 
   return (
-    <form className="stepOne">
+    <form className="signup-stepOne">
       <label htmlFor="email">
         <i class="icon fas fa-envelope"></i>
         <input

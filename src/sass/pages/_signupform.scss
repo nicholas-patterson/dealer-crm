@@ -3,8 +3,8 @@
   max-width: 40%;
   margin: 5rem auto;
 
-  // Main Form (SignUoForm.js)
-  & .form {
+  // Main Form (SignUpForm.js)
+  & .signup-form {
     background: rgba(47, 55, 66, 0.486);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.445);
     width: 100%;
@@ -50,7 +50,7 @@
 }
 
 // StepOne Form (StepOne.js)
-.stepOne {
+.signup-stepOne {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -108,7 +108,7 @@
 
 // StepTwo Form (StepTwo.js)
 
-.stepTwo {
+.signup-stepTwo {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2rem;

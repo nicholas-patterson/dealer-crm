@@ -74,72 +74,115 @@ const DealerDashboard = props => {
         return (
           <Portal>
             <form className="leads-form" onSubmit={handleSubmit}>
-              <h3 className="leads-form_title">Create A Lead..</h3>
+              {/* <h3 className="leads-form_title">Create A Lead..</h3> */}
+              <div className="leads-field">
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.first_name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">First Name</span>
+                </label>
+              </div>
 
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={leadInfo.first_name}
-                onChange={handleChange}
-                placeholder="First Name"
-              />
+              <div className="leads-field">
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.last_name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">Last Name</span>
+                </label>
+              </div>
 
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={leadInfo.last_name}
-                onChange={handleChange}
-                placeholder="Last Name"
-              />
-
-              <input
-                type="text"
-                id="street"
-                name="street"
-                value={leadInfo.street}
-                onChange={handleChange}
-                placeholder="Street"
-              />
-
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={leadInfo.city}
-                onChange={handleChange}
-                placeholder="City"
-              />
-
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={leadInfo.state}
-                onChange={handleChange}
-                placeholder="State"
-              />
-
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={leadInfo.email}
-                onChange={handleChange}
-                placeholder="Email..."
-              />
-
-              <input
-                type="phone"
-                id="phone"
-                name="phone"
-                value={leadInfo.phone}
-                onChange={handleChange}
-                placeholder="Phone"
-              />
-
-              <button className="submitBtn">Submit</button>
+              <div className="leads-field">
+                <input
+                  type="text"
+                  id="street"
+                  name="street"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.street}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">Street</span>
+                </label>
+              </div>
+              <div className="leads-field">
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.city}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">City</span>
+                </label>
+              </div>
+              <div className="leads-field">
+                <input
+                  type="text"
+                  id="state"
+                  name="state"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.state}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">State</span>
+                </label>
+              </div>
+              <div className="leads-field">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.email}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">Email</span>
+                </label>
+              </div>
+              <div id="phone-column" className="leads-field">
+                <input
+                  type="phone"
+                  id="leads-phone"
+                  name="phone"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.phone}
+                  onChange={handleChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">Phone</span>
+                </label>
+              </div>
+              <button className="leads-submitBtn">Submit</button>
             </form>
           </Portal>
         );

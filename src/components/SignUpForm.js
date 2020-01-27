@@ -63,20 +63,22 @@ const SignUpForm = () => {
   return (
     <>
       <div className="wrapper">
-        <div className="form">
+        <div className="signup-form">
           <Logo />
-          <div className="form__stepper">
-            <ul className="form__stepper--unorderedlist">
+          <div className="signup-form__stepper">
+            <ul className="signup-form__stepper--unorderedlist">
               <li
                 className={
-                  "form__stepper--item " + (currentStep === 1 ? "one" : "dark")
+                  "signup-form__stepper--item " +
+                  (currentStep === 1 ? "one" : "dark")
                 }
               >
                 1
               </li>
               <li
                 className={
-                  "form__stepper--item " + (currentStep === 2 ? "two" : "dark")
+                  "signup-form__stepper--item " +
+                  (currentStep === 2 ? "two" : "dark")
                 }
               >
                 2

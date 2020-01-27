@@ -1,48 +1,91 @@
-.manager-form {
+/* Manager Form Fields Styling */
+  .manager-form {
+  width: 50%;
+  margin: 20rem auto;
+  padding: 3rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 2rem;
-  justify-content: center;
-  width: 40%;
-  margin: 20rem auto;
-  background: rgb(235, 232, 232);
-  padding: 3rem;
-  & input[type] {
-    width: 100%;
-    padding: 1.4rem;
-    font-size: 1.5rem;
-    border-radius: 1rem;
-    border: 1px solid $primary-blue;
-    padding-left: 4rem;
-    background: white;
-    letter-spacing: 0.2rem;
-    color: black;
-    outline: none;
-    &:not(last-child) {
-      margin-bottom: 3rem;
+  gap: 2rem;
+  background: #ebe8e8;
+    #manager-email-column{
+        width: 50%;
+        grid-column: 1/3;
+        justify-self: center;
+      }
+    .manager-submitBtn{
+        margin-top: 4rem;
+        grid-column: 1/3;
+        justify-self: center;
+        width: 50%;
+        padding: 1.2rem 2rem;
+        text-align: center;
+        font-weight: 400;
+        text-transform: uppercase;
+        border-radius: 4px;
+        min-width: 8rem;
+        background: #2EB85C;
+        cursor: pointer;
+        letter-spacing: 1px;
+        font-size: 1.4rem;
     }
+  .manager-field {
+    width: 100%;
+    position: relative;
+    overflow: hidden; 
+    .manager-group{
+      width: 100%;
+      color:#000;
+      font-size: 1.5rem;
+      padding-top: 2.7rem;
+      padding-bottom: .5rem;
+      border: none;
+      outline: none;
+      background-color: #ebe8e8;
+    }
+      .manager-label-name{
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      border-bottom: 1px solid black;
+      color: black;
+        &::after {
+          content: "";
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          border-bottom: 3px solid $primary-blue;
+          left: 0px;
+          bottom: -1px;
+          transform: translateX(-101%);
+          transition: all 0.3s ease;
+        }
+        .manager-content-name {
+          position: absolute;
+          bottom: 5px;
+          left: 0;
+          transition: all 0.3s ease;
+        }
+      }
+    }
+  
   }
 
-  .manager-form__title {
-    grid-column: 1/3;
-    text-align: center;
-    color: black;
-    font-size: 2rem;
-  }
 
-  & input[type="email"] {
-    grid-column: 1/3;
-  }
-
-  .submitBtn {
-    background: #2eb85c;
-    border: none;
-    grid-column: 1/3;
-    width: 25%;
-    margin: 0 auto;
-    padding: 1rem 3rem;
-    border-radius: 5px;
+  /* Code for content-name */
+  .manager-form .manager-field input:focus + .manager-label-name .manager-content-name, .manager-form .manager-field input:valid + .manager-label-name .manager-content-name{
+    transform: translateY(-150%);
     font-size: 1.4rem;
-    cursor: pointer;
+    color: $primary-blue;
   }
-}
+
+  /* Code for content name */
+
+  .manager-form .manager-field input:focus + .manager-label-name::after, .manager-form .manager-field input:valid + .manager-label-name::after{
+    transform: translateX(0%);      
+  }
+
+
+

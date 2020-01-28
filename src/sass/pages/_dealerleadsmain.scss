@@ -13,6 +13,14 @@
 }
 
 .leads {
+  .edit-style {
+        color: $primary-blue;
+        font-size: 2.5rem; 
+      }
+     .delete-style {
+        color: red;
+        font-size: 2.5rem;
+      }
   &__heading {
     margin-top: 10rem;
     font-size: 2.7rem;
@@ -20,21 +28,31 @@
     letter-spacing: 1px;
     border-bottom: 1px solid $primary-blue;
     padding-bottom: 1.5rem;
+   margin-bottom: 2.5rem; 
   }
-  .categories {
-    width: 100%;
-    margin-top: 2.4rem;
-    ul {
-      list-style-type: none;
-      display: flex;
-      justify-content: space-evenly;
-      li {
-        color: #e4e4e4;
-      }
+  
+ table{
+    width:  100%;
+    border-collapse:collapse;
+    td{
+      text-align: center;
+      padding: 2rem; 
+    }
+    tr{
+      border-radius: 4px;
+    }
+    tr:nth-child(even){
+      background: #3e4854;
+    }
+    table.spaceunder > tr {
+      padding-bottom: 2rem;
+    }
+    th{
+      margin-bottom: 2rem;
     }
   }
-
-  .recent-leads__items {
+ 
+  /* .recent-leads__items {
     display: flex;
     flex-flow: column nowrap;
     margin-top: 5rem;
@@ -74,5 +92,5 @@
     .recent-leads__item:nth-child(odd) {
       background-color: #3e4854;
     }
-  }
+  } */
 }

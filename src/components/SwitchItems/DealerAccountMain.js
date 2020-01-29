@@ -13,6 +13,12 @@ const DealerAccountMain = () => {
     password: ""
   });
 
+  const [passwordInformation, setPasswordInformation] = useState({
+    curent_password: "",
+    new_password: "",
+    confirm_new_password: ""
+  });
+
   const handlePersonalInformationChange = e => {
     setPersonalInformation({
       ...personalInformation,
@@ -23,6 +29,13 @@ const DealerAccountMain = () => {
   const handleEmailInformation = e => {
     setEmailInformation({
       ...emailInformation,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handlePasswordInformation = e => {
+    setPasswordInformation({
+      ...passwordInformation,
       [e.target.name]: e.target.value
     });
   };
@@ -148,6 +161,65 @@ const DealerAccountMain = () => {
               </label>
             </div>
             <button className="ea-submitBtn">Save</button>
+          </form>
+        </div>
+      </div>
+      <h4 className="pw-subtitle">Password</h4>
+      <div className="password--information">
+        <div className="password--information__desc">
+          <p>
+            To change password, enter your current password and then your new
+            password; be sure to confirm your new password.
+          </p>
+        </div>
+        <div className="password--information__form-section">
+          <form className="password__information__fields">
+            <div className="pw-field">
+              <input
+                type="password"
+                name="current_password"
+                id="current_password"
+                className="pw-group"
+                autoComplete="off"
+                required
+                value={passwordInformation.current_password}
+                onChange={handlePasswordInformation}
+              />
+              <label htmlFor="inputField" className="pw-label-name">
+                <span className="pw-content-name">Current Password</span>
+              </label>
+            </div>
+            <div className="pw-field">
+              <input
+                type="password"
+                name="new_password"
+                id="new_password"
+                className="pw-group"
+                autoComplete="off"
+                required
+                value={passwordInformation.new_password}
+                onChange={handlePasswordInformation}
+              />
+              <label htmlFor="inputField" className="pw-label-name">
+                <span className="pw-content-name">New Password</span>
+              </label>
+            </div>
+            <div className="pw-field">
+              <input
+                type="password"
+                name="confirm_new_password"
+                id="confirm_new_password"
+                className="pw-group"
+                autoComplete="off"
+                required
+                value={passwordInformation.confirm_new_password}
+                onChange={handlePasswordInformation}
+              />
+              <label htmlFor="inputField" className="pw-label-name">
+                <span className="pw-content-name"> Confirm Password</span>
+              </label>
+            </div>
+            <button className="pw-submitBtn">Save</button>
           </form>
         </div>
       </div>

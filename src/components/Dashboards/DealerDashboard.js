@@ -8,6 +8,7 @@ import DealerInventoryMain from "../SwitchItems/DealerInventoryMain";
 import DealerAccountMain from "../SwitchItems/DealerAccountMain";
 import DealerHelpMain from "../SwitchItems/DealerHelpMain";
 import { connect } from "react-redux";
+import { Link } from "@reach/router";
 
 const DealerDashboard = props => {
   const [leadInfo, setLeadInfo] = useState({
@@ -62,12 +63,12 @@ const DealerDashboard = props => {
       case "help":
         return <DealerHelpMain />;
       default:
-        return null;
+        return <DealerDashboardMain />;
     }
   };
 
   console.log(props.location.pathname);
-
+  console.log("PROPS IN DASH", props);
   const modalSwitch = () => {
     switch (props.location.pathname) {
       case "/dealer/dash/newlead":
@@ -182,6 +183,11 @@ const DealerDashboard = props => {
                   <span className="leads-content-name">Phone</span>
                 </label>
               </div>
+
+              <Link className="leads-closeBtn" to="/dealer/dash">
+                Close
+              </Link>
+
               <button className="leads-submitBtn">Submit</button>
             </form>
           </Portal>
@@ -269,7 +275,9 @@ const DealerDashboard = props => {
                   <span className="salesperson-content-name">Email</span>
                 </label>
               </div>
-
+              <Link className="salesperson-closeBtn" to="/dealer/dash">
+                Close
+              </Link>
               <button className="salesperson-submitBtn">Submit</button>
             </form>
           </Portal>
@@ -355,6 +363,9 @@ const DealerDashboard = props => {
                   <span className="manager-content-name">Email</span>
                 </label>
               </div>
+              <Link className="manager-closeBtn" to="/dealer/dash">
+                Close
+              </Link>
               <button className="manager-submitBtn">Submit</button>
             </form>
           </Portal>

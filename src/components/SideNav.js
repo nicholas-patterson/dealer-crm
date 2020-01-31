@@ -39,7 +39,8 @@ const SideNav = props => {
     <>
       <div className="sidebar__links">
         <Link
-          to="/dealer/dash"
+          // to="/dealer/dash"
+          to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
           onClick={handleDashboardClick}
           className={
             "sidebar__link " + (props.link === "dashboard" ? "border" : null)
@@ -49,7 +50,8 @@ const SideNav = props => {
           dashboard
         </Link>
         <Link
-          to="/dealer/leads"
+          //to="/dealer/leads"
+          to={props.user === "salesman" ? "/sales/leads" : "/dealer/leads"}
           className={
             "sidebar__link " + (props.link === "leads" ? "border" : null)
           }
@@ -59,7 +61,8 @@ const SideNav = props => {
           leads
         </Link>
         <Link
-          to="/dealer/inventory"
+          //to="/dealer/inventory"
+          to={props.user === "salesman" ? "/sales/inventory" : "/dealer/inventory"}
           className={
             "sidebar__link " + (props.link === "inventory" ? "border" : null)
           }
@@ -69,7 +72,8 @@ const SideNav = props => {
           inventory
         </Link>
         <Link
-          to="/dealer/account"
+          to={props.user === "salesman" ? "/sales/account" : "/dealer/account"}
+          //to="/dealer/account"
           className={
             "sidebar__link " + (props.link === "account" ? "border" : null)
           }
@@ -79,7 +83,8 @@ const SideNav = props => {
           Account
         </Link>
         <Link
-          to="/dealer/help"
+          to={props.user === "salesman" ? "/sales/help" : "/dealer/help"}
+          //to="/dealer/help"
           className={
             "sidebar__link " + (props.link === "help" ? "border" : null)
           }
@@ -89,7 +94,8 @@ const SideNav = props => {
           help
         </Link>
         <Link
-          to="/dealer/logout"
+          to={props.user === "salesman" ? "/sales/logout" : "/dealer/logout"}
+          //to="/dealer/logout"
           className={
             "sidebar__link " + (props.link === "logout" ? "border" : null)
           }
@@ -105,7 +111,8 @@ const SideNav = props => {
 
 const mapStateToProps = state => {
   return {
-    link: state.dealerNavigationReducer.link
+    link: state.dealerNavigationReducer.link,
+    user: state.userReducer.user
   };
 };
 

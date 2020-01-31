@@ -6,10 +6,20 @@ const DealerDashboardMain = props => {
   console.log("DEALERDASHMAIN", props);
   return (
     <>
-      <div className="header-dealer">
-        <div className="header-dealer__name">Dealership: Ford</div>
-        <div className="header-dealer__notifications">Notifications</div>
-      </div>
+      {/* <div className="header-dealer"> */}
+        {/* <div className="header-dealer__name">Dealership: Ford</div> */}
+        {/* <div className="header-dealer__notifications">Notifications</div> */}
+        {props.user === "salesman" ? 
+        <div className="header-dealer">
+          <div className="header-dealer__name">Welcome, Nicholas</div>
+          <div className="header-dealer__notifications">Notifications</div>
+          </div> : 
+          <div className="header-dealer">
+          <div className="header-dealer__name">Dealership: Ford</div>
+          <div className="header-dealer__notifications">Notifications</div>
+          </div> 
+        }
+      {/* </div> */}
       {/* ACTION AND RECENT ACTIVITY BOXES */}
       <div className="console-recent-activity-container">
         {/* START CONSOLE */}
@@ -18,7 +28,8 @@ const DealerDashboardMain = props => {
 
           <div className="console__controls">
             <Link
-              to="/dealer/dash/newlead"
+              to={props.user === "salesman" ? "/sales/dash/newlead" : "/dealer/dash/newlead"}
+              //to="/dealer/dash/newlead"
               className="console__control"
               onClick={props.leadsClick}
             >

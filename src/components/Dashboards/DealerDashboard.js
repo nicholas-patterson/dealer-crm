@@ -67,11 +67,15 @@ const DealerDashboard = props => {
     }
   };
 
+  const leadmodalcase = props.user === "salesman" ? "/sales/dash/newlead" : "/dealer/dash/newlead";
+  console.log("LEAD MODAL CASE", leadmodalcase)
+
   console.log(props.location.pathname);
   console.log("PROPS IN DASH", props);
   const modalSwitch = () => {
     switch (props.location.pathname) {
-      case "/dealer/dash/newlead":
+      //case "/dealer/dash/newlead":
+        case leadmodalcase:
         return (
           <Portal>
             <form className="leads-form" onSubmit={handleSubmit}>

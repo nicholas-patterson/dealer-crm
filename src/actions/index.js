@@ -19,3 +19,9 @@ export const getInventoryLink = link => {
   };
 };
 
+export const getUserType = () => {
+  return {
+    type: "FETCH_USER_TYPE",
+    payload: "salesman"
+  };
+};

@@ -25,7 +25,7 @@ const WelcomePage = () => {
               Get Started
             </Link>
           </div>
-          <div>
+          <div className="illustration-container">
             <img
               className="img-styles"
               src={illustration}

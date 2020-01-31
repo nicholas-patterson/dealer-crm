@@ -49,13 +49,16 @@
   }
 }
 
+.illustration-container {
+  margin-top: 7rem;
+}
 .img-styles {
   width: 80rem;
   animation: illustrationFade 875ms ease-in-out;
   animation-fill-mode: backwards;
 
   @media (max-width: $laptop-desktop-width) {
-    width: 60rem;
+    width: 60rem;    
   }
 }
 

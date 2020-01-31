@@ -397,7 +397,8 @@ const DealerDashboard = props => {
 
 const mapStateToProps = state => {
   return {
-    dash: state.dealerNavigationReducer.link
+    dash: state.dealerNavigationReducer.link,
+    user: state.userReducer.user
   };
 };
 

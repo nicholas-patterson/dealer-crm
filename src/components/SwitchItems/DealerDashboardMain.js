@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "@reach/router";
+import { connect } from "react-redux";
 
 const DealerDashboardMain = props => {
+  console.log("DEALERDASHMAIN", props);
   return (
     <>
       <div className="header-dealer">
@@ -23,21 +25,25 @@ const DealerDashboardMain = props => {
               <p>Add New Lead</p>
             </Link>
 
-            <Link
-              to="/dealer/dash/newsalesperson"
-              className="console__control"
-              onClick={props.salesClick}
-            >
-              <p>Add New Salesperson</p>
-            </Link>
+            {props.user === "salesman" ? null : (
+              <Link
+                to="/dealer/dash/newsalesperson"
+                className="console__control"
+                onClick={props.salesClick}
+              >
+                <p>Add New Salesperson</p>
+              </Link>
+            )}
 
-            <Link
-              to="/dealer/dash/newmanager"
-              className="console__control"
-              onClick={props.managerClick}
-            >
-              <p>Add New Manager</p>
-            </Link>
+            {props.user === "salesman" ? null : (
+              <Link
+                to="/dealer/dash/newmanager"
+                className="console__control"
+                onClick={props.managerClick}
+              >
+                <p>Add New Manager</p>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -172,4 +178,10 @@ const DealerDashboardMain = props => {
   );
 };
 
-export default DealerDashboardMain;
+const mapStateToProps = state => {
+  return {
+    user: state.userReducer.user
+  };
+};
+
+export default connect(mapStateToProps, {})(DealerDashboardMain);

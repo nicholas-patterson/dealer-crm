@@ -8,13 +8,15 @@ import DealerLeadsMain from "./components/SwitchItems/DealerLeadsMain";
 import DealerInventoryMain from "./components/SwitchItems/DealerInventoryMain";
 import DealerHelpMain from "./components/SwitchItems/DealerHelpMain";
 import DealerAccountMain from "./components/SwitchItems/DealerAccountMain";
+import {connect} from "react-redux";
 
 import { Router } from "@reach/router";
 
-const App = () => {
+const App = (props) => {
+  console.log("PROPS IN APP.JS", props)
   return (
     <div className="middle">
-      <Router>
+      {props.user === "dealer" ? <Router>
         <WelcomePage default="/" />
         <SignUpForm path="/signup" />
         <LoginForm path="/login" />
@@ -25,9 +27,26 @@ const App = () => {
           <DealerHelpMain path="/help" />
           <DealerAccountMain path="/account" />
         </DealerDashBoard>
-      </Router>
+      </Router>: <Router>
+        <WelcomePage default="/" />
+        <SignUpForm path="/signup" />
+        <LoginForm path="/login" />
+        <DealerDashBoard path="/sales">
+          <DealerDashboardMain path="/dash" />
+          <DealerLeadsMain path="/leads" />
+          <DealerInventoryMain path="/inventory" />
+          <DealerHelpMain path="/help" />
+          <DealerAccountMain path="/account" />
+        </DealerDashBoard>
+      </Router>}
     </div>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer.user
+  }
+}
+
+export default connect(mapStateToProps, {})(App);

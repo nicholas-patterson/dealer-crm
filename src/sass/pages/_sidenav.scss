@@ -28,6 +28,11 @@
     border-right: 6px solid $primary-blue;
   }
 
+  &.saleman-border {
+    background-color: #495563;
+    border-right: 6px solid $secondary-blue;
+  }
+
   @media (max-width: $laptop-desktop-width) {
     font-size: 1.8rem;
     padding: 20px 40px 20px 20px;

@@ -35,7 +35,7 @@ const SideNav = props => {
     props.getDashboardLink("logout");
   };
 
-  console.log(props.link)
+  console.log(props.link);
   return (
     <>
       <div className="sidebar__links">
@@ -44,8 +44,14 @@ const SideNav = props => {
           to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
           onClick={handleDashboardClick}
           className={
-            "sidebar__link " + (props.link === "dashboard"  ? "border" : null) 
-           }
+            "sidebar__link " +
+            (props.link === "dashboard" && props.user !== "salesman"
+              ? "border"
+              : null) +
+            (props.link === "dashboard" && props.user === "salesman"
+              ? " saleman-border"
+              : null)
+          }
         >
           <Icon className="iconify" icon={outlineBubbleChart} />
           dashboard
@@ -54,7 +60,13 @@ const SideNav = props => {
           //to="/dealer/leads"
           to={props.user === "salesman" ? "/sales/leads" : "/dealer/leads"}
           className={
-            "sidebar__link " + (props.link === "leads" ? "border" : null) 
+            "sidebar__link " +
+            (props.link === "leads" && props.user !== "salesman"
+              ? "border "
+              : null) +
+            (props.link === "leads" && props.user === "salesman"
+              ? " saleman-border"
+              : null)
           }
           onClick={handleLeadsClick}
         >
@@ -63,9 +75,17 @@ const SideNav = props => {
         </Link>
         <Link
           //to="/dealer/inventory"
-          to={props.user === "salesman" ? "/sales/inventory" : "/dealer/inventory"}
+          to={
+            props.user === "salesman" ? "/sales/inventory" : "/dealer/inventory"
+          }
           className={
-            "sidebar__link " + (props.link === "inventory" ? "border" : null)
+            "sidebar__link " +
+            (props.link === "inventory" && props.user !== "salesman"
+              ? "border "
+              : null) +
+            (props.link === "inventory" && props.user === "salesman"
+              ? " saleman-border"
+              : null)
           }
           onClick={handleInventoryClick}
         >
@@ -76,7 +96,13 @@ const SideNav = props => {
           to={props.user === "salesman" ? "/sales/account" : "/dealer/account"}
           //to="/dealer/account"
           className={
-            "sidebar__link " + (props.link === "account" ? "border" : null)
+            "sidebar__link " +
+            (props.link === "account" && props.user !== "salesman"
+              ? "border "
+              : null) +
+            (props.link === "account" && props.user === "salesman"
+              ? " saleman-border"
+              : null)
           }
           onClick={handleAccountClick}
         >
@@ -87,7 +113,13 @@ const SideNav = props => {
           to={props.user === "salesman" ? "/sales/help" : "/dealer/help"}
           //to="/dealer/help"
           className={
-            "sidebar__link " + (props.link === "help" ? "border" : null)
+            "sidebar__link " +
+            (props.link === "help" && props.user !== "salesman"
+              ? "border "
+              : null) +
+            (props.link === "help" && props.user === "salesman"
+              ? " saleman-border"
+              : null)
           }
           onClick={handleHelpClick}
         >
@@ -98,7 +130,13 @@ const SideNav = props => {
           to={props.user === "salesman" ? "/sales/logout" : "/dealer/logout"}
           //to="/dealer/logout"
           className={
-            "sidebar__link " + (props.link === "logout" ? "border" : null)
+            "sidebar__link " +
+            (props.link === "logout" && props.user !== "salesman"
+              ? "border "
+              : null) +
+            (props.link === "logout" && props.user === "salesman"
+              ? " saleman-border"
+              : null)
           }
           onClick={handleLogoutClick}
         >

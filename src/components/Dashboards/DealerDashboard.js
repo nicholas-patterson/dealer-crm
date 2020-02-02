@@ -188,7 +188,7 @@ const DealerDashboard = props => {
                 </label>
               </div>
 
-              <Link className="leads-closeBtn" to="/dealer/dash">
+              <Link className="leads-closeBtn" to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}>
                 Close
               </Link>
 

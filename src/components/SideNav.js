@@ -4,7 +4,7 @@ import outlineBubbleChart from "@iconify/icons-ic/outline-bubble-chart";
 import usersIcon from "@iconify/icons-feather/users";
 import carGarage from "@iconify/icons-si-glyph/car-garage";
 import roundHelpOutline from "@iconify/icons-ic/round-help-outline";
-import sharLogOut from "@iconify/icons-ic/sharp-log-out";
+import sharpLogOut from "@iconify/icons-ic/sharp-log-out";
 import settingsIcon from "@iconify/icons-feather/settings";
 import { connect } from "react-redux";
 import { getDashboardLink, getLeadsLink } from "../actions";
@@ -35,6 +35,7 @@ const SideNav = props => {
     props.getDashboardLink("logout");
   };
 
+  console.log(props.link)
   return (
     <>
       <div className="sidebar__links">
@@ -43,8 +44,8 @@ const SideNav = props => {
           to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
           onClick={handleDashboardClick}
           className={
-            "sidebar__link " + (props.link === "dashboard" ? "border" : null)
-          }
+            "sidebar__link " + (props.link === "dashboard"  ? "border" : null) 
+           }
         >
           <Icon className="iconify" icon={outlineBubbleChart} />
           dashboard
@@ -53,7 +54,7 @@ const SideNav = props => {
           //to="/dealer/leads"
           to={props.user === "salesman" ? "/sales/leads" : "/dealer/leads"}
           className={
-            "sidebar__link " + (props.link === "leads" ? "border" : null)
+            "sidebar__link " + (props.link === "leads" ? "border" : null) 
           }
           onClick={handleLeadsClick}
         >
@@ -101,7 +102,7 @@ const SideNav = props => {
           }
           onClick={handleLogoutClick}
         >
-          <Icon className="iconify" icon={sharLogOut} />
+          <Icon className="iconify" icon={sharpLogOut} />
           Log out
         </Link>
       </div>

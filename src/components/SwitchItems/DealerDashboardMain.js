@@ -7,30 +7,45 @@ const DealerDashboardMain = props => {
   return (
     <>
       {/* <div className="header-dealer"> */}
-        {/* <div className="header-dealer__name">Dealership: Ford</div> */}
-        {/* <div className="header-dealer__notifications">Notifications</div> */}
-        {props.user === "salesman" ? 
+      {/* <div className="header-dealer__name">Dealership: Ford</div> */}
+      {/* <div className="header-dealer__notifications">Notifications</div> */}
+      {props.user === "salesman" ? (
         <div className="header-dealer">
           <div className="header-dealer__name">Welcome, Nicholas</div>
           <div className="header-dealer__notifications">Notifications</div>
-          </div> : 
-          <div className="header-dealer">
+        </div>
+      ) : (
+        <div className="header-dealer">
           <div className="header-dealer__name">Dealership: Ford</div>
           <div className="header-dealer__notifications">Notifications</div>
-          </div> 
-        }
+        </div>
+      )}
       {/* </div> */}
       {/* ACTION AND RECENT ACTIVITY BOXES */}
       <div className="console-recent-activity-container">
         {/* START CONSOLE */}
         <div className="console">
-          <h2 className="console__heading">what would you like to do?</h2>
+          <h2
+            className={
+              "console__heading " +
+              (props.user === "salesman" ? "sales_bb" : "dealer_bb")
+            }
+          >
+            what would you like to do?
+          </h2>
 
           <div className="console__controls">
             <Link
-              to={props.user === "salesman" ? "/sales/dash/newlead" : "/dealer/dash/newlead"}
+              to={
+                props.user === "salesman"
+                  ? "/sales/dash/newlead"
+                  : "/dealer/dash/newlead"
+              }
               //to="/dealer/dash/newlead"
-              className="console__control"
+              className={
+                "console__control " +
+                (props.user === "salesman" ? "sales_border" : "dealer_border")
+              }
               onClick={props.leadsClick}
             >
               <p>Add New Lead</p>
@@ -39,7 +54,10 @@ const DealerDashboardMain = props => {
             {props.user === "salesman" ? null : (
               <Link
                 to="/dealer/dash/newsalesperson"
-                className="console__control"
+                className={
+                  "console__control " +
+                  (props.user === "salesman" ? "sales_border" : "dealer_border")
+                }
                 onClick={props.salesClick}
               >
                 <p>Add New Salesperson</p>
@@ -49,7 +67,10 @@ const DealerDashboardMain = props => {
             {props.user === "salesman" ? null : (
               <Link
                 to="/dealer/dash/newmanager"
-                className="console__control"
+                className={
+                  "console__control " +
+                  (props.user === "salesman" ? "sales_border" : "dealer_border")
+                }
                 onClick={props.managerClick}
               >
                 <p>Add New Manager</p>
@@ -60,10 +81,20 @@ const DealerDashboardMain = props => {
 
         {/* START RECENT ACTIVITY */}
         <div className="recent-activity">
-          <h2 className="recent-activity__heading">
+          <h2
+            className={
+              "recent-activity__heading " +
+              (props.user === "salesman" ? "sales_bb" : "dealer_bb")
+            }
+          >
             recent activity{" "}
             <span
-              className="iconify recent-activity__help-icon"
+              className={
+                "iconify recent-activity__help-icon " +
+                (props.user === "salesman"
+                  ? "sales_help_icon"
+                  : "dealer_help_icon")
+              }
               data-icon="mdi:map-marker-question-outline"
               data-inline="false"
             ></span>

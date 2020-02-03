@@ -45,7 +45,6 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    // border-bottom: 1px solid #39C;
     padding-bottom: 1.5rem;
   }
 
@@ -59,11 +58,18 @@
 
       &__heading {
         margin-top: 10rem;
-        border-bottom: 1px solid #39c;
         padding-bottom: 1.5rem;
         font-weight: 400;
         font-size: 2.7rem;
         letter-spacing: 1px;
+      }
+
+      & .sales_bb {
+        border-bottom: 1px solid $secondary-blue;
+      }
+
+      & .dealer_bb {
+        border-bottom: 1px solid #39c;
       }
 
       &__controls {
@@ -92,8 +98,14 @@
         font-weight: 300;
         cursor: pointer;
 
-        &:hover {
+        &.dealer_border:hover {
           border: 2px solid #39c;
+          background-color: #000;
+          box-shadow: 0 3px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        &.sales_border:hover {
+          border: 2px solid $secondary-blue;
           background-color: #000;
           box-shadow: 0 3px 12px rgba(0, 0, 0, 0.7);
         }
@@ -101,24 +113,39 @@
     }
   }
 
-
   .recent-activity {
     flex-basis: 50%;
     &__heading {
       margin-top: 10rem;
-      border-bottom: 1px solid #39c;
+      //border-bottom: 1px solid #39c;
       padding-bottom: 1.5rem;
       font-weight: 400;
       font-size: 2.7rem;
       letter-spacing: 1px;
     }
 
+    & .sales_bb {
+      border-bottom: 1px solid $secondary-blue;
+    }
+
+    & .dealer_bb {
+      border-bottom: 1px solid #39c;
+    }
+
     &__help-icon {
       font-size: 2rem;
       display: inline-block;
       margin-left: 0.3rem;
-      color: #39c;
+      //color: #39c;
       vertical-align: middle;
+    }
+
+    & .sales_help_icon {
+      color: $secondary-blue;
+    }
+
+    & .dealer_help_icon {
+      color: $primary-blue;
     }
 
     &__items {
@@ -166,7 +193,7 @@
         // margin-left: 30px;
         flex-basis: 20%;
         color: #39c;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: 700;
       }
     }

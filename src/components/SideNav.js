@@ -46,7 +46,7 @@ const SideNav = props => {
           className={
             "sidebar__link " +
             (props.link === "dashboard" && props.user !== "salesman"
-              ? "border"
+              ? "border "
               : null) +
             (props.link === "dashboard" && props.user === "salesman"
               ? " saleman-border"

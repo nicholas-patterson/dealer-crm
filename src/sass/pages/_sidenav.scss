@@ -38,3 +38,54 @@
     padding: 20px 40px 20px 20px;
   }
 }
+
+.logout_confirm__box {
+  width: 35%;
+  margin: 35rem auto;
+  padding: 3rem;
+  background: #ebe8e8;
+
+  & .logout_confirm__heading {
+    color: #000;
+    text-align: center;
+  }
+
+  & .button-box {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  & .logout_confirm__confirmBtn {
+    margin-top: 4rem;
+    width: 30%;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    font-weight: 400;
+    text-transform: uppercase;
+    border-radius: 4px;
+    min-width: 8rem;
+    background: #2eb85c;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 1.4rem;
+    border: none;
+  }
+
+  .logout_confirm__closeBtn {
+    margin-top: 4rem;
+    width: 30%;
+    justify-self: flex-end;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    font-weight: 400;
+    text-transform: uppercase;
+    border-radius: 4px;
+    min-width: 8rem;
+    background: red;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 1.4rem;
+    color: black;
+    border: none;
+  }
+}

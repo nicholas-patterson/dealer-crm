@@ -1,5 +1,5 @@
 const initialState = {
-  user: "salesman"
+  user: "dealer"
 };
 
 export const userReducer = (state = initialState, action) => {

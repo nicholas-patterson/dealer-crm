@@ -42,8 +42,6 @@ const SideNav = props => {
   const handleCloseButton = () => {
     setModal(false);
   };
-
-  console.log(props.link);
   return (
     <>
       {modal ? (

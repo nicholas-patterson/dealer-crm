@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import outlineBubbleChart from "@iconify/icons-ic/outline-bubble-chart";
 import usersIcon from "@iconify/icons-feather/users";
@@ -9,8 +9,11 @@ import settingsIcon from "@iconify/icons-feather/settings";
 import { connect } from "react-redux";
 import { getDashboardLink, getLeadsLink } from "../actions";
 import { Link } from "@reach/router";
+import Portal from "./Portal";
 
 const SideNav = props => {
+  const [modal, setModal] = useState(false);
+
   const handleDashboardClick = () => {
     props.getDashboardLink("dashboard");
   };
@@ -32,12 +35,36 @@ const SideNav = props => {
   };
 
   const handleLogoutClick = () => {
-    props.getDashboardLink("logout");
+    //props.getDashboardLink("logout");
+    setModal(true);
+  };
+
+  const handleCloseButton = () => {
+    setModal(false);
   };
 
   console.log(props.link);
   return (
     <>
+      {modal ? (
+        <Portal>
+          <div className="logout_confirm__box">
+            <h3 className="logout_confirm__heading">
+              Are you sure you want to log out ?
+            </h3>
+            <div className="button-box">
+              <Link
+                onClick={handleCloseButton}
+                className="logout_confirm__closeBtn"
+                to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
+              >
+                Close
+              </Link>
+              <button className="logout_confirm__confirmBtn">Confirm</button>
+            </div>
+          </div>
+        </Portal>
+      ) : null}
       <div className="sidebar__links">
         <Link
           // to="/dealer/dash"

@@ -42,7 +42,7 @@ const WelcomePage = () => {
           <span role="img" aria-label="heart emoji">
             ❤️
           </span>{" "}
-          Nicholas Patterson and Elvis Knapman
+          Nicholas Patterson
         </p>
       </footer>
     </>

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import {Link} from "@reach/router";
+import Portal from "../Portal";
 
-const DealerInventoryMain = () => {
+const DealerInventoryMain = (props) => {
+  
   const [newInventory, setNewInventory] = useState({
     new_year: "",
     new_make: "",
@@ -20,8 +23,46 @@ const DealerInventoryMain = () => {
     setUsedInventory({ ...usedInventory, [e.target.name]: e.target.value });
   };
 
+  const handleNewInventoryAdd = e => {
+    setShowNewInventoryModal(true);
+  }
+
+  const handleUsedInventoryAdd = e => {
+    setShowUsedInventoryModal(true);
+  }
+
+  const [showUsedInventoryModal, setShowUsedInventoryModal] = useState(false);
+  const [showNewInventoryModal, setShowNewInventoryModal] = useState(false);
+
+
   return (
     <>
+    {showUsedInventoryModal ? 
+     <Portal>
+        <form>
+          <input type="file" name="car_picture"/>
+          <input type="text" name="year"/>
+          <input type="text" name="make"/>
+          <input type="text" name="model"/>
+          <input type="text" name="price"/>
+          <input type="text" name="miles"/>
+
+          <textarea type="car info" name="info"></textarea>
+        </form>
+     </Portal>: null}
+     {showNewInventoryModal ? 
+     <Portal>
+         <form>
+          <input type="file" name="car_picture"/>
+          <input type="text" name="year"/>
+          <input type="text" name="make"/>
+          <input type="text" name="model"/>
+          <input type="text" name="price"/>
+          <input type="text" name="miles"/>
+
+          <textarea type="car info" name="info"></textarea>
+        </form>
+     </Portal>: null}
       <div className="header-dealer">
         <div className="header-dealer__name">Dealership: Ford</div>
         <div className="header-dealer__notifications">Notifications</div>
@@ -83,7 +124,7 @@ const DealerInventoryMain = () => {
         </div>
         <div className="new--inventory__results">
           <h2>
-            You don't have any new inventory{" "}
+            No New Inventory, <Link onClick={handleNewInventoryAdd} to="/dealer/inventory/NewInventory">Click Here To Add</Link>{" "}
             <span role="img" aria-label="crying">
               😢
             </span>
@@ -146,7 +187,7 @@ const DealerInventoryMain = () => {
         </div>
         <div className="used--inventory__results">
           <h2>
-            You don't have any used inventory{" "}
+            No Used Inventory, <Link onClick={handleUsedInventoryAdd} to="/dealer/inventory/UsedInventory">Click Here To Add</Link>{" "}
             <span role="img" aria-label="crying">
               😢
             </span>

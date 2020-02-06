@@ -63,10 +63,10 @@
     tr {
       border-radius: 4px;
     }
-    tr:nth-child(even) {
+    tbody:nth-child(odd) {
       background: #3e4854;
     }
-    table.spaceunder > tr {
+    table.spaceunder {
       padding-bottom: 2rem;
     }
     th {

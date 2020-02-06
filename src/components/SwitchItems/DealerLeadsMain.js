@@ -32,36 +32,42 @@ const DealerLeadsMain = props => {
         </div>
 
         <table>
-          <tr>
-            <th>Full Name</th>
-            <th>Address</th>
-            <th>Type</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <tr class="spaceunder"></tr>
-          <tr>
-            <td>Nicholas Patterson</td>
-            <td>1500 Redis Lane, Javascript, Js 18999</td>
-            <td>Referral</td>
-            <td className="edit-style">
-              <Icon icon={editOutline} />
-            </td>
-            <td className="delete-style">
-              <Icon icon={deleteOutline} />
-            </td>
-          </tr>
-          <tr>
-            <td>Elvis Knapman</td>
-            <td>1100 Json WebToken Pl, JWT, 18787</td>
-            <td>Walk in</td>
-            <td className="edit-style">
-              <Icon icon={editOutline} />
-            </td>
-            <td className="delete-style">
-              <Icon icon={deleteOutline} />
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Address</th>
+              <th>Type</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <td className="spaceunder"></td>
+          <tbody>
+            <tr>
+              <td>Nicholas Patterson</td>
+              <td>1500 Redis Lane, Javascript, Js 18999</td>
+              <td>Referral</td>
+              <td className="edit-style">
+                <Icon icon={editOutline} />
+              </td>
+              <td className="delete-style">
+                <Icon icon={deleteOutline} />
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Elvis Knapman</td>
+              <td>1100 Json WebToken Pl, JWT, 18787</td>
+              <td>Walk in</td>
+              <td className="edit-style">
+                <Icon icon={editOutline} />
+              </td>
+              <td className="delete-style">
+                <Icon icon={deleteOutline} />
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </>

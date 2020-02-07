@@ -35,7 +35,7 @@ const WelcomePage = () => {
         </div>
       </div>
       <footer className="footer">
-        <p class="footer__copyright">&copy; 2019 Auto Acuity</p>
+        <p className="footer__copyright">&copy; 2019 Auto Acuity</p>
         <p className="footer__privacy-policy">Privacy Policy</p>
         <p>
           Made with{" "}

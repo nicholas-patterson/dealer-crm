@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import StepOne from "./FormSteps/StepOne";
 import StepTwo from "./FormSteps/StepTwo";
 import Logo from "./Logo/Logo";
+import { connect } from "react-redux";
+import { registerUser } from "../actions/index";
+import { navigate } from "@reach/router";
 
-const SignUpForm = () => {
+const SignUpForm = props => {
   const [form, setForm] = useState({
     dealer_email: "",
     dealer_username: "",
@@ -13,7 +16,8 @@ const SignUpForm = () => {
     dealer_city: "",
     dealer_state: "",
     dealer_country: "",
-    dealer_zipcode: ""
+    dealer_zipcode: "",
+    dealer_type: "dealer"
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -31,6 +35,7 @@ const SignUpForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    props.registerUser(form, navigate);
     console.log(form);
   };
 
@@ -92,4 +97,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default connect(null, { registerUser })(SignUpForm);

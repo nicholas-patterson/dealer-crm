@@ -10,8 +10,8 @@ const StepTwo = props => {
       <input
         type="text"
         id="dealership_name"
-        name="dealership_name"
-        value={props.value.dealership_name}
+        name="dealer_name"
+        value={props.value.dealer_name}
         onChange={props.handleChange}
         placeholder="Dealership Name..."
       />
@@ -19,8 +19,8 @@ const StepTwo = props => {
       <input
         type="text"
         id="dealership_street"
-        name="dealership_street"
-        value={props.value.dealership_street}
+        name="dealer_street"
+        value={props.value.dealer_street}
         onChange={props.handleChange}
         placeholder="Street..."
       />
@@ -28,14 +28,14 @@ const StepTwo = props => {
       <input
         type="text"
         id="dealership_city"
-        name="dealership_city"
-        value={props.value.dealership_city}
+        name="dealer_city"
+        value={props.value.dealer_city}
         onChange={props.handleChange}
         placeholder="City..."
       />
 
       <select
-        name="dealership_state"
+        name="dealer_state"
         id="dealership_state"
         onChange={props.handleChange}
       >
@@ -96,8 +96,8 @@ const StepTwo = props => {
       <input
         type="text"
         id="dealership_country"
-        name="dealership_country"
-        value={props.value.dealership_country}
+        name="dealer_country"
+        value={props.value.dealer_country}
         onChange={props.handleChange}
         placeholder="Country..."
       />
@@ -106,8 +106,8 @@ const StepTwo = props => {
         <input
           type="text"
           id="dealership_zipcode"
-          name="dealership_zipcode"
-          value={props.value.dealership_zipcode}
+          name="dealer_zipcode"
+          value={props.value.dealer_zipcode}
           onChange={props.handleChange}
           placeholder="Zip Code..."
         />
@@ -116,12 +116,12 @@ const StepTwo = props => {
       <button onClick={back} className="button backBtn">
         Back
       </button>
-      {props.value.dealership_name.length === 0 ||
-      props.value.dealership_street.length === 0 ||
-      props.value.dealership_city.length === 0 ||
-      props.value.dealership_state.length === 0 ||
-      props.value.dealership_country.length === 0 ||
-      props.value.dealership_zipcode.length === 0 ? (
+      {props.value.dealer_name.length === 0 ||
+      props.value.dealer_street.length === 0 ||
+      props.value.dealer_city.length === 0 ||
+      props.value.dealer_state.length === 0 ||
+      props.value.dealer_country.length === 0 ||
+      props.value.dealer_zipcode.length === 0 ? (
         <button
           disabled
           onClick={props.handleSubmit}

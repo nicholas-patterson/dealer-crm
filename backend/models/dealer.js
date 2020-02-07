@@ -18,8 +18,12 @@ module.exports = (sequelize, DataTypes) => {
   Dealer.associate = function(models) {
     // associations can be defined here
     console.log("MY MODELS", models);
-    Dealer.hasMany(models.Lead);
-    Dealer.hasMany(models.Salesman);
+    Dealer.hasMany(models.Lead, {
+      foreignKey: "dealerId"
+    });
+    Dealer.hasMany(models.Salesman, {
+      foreignKey: "dealerId"
+    });
   };
   return Dealer;
 };

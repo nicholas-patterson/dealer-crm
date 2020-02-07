@@ -31,14 +31,14 @@ export const getUserType = () => {
 };
 
 // Register User Action
-export const registerUser = (user, history) => {
+export const registerUser = (user, navigate) => {
   return dispatch => {
     dispatch({ type: "REG_USER_START" });
     axios
-      .post("__BACKEND__URL__FOR__DB", user)
+      .post("http://localhost:5000/api/dealer/register", user)
       .then(res => {
         dispatch({ type: "REG_USER_SUCCESS", payload: res.data });
-        history.push("/login");
+        navigate("/login");
       })
       .catch(err => {
         dispatch({ type: "REG_USER_FAILURE", payload: err.data });
@@ -47,20 +47,15 @@ export const registerUser = (user, history) => {
 };
 
 /// Login User Action
-
-export const loginUser = (user, history) => {
+export const loginUser = (user, navigate) => {
   return dispatch => {
     dispatch({ type: "LOGIN_USER_START" });
     axios
-      .post("https://lambda-wedding-planner.herokuapp.com/api/auth/login", user)
+      .post("http://localhost:5000/api/dealer/login", user)
       .then(res => {
-        dispatch({
-          type: "LOGIN_USER_SUCCESS",
-          payload: {
-            data: res.data
-          }
-        });
-      }, history.push("/"))
+        dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data });
+        navigate("/dealer");
+      })
       .catch(err => {
         dispatch({ type: "LOGIN_USER_FAILURE", payload: err.response });
       });

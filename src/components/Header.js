@@ -1,5 +1,14 @@
 import React from "react";
 import logoSmall from "../images/AUTOACUITYLOGO-sm.png";
+import { navigate } from "@reach/router";
+
+const handleLoginClick = () => {
+  navigate("/login");
+};
+
+const handleSignUpClick = () => {
+  navigate("/signup");
+};
 
 const Header = () => {
   return (
@@ -15,10 +24,17 @@ const Header = () => {
           </div>
           <div className="header__nav__buttons">
             <div className="header__nav__button">
-              <div className="button button--login">Login</div>
+              <div onClick={handleLoginClick} className="button button--login">
+                Login
+              </div>
             </div>
             <div className="header__nav__button">
-              <div className="button button--signup">Sign Up</div>
+              <div
+                onClick={handleSignUpClick}
+                className="button button--signup"
+              >
+                Sign Up
+              </div>
             </div>
           </div>
         </nav>

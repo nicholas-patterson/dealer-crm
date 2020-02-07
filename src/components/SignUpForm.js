@@ -5,15 +5,15 @@ import Logo from "./Logo/Logo";
 
 const SignUpForm = () => {
   const [form, setForm] = useState({
-    email: "",
-    username: "",
-    password: "",
-    dealership_name: "",
-    dealership_street: "",
-    dealership_city: "",
-    dealership_state: "",
-    dealership_country: "",
-    dealership_zipcode: ""
+    dealer_email: "",
+    dealer_username: "",
+    dealer_password: "",
+    dealer_name: "",
+    dealer_street: "",
+    dealer_city: "",
+    dealer_state: "",
+    dealer_country: "",
+    dealer_zipcode: ""
   });
 
   const [currentStep, setCurrentStep] = useState(1);

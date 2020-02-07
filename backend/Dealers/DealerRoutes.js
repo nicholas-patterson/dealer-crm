@@ -17,7 +17,7 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const dealer = await db.Dealer.findAll({
+    const dealer = await db.Dealer.findOne({
       where: {
         id
       }
@@ -43,7 +43,8 @@ router.post("/register", async (req, res) => {
       dealer_city: req.body.dealer_city,
       dealer_state: req.body.dealer_state,
       dealer_country: req.body.dealer_country,
-      dealer_zipcode: req.body.zipcode
+      dealer_zipcode: req.body.dealer_zipcode,
+      dealer_type: req.body.dealer_type
     });
     console.log("NEW DEALER", newDealer);
     res.status(201).json(newDealer);

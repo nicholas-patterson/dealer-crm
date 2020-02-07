@@ -12,8 +12,8 @@ const StepOne = props => {
         <input
           type="email"
           id="email"
-          name="email"
-          value={props.value.email}
+          name="dealer_email"
+          value={props.value.dealer_email}
           onChange={props.handleChange}
           placeholder="Email..."
         />
@@ -23,8 +23,8 @@ const StepOne = props => {
         <input
           type="text"
           id="username"
-          name="username"
-          value={props.value.username}
+          name="dealer_username"
+          value={props.value.dealer_username}
           onChange={props.handleChange}
           placeholder="Username..."
         />
@@ -34,16 +34,16 @@ const StepOne = props => {
         <input
           type="password"
           id="password"
-          name="password"
-          value={props.value.password}
+          name="dealer_password"
+          value={props.value.dealer_password}
           onChange={props.handleChange}
           placeholder="Password..."
         />
       </label>
 
-      {props.value.email.length === 0 ||
-      props.value.username.length === 0 ||
-      props.value.password.length === 0 ? (
+      {props.value.dealer_email.length === 0 ||
+      props.value.dealer_username.length === 0 ||
+      props.value.dealer_password.length === 0 ? (
         <button disabled className="disabledBtn button">
           Continue
         </button>

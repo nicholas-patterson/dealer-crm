@@ -5,6 +5,8 @@ const StepTwo = props => {
     props.prev();
   };
 
+  console.log(props.value);
+
   return (
     <form className="signup-stepTwo">
       <input
@@ -113,6 +115,16 @@ const StepTwo = props => {
         />
       </label>
 
+      <input
+        type="checkbox"
+        id="dealership_type"
+        checked
+        name="dealer_type"
+        value={props.value.dealer_type}
+        onChange={props.handleChange}
+        placeholder="Type"
+      />
+
       <button onClick={back} className="button backBtn">
         Back
       </button>
@@ -130,7 +142,11 @@ const StepTwo = props => {
           Submit
         </button>
       ) : (
-        <button onClick={props.handleSubmit} className="button submitBtn">
+        <button
+          type="submit"
+          onClick={props.handleSubmit}
+          className="button submitBtn"
+        >
           Submit
         </button>
       )}

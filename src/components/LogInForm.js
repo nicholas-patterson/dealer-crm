@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-
 import Logo from "./Logo/Logo";
+import { connect } from "react-redux";
+import { loginUser } from "../actions/index";
+import { navigate } from "@reach/router";
 
 const LogInForm = props => {
   const [user, setUser] = useState({
@@ -13,6 +15,12 @@ const LogInForm = props => {
       ...user,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(user);
+    props.loginUser(user, navigate);
   };
 
   return (
@@ -46,11 +54,17 @@ const LogInForm = props => {
                 />
               </label>
               {!user.username || !user.password ? (
-                <button className="button disabledBtn" disabled>
+                <button type="button" className="button disabledBtn" disabled>
                   Log In
                 </button>
               ) : (
-                <button className="continueBtn button">Log In</button>
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  className="continueBtn button"
+                >
+                  Log In
+                </button>
               )}
             </form>
           </div>
@@ -60,4 +74,4 @@ const LogInForm = props => {
   );
 };
 
-export default LogInForm;
+export default connect(null, { loginUser })(LogInForm);

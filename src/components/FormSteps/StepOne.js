@@ -8,7 +8,7 @@ const StepOne = props => {
   return (
     <form className="signup-stepOne">
       <label htmlFor="email">
-        <i class="icon fas fa-envelope"></i>
+        <i className="icon fas fa-envelope"></i>
         <input
           type="email"
           id="email"
@@ -44,11 +44,15 @@ const StepOne = props => {
       {props.value.dealer_email.length === 0 ||
       props.value.dealer_username.length === 0 ||
       props.value.dealer_password.length === 0 ? (
-        <button disabled className="disabledBtn button">
+        <button disabled type="button" className="disabledBtn button">
           Continue
         </button>
       ) : (
-        <button className="continueBtn button" onClick={saveAndContinue}>
+        <button
+          className="continueBtn button"
+          type="button"
+          onClick={saveAndContinue}
+        >
           Continue
         </button>
       )}

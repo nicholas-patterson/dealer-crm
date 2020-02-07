@@ -12,20 +12,20 @@ import { Link } from "@reach/router";
 
 const DealerDashboard = props => {
   const [leadInfo, setLeadInfo] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: ""
+    lead_firstname: "",
+    lead_lastname: "",
+    lead_email: "",
+    lead_phone: "",
+    lead_street: "",
+    lead_city: "",
+    lead_state: ""
   });
   const [salesInfo, setSalesInfo] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    username: "",
-    password: ""
+    salesman_firstname: "",
+    salesman_lastname: "",
+    salesman_email: "",
+    salesman_username: "",
+    salesman_password: ""
   });
   const [managerInfo, setManagerInfo] = useState({
     first_name: "",
@@ -34,18 +34,33 @@ const DealerDashboard = props => {
     username: "",
     password: ""
   });
-  // Make seperate handleChange for each state
-  const handleChange = e => {
+
+  // Handle Change for lead form
+  const handleLeadChange = e => {
     setLeadInfo({ ...leadInfo, [e.target.name]: e.target.value });
+  };
+  // Handle Change for Salesman form
+  const handleSalesChange = e => {
     setSalesInfo({ ...salesInfo, [e.target.name]: e.target.value });
+  };
+  // Handle Change for Manager form
+  const handleManagerChange = e => {
     setManagerInfo({ ...managerInfo, [e.target.name]: e.target.value });
   };
 
-  // Make seperate handleSubmit for each form
-  const handleSubmit = e => {
+  //  handle Submit for new lead form
+  const handleLeadsSubmit = e => {
     e.preventDefault();
     console.log(leadInfo);
+  };
+  // handle submit for new salesman form
+  const handleSalesSubmit = e => {
+    e.preventDefault();
     console.log(salesInfo);
+  };
+  // handle submit for new manager form
+  const handleManagerSubmit = e => {
+    e.preventDefault();
     console.log(managerInfo);
   };
 
@@ -67,29 +82,30 @@ const DealerDashboard = props => {
     }
   };
 
-  const leadmodalcase = props.user === "salesman" ? "/sales/dash/newlead" : "/dealer/dash/newlead";
-  console.log("LEAD MODAL CASE", leadmodalcase)
+  const leadmodalcase =
+    props.user === "salesman" ? "/sales/dash/newlead" : "/dealer/dash/newlead";
+  console.log("LEAD MODAL CASE", leadmodalcase);
 
   console.log(props.location.pathname);
   console.log("PROPS IN DASH", props);
   const modalSwitch = () => {
     switch (props.location.pathname) {
       //case "/dealer/dash/newlead":
-        case leadmodalcase:
+      case leadmodalcase:
         return (
           <Portal>
-            <form className="leads-form" onSubmit={handleSubmit}>
+            <form className="leads-form" onSubmit={handleLeadsSubmit}>
               {/* <h3 className="leads-form_title">Create A Lead..</h3> */}
               <div className="leads-field">
                 <input
                   type="text"
                   id="first_name"
-                  name="first_name"
+                  name="lead_firstname"
                   autoComplete="off"
                   required
                   className="leads-group"
-                  value={leadInfo.first_name}
-                  onChange={handleChange}
+                  value={leadInfo.lead_firstname}
+                  onChange={handleLeadChange}
                 />
                 <label htmlFor="inputField" className="leads-label-name">
                   <span className="leads-content-name">First Name</span>
@@ -100,12 +116,12 @@ const DealerDashboard = props => {
                 <input
                   type="text"
                   id="last_name"
-                  name="last_name"
+                  name="lead_lastname"
                   autoComplete="off"
                   required
                   className="leads-group"
-                  value={leadInfo.last_name}
-                  onChange={handleChange}
+                  value={leadInfo.lead_lastname}
+                  onChange={handleLeadChange}
                 />
                 <label htmlFor="inputField" className="leads-label-name">
                   <span className="leads-content-name">Last Name</span>
@@ -116,12 +132,12 @@ const DealerDashboard = props => {
                 <input
                   type="text"
                   id="street"
-                  name="street"
+                  name="lead_street"
                   autoComplete="off"
                   required
                   className="leads-group"
-                  value={leadInfo.street}
-                  onChange={handleChange}
+                  value={leadInfo.lead_street}
+                  onChange={handleLeadChange}
                 />
                 <label htmlFor="inputField" className="leads-label-name">
                   <span className="leads-content-name">Street</span>
@@ -131,12 +147,12 @@ const DealerDashboard = props => {
                 <input
                   type="text"
                   id="city"
-                  name="city"
+                  name="lead_city"
                   autoComplete="off"
                   required
                   className="leads-group"
-                  value={leadInfo.city}
-                  onChange={handleChange}
+                  value={leadInfo.lead_city}
+                  onChange={handleLeadChange}
                 />
                 <label htmlFor="inputField" className="leads-label-name">
                   <span className="leads-content-name">City</span>
@@ -146,12 +162,12 @@ const DealerDashboard = props => {
                 <input
                   type="text"
                   id="state"
-                  name="state"
+                  name="lead_state"
                   autoComplete="off"
                   required
                   className="leads-group"
-                  value={leadInfo.state}
-                  onChange={handleChange}
+                  value={leadInfo.lead_state}
+                  onChange={handleLeadChange}
                 />
                 <label htmlFor="inputField" className="leads-label-name">
                   <span className="leads-content-name">State</span>
@@ -161,12 +177,12 @@ const DealerDashboard = props => {
                 <input
                   type="email"
                   id="email"
-                  name="email"
+                  name="lead_email"
                   autoComplete="off"
                   required
                   className="leads-group"
-                  value={leadInfo.email}
-                  onChange={handleChange}
+                  value={leadInfo.lead_email}
+                  onChange={handleLeadChange}
                 />
                 <label htmlFor="inputField" className="leads-label-name">
                   <span className="leads-content-name">Email</span>
@@ -176,19 +192,22 @@ const DealerDashboard = props => {
                 <input
                   type="phone"
                   id="leads-phone"
-                  name="phone"
+                  name="lead_phone"
                   autoComplete="off"
                   required
                   className="leads-group"
-                  value={leadInfo.phone}
-                  onChange={handleChange}
+                  value={leadInfo.lead_phone}
+                  onChange={handleLeadChange}
                 />
                 <label htmlFor="inputField" className="leads-label-name">
                   <span className="leads-content-name">Phone</span>
                 </label>
               </div>
 
-              <Link className="leads-closeBtn" to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}>
+              <Link
+                className="leads-closeBtn"
+                to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
+              >
                 Close
               </Link>
 
@@ -199,19 +218,19 @@ const DealerDashboard = props => {
       case "/dealer/dash/newsalesperson":
         return (
           <Portal>
-            <form onSubmit={handleSubmit} className="salesperson-form">
+            <form onSubmit={handleSalesSubmit} className="salesperson-form">
               {/* <h3 className="salesperson-form__title">Add New Salesperson</h3> */}
 
               <div className="salesperson-field">
                 <input
                   type="text"
                   id="first_name"
-                  name="first_name"
+                  name="salesman_firstname"
                   autoComplete="off"
                   required
                   className="salesperson-group"
-                  value={salesInfo.first_name}
-                  onChange={handleChange}
+                  value={salesInfo.salesman_firstname}
+                  onChange={handleSalesChange}
                 />
                 <label htmlFor="inputField" className="salesperson-label-name">
                   <span className="salesperson-content-name">First Name</span>
@@ -221,12 +240,12 @@ const DealerDashboard = props => {
                 <input
                   type="text"
                   id="last_name"
-                  name="last_name"
+                  name="salesman_lastname"
                   autoComplete="off"
                   required
                   className="salesperson-group"
-                  value={salesInfo.last_name}
-                  onChange={handleChange}
+                  value={salesInfo.salesman_lastname}
+                  onChange={handleSalesChange}
                 />
                 <label htmlFor="inputField" className="salesperson-label-name">
                   <span className="salesperson-content-name">Last Name</span>
@@ -236,12 +255,12 @@ const DealerDashboard = props => {
                 <input
                   type="text"
                   id="username"
-                  name="username"
+                  name="salesman_username"
                   autoComplete="off"
                   required
                   className="salesperson-group"
-                  value={salesInfo.username}
-                  onChange={handleChange}
+                  value={salesInfo.salesman_username}
+                  onChange={handleSalesChange}
                 />
                 <label htmlFor="inputField" className="salesperson-label-name">
                   <span className="salesperson-content-name">Username</span>
@@ -252,12 +271,12 @@ const DealerDashboard = props => {
                 <input
                   type="text"
                   id="password"
-                  name="password"
+                  name="salesman_password"
                   autoComplete="off"
                   required
                   className="salesperson-group"
-                  value={salesInfo.password}
-                  onChange={handleChange}
+                  value={salesInfo.salesman_password}
+                  onChange={handleSalesChange}
                 />
                 <label htmlFor="inputField" className="salesperson-label-name">
                   <span className="salesperson-content-name">Password</span>
@@ -268,12 +287,12 @@ const DealerDashboard = props => {
                 <input
                   type="email"
                   id="email"
-                  name="email"
+                  name="salesman_email"
                   autoComplete="off"
                   required
                   className="salesperson-group"
-                  value={salesInfo.email}
-                  onChange={handleChange}
+                  value={salesInfo.salesman_email}
+                  onChange={handleSalesChange}
                 />
                 <label htmlFor="inputField" className="salesperson-label-name">
                   <span className="salesperson-content-name">Email</span>
@@ -289,7 +308,7 @@ const DealerDashboard = props => {
       case "/dealer/dash/newmanager":
         return (
           <Portal>
-            <form onSubmit={handleSubmit} className="manager-form">
+            <form onSubmit={handleManagerSubmit} className="manager-form">
               {/* <h1 className="manager-form__title">Add New Manager</h1> */}
 
               <div className="manager-field">
@@ -301,7 +320,7 @@ const DealerDashboard = props => {
                   required
                   className="manager-group"
                   value={managerInfo.first_name}
-                  onChange={handleChange}
+                  onChange={handleManagerChange}
                 />
                 <label htmlFor="inputField" className="manager-label-name">
                   <span className="manager-content-name">First Name</span>
@@ -316,7 +335,7 @@ const DealerDashboard = props => {
                   required
                   className="manager-group"
                   value={managerInfo.last_name}
-                  onChange={handleChange}
+                  onChange={handleManagerChange}
                 />
                 <label htmlFor="inputField" className="manager-label-name">
                   <span className="manager-content-name">Last Name</span>
@@ -331,7 +350,7 @@ const DealerDashboard = props => {
                   required
                   className="manager-group"
                   value={managerInfo.username}
-                  onChange={handleChange}
+                  onChange={handleManagerChange}
                 />
                 <label htmlFor="inputField" className="manager-label-name">
                   <span className="manager-content-name">Username</span>
@@ -346,7 +365,7 @@ const DealerDashboard = props => {
                   required
                   className="manager-group"
                   value={managerInfo.password}
-                  onChange={handleChange}
+                  onChange={handleManagerChange}
                 />
                 <label htmlFor="inputField" className="manager-label-name">
                   <span className="manager-content-name">Password</span>
@@ -361,7 +380,7 @@ const DealerDashboard = props => {
                   required
                   className="manager-group"
                   value={managerInfo.email}
-                  onChange={handleChange}
+                  onChange={handleManagerChange}
                 />
                 <label htmlFor="inputField" className="manager-label-name">
                   <span className="manager-content-name">Email</span>

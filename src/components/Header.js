@@ -1,16 +1,19 @@
 import React from "react";
 import logoSmall from "../images/AUTOACUITYLOGO-sm.png";
 import { navigate } from "@reach/router";
+import { connect } from "react-redux";
+import { getUserType } from "../actions/index";
 
-const handleLoginClick = () => {
-  navigate("/login");
-};
+const Header = props => {
+  const handleLoginClick = () => {
+    props.getUserType("dealer");
+    navigate("/login");
+  };
 
-const handleSignUpClick = () => {
-  navigate("/signup");
-};
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
 
-const Header = () => {
   return (
     <>
       <header className="header">
@@ -43,4 +46,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default connect(null, { getUserType })(Header);

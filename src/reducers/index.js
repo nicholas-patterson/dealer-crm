@@ -7,6 +7,7 @@ import { deleteSalespersonReducer } from "./deleteSalespersonReducer";
 import { editLeadReducer } from "./editLeadReducer";
 import { loginReducer } from "./loginReducer";
 import { registerReducer } from "./registerReducer";
+import { salesLoginReducer } from "./salesLoginReducer";
 
 export default combineReducers({
   dealerNavigationReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   deleteSalespersonReducer,
   editLeadReducer,
   loginReducer,
-  registerReducer
+  registerReducer,
+  salesLoginReducer
 });

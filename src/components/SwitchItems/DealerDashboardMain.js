@@ -6,12 +6,11 @@ const DealerDashboardMain = props => {
   console.log("DEALERDASHMAIN", props);
   return (
     <>
-      {/* <div className="header-dealer"> */}
-      {/* <div className="header-dealer__name">Dealership: Ford</div> */}
-      {/* <div className="header-dealer__notifications">Notifications</div> */}
       {props.user === "salesman" ? (
         <div className="header-dealer">
-          <div className="header-dealer__name">Welcome, Nicholas</div>
+          <div className="header-dealer__name">
+            Welcome, {props.salesman.salesman_username}
+          </div>
           <div className="header-dealer__notifications">Notifications</div>
         </div>
       ) : (
@@ -222,7 +221,8 @@ const DealerDashboardMain = props => {
 
 const mapStateToProps = state => {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    salesman: state.salesLoginReducer.user
   };
 };
 

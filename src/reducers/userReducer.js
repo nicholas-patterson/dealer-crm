@@ -1,5 +1,5 @@
 const initialState = {
-  user: "dealer"
+  user: ""
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -7,7 +7,7 @@ export const userReducer = (state = initialState, action) => {
     case "FETCH_USER_TYPE":
       return {
         ...state,
-        user: state.user
+        user: action.payload
       };
     default:
       return state;

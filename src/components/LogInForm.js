@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Logo from "./Logo/Logo";
 import { connect } from "react-redux";
-import { loginUser } from "../actions/index";
+import { loginUser, getUserType } from "../actions/index";
 import { navigate } from "@reach/router";
+import { Link } from "@reach/router";
 
 const LogInForm = props => {
   const [user, setUser] = useState({
@@ -23,6 +24,10 @@ const LogInForm = props => {
     props.loginUser(user, navigate);
   };
 
+  const handleSalesForm = e => {
+    props.getUserType("salesman");
+  };
+
   return (
     <>
       <div className="wrapper">
@@ -30,7 +35,7 @@ const LogInForm = props => {
           <Logo />
           <div className="login-form-container">
             <form className="login-stepOne">
-              <h2 className="login-title">Account Log In</h2>
+              <h2 className="login-title">Dealer Account Log In</h2>
               <label htmlFor="username">
                 <i className="icon fas fa-user"></i>
                 <input
@@ -67,6 +72,26 @@ const LogInForm = props => {
                 </button>
               )}
             </form>
+            <span
+              style={{
+                textAlign: "center",
+                display: "block",
+                fontWeight: 300,
+                paddingTop: "2rem"
+              }}
+            >
+              Salesman Login{" "}
+              <Link
+                onClick={handleSalesForm}
+                style={{
+                  color: "white",
+                  borderBottom: "1px solid #39c"
+                }}
+                to="/saleslogin"
+              >
+                Click Here
+              </Link>
+            </span>
           </div>
         </div>
       </div>
@@ -74,4 +99,4 @@ const LogInForm = props => {
   );
 };
 
-export default connect(null, { loginUser })(LogInForm);
+export default connect(null, { loginUser, getUserType })(LogInForm);

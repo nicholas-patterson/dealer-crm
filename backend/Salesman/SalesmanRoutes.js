@@ -62,9 +62,7 @@ router.post("/login", async (req, res) => {
       salesman.salesman_password
     );
     if (comparePass && salesman) {
-      res
-        .status(201)
-        .json({ message: `Welcome, ${salesman.salesman_username}` });
+      res.status(201).json(salesman);
     }
   } catch (err) {
     res.status(500).json(err);

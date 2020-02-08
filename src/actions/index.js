@@ -23,10 +23,10 @@ export const getInventoryLink = link => {
 
 // Get user type
 
-export const getUserType = () => {
+export const getUserType = user => {
   return {
     type: "FETCH_USER_TYPE",
-    payload: "salesman"
+    payload: user
   };
 };
 
@@ -46,7 +46,7 @@ export const registerUser = (user, navigate) => {
   };
 };
 
-/// Login User Action
+/// Login DEALER User Action
 export const loginUser = (user, navigate) => {
   return dispatch => {
     dispatch({ type: "LOGIN_USER_START" });
@@ -58,6 +58,22 @@ export const loginUser = (user, navigate) => {
       })
       .catch(err => {
         dispatch({ type: "LOGIN_USER_FAILURE", payload: err.response });
+      });
+  };
+};
+
+// Login SALES User Action
+export const salesLoginUser = (user, navigate) => {
+  return dispatch => {
+    dispatch({ type: "LOGIN_SALES_USER_START" });
+    axios
+      .post("http://localhost:5000/api/sales/login", user)
+      .then(res => {
+        dispatch({ type: "LOGIN_SALES_USER_SUCCESS", payload: res.data });
+        navigate("/sales");
+      })
+      .catch(err => {
+        dispatch({ type: "LOGIN_SALES_USER_FAILURE", payload: err.response });
       });
   };
 };

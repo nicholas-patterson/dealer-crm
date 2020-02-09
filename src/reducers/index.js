@@ -8,6 +8,7 @@ import { editLeadReducer } from "./editLeadReducer";
 import { loginReducer } from "./loginReducer";
 import { registerReducer } from "./registerReducer";
 import { salesLoginReducer } from "./salesLoginReducer";
+import { getDealerLeadReducer } from "./getDealerLeadReducer";
 
 export default combineReducers({
   dealerNavigationReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   editLeadReducer,
   loginReducer,
   registerReducer,
-  salesLoginReducer
+  salesLoginReducer,
+  getDealerLeadReducer
 });

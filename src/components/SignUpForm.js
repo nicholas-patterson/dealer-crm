@@ -3,7 +3,7 @@ import StepOne from "./FormSteps/StepOne";
 import StepTwo from "./FormSteps/StepTwo";
 import Logo from "./Logo/Logo";
 import { connect } from "react-redux";
-import { registerUser } from "../actions/index";
+import { registerUser, getUserType } from "../actions/index";
 import { navigate } from "@reach/router";
 
 const SignUpForm = props => {
@@ -36,6 +36,7 @@ const SignUpForm = props => {
   const handleSubmit = e => {
     e.preventDefault();
     props.registerUser(form, navigate);
+    props.getUserType("dealer");
     console.log(form);
   };
 
@@ -97,4 +98,4 @@ const SignUpForm = props => {
   );
 };
 
-export default connect(null, { registerUser })(SignUpForm);
+export default connect(null, { registerUser, getUserType })(SignUpForm);

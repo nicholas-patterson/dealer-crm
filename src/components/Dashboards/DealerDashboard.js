@@ -9,6 +9,10 @@ import DealerAccountMain from "../SwitchItems/DealerAccountMain";
 import DealerHelpMain from "../SwitchItems/DealerHelpMain";
 import { connect } from "react-redux";
 import { Link } from "@reach/router";
+import { addLead } from "../../actions/index";
+import { navigate } from "@reach/router";
+
+// Select Menu
 
 const DealerDashboard = props => {
   const [leadInfo, setLeadInfo] = useState({
@@ -18,7 +22,8 @@ const DealerDashboard = props => {
     lead_phone: "",
     lead_street: "",
     lead_city: "",
-    lead_state: ""
+    lead_state: "",
+    lead_type: ""
   });
   const [salesInfo, setSalesInfo] = useState({
     salesman_firstname: "",
@@ -51,7 +56,17 @@ const DealerDashboard = props => {
   //  handle Submit for new lead form
   const handleLeadsSubmit = e => {
     e.preventDefault();
-    console.log(leadInfo);
+    props.addLead(leadInfo, navigate);
+    setLeadInfo({
+      lead_firstname: "",
+      lead_lastname: "",
+      lead_email: "",
+      lead_phone: "",
+      lead_street: "",
+      lead_city: "",
+      lead_state: "",
+      lead_type: ""
+    });
   };
   // handle submit for new salesman form
   const handleSalesSubmit = e => {
@@ -88,6 +103,7 @@ const DealerDashboard = props => {
 
   console.log(props.location.pathname);
   console.log("PROPS IN DASH", props);
+  console.log("LEAD INFO", leadInfo);
   const modalSwitch = () => {
     switch (props.location.pathname) {
       //case "/dealer/dash/newlead":
@@ -204,6 +220,19 @@ const DealerDashboard = props => {
                 </label>
               </div>
 
+              <select
+                id="leads-select"
+                className="leads-group"
+                onChange={handleLeadChange}
+                value={leadInfo.lead_type}
+                name="lead_type"
+              >
+                <option value="">Select</option>
+                <option value="walk-in">Walk-in</option>
+                <option value="referral">Referral</option>
+                <option value="online">Online</option>
+              </select>
+
               <Link
                 className="leads-closeBtn"
                 to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
@@ -211,7 +240,9 @@ const DealerDashboard = props => {
                 Close
               </Link>
 
-              <button className="leads-submitBtn">Submit</button>
+              <button type="submit" className="leads-submitBtn">
+                Submit
+              </button>
             </form>
           </Portal>
         );
@@ -425,4 +456,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {})(DealerDashboard);
+export default connect(mapStateToProps, { addLead })(DealerDashboard);

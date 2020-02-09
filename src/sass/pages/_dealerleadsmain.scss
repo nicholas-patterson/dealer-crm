@@ -63,7 +63,7 @@
     tr {
       border-radius: 4px;
     }
-    tbody:nth-child(odd) {
+    tbody tr:nth-child(even) {
       background: #3e4854;
     }
     table.spaceunder {

@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Icon } from "@iconify/react";
 import editOutline from "@iconify/icons-ant-design/edit-outline";
 import deleteOutline from "@iconify/icons-ant-design/delete-outline";
 import { connect } from "react-redux";
+import { getDealerLeads } from "../../actions/index";
 
 const DealerLeadsMain = props => {
+  useEffect(() => {
+    props.getDealerLeads();
+  }, []);
+
+  console.log("MY DEALERS LEADS", props.leads.Leads);
   return (
     <>
       <div className="header-dealer">
@@ -43,7 +49,7 @@ const DealerLeadsMain = props => {
           </thead>
           <td className="spaceunder"></td>
           <tbody>
-            <tr>
+            {/* <tr>
               <td>Nicholas Patterson</td>
               <td>1500 Redis Lane, Javascript, Js 18999</td>
               <td>Referral</td>
@@ -53,9 +59,29 @@ const DealerLeadsMain = props => {
               <td className="delete-style">
                 <Icon icon={deleteOutline} />
               </td>
-            </tr>
+            </tr> */}
+            {props.leads.Leads &&
+              props.leads.Leads.map(lead => {
+                return (
+                  <tr key={lead.id}>
+                    <td>
+                      {lead.lead_firstname} {lead.lead_lastname}
+                    </td>
+                    <td>
+                      {lead.lead_street}, {lead.lead_city}, {lead.lead_state}{" "}
+                      {lead.lead_type}
+                    </td>
+                    <td className="edit-style">
+                      <Icon icon={editOutline} />
+                    </td>
+                    <td className="delete-style">
+                      <Icon icon={deleteOutline} />
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
-          <tbody>
+          {/* <tbody>
             <tr>
               <td>Elvis Knapman</td>
               <td>1100 Json WebToken Pl, JWT, 18787</td>
@@ -67,7 +93,7 @@ const DealerLeadsMain = props => {
                 <Icon icon={deleteOutline} />
               </td>
             </tr>
-          </tbody>
+          </tbody> */}
         </table>
       </div>
     </>
@@ -76,8 +102,9 @@ const DealerLeadsMain = props => {
 
 const mapStateToProps = state => {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    leads: state.getDealerLeadReducer.leads
   };
 };
 
-export default connect(mapStateToProps, {})(DealerLeadsMain);
+export default connect(mapStateToProps, { getDealerLeads })(DealerLeadsMain);

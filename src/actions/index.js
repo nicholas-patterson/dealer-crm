@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// -- DONE
 export const getDashboardLink = link => {
   return {
     type: "FETCH_DASHBOARD_LINK_SUCCESS",
@@ -7,13 +8,14 @@ export const getDashboardLink = link => {
   };
 };
 
+// -- DONE
 export const getLeadsLink = link => {
   return {
     type: "FETCH_DASHBOARD_LINK_SUCCESS",
     payload: link
   };
 };
-
+// --DONE
 export const getInventoryLink = link => {
   return {
     type: "FETCH_DASHBOARD_LINK_SUCCESS",
@@ -21,8 +23,7 @@ export const getInventoryLink = link => {
   };
 };
 
-// Get user type
-
+// Get user type --DONE
 export const getUserType = user => {
   return {
     type: "FETCH_USER_TYPE",
@@ -30,7 +31,7 @@ export const getUserType = user => {
   };
 };
 
-// Register User Action
+// Register User Action --DONE
 export const registerUser = (user, navigate) => {
   return dispatch => {
     dispatch({ type: "REG_USER_START" });
@@ -46,15 +47,17 @@ export const registerUser = (user, navigate) => {
   };
 };
 
-/// Login DEALER User Action
+/// Login DEALER User Action --DONE
 export const loginUser = (user, navigate) => {
   return dispatch => {
     dispatch({ type: "LOGIN_USER_START" });
     axios
-      .post("http://localhost:5000/api/dealer/login", user)
+      .post("http://localhost:5000/api/dealer/login", user, {
+        withCredentials: true
+      })
       .then(res => {
         dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data });
-        navigate("/dealer");
+        navigate("/dealer/dash");
       })
       .catch(err => {
         dispatch({ type: "LOGIN_USER_FAILURE", payload: err.response });
@@ -62,12 +65,14 @@ export const loginUser = (user, navigate) => {
   };
 };
 
-// Login SALES User Action
+// Login SALES User Action --DONE
 export const salesLoginUser = (user, navigate) => {
   return dispatch => {
     dispatch({ type: "LOGIN_SALES_USER_START" });
     axios
-      .post("http://localhost:5000/api/sales/login", user)
+      .post("http://localhost:5000/api/sales/login", user, {
+        withCredentials: true
+      })
       .then(res => {
         dispatch({ type: "LOGIN_SALES_USER_SUCCESS", payload: res.data });
         navigate("/sales");
@@ -86,14 +91,34 @@ export const logoutUser = () => {
   };
 };
 
-// Add New Lead Action
-export const addLead = lead => {
+// Get Leads by Dealer
+export const getDealerLeads = () => {
+  return dispatch => {
+    dispatch({ type: "GET_DEALER_LEADS_START" });
+    axios
+      .get("http://localhost:5000/api/dealer/all/leads", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({ type: "GET_DEALER_LEADS_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: "GET_DEALER_LEADS_FAILURE", payload: err.repsonse });
+      });
+  };
+};
+
+// Add New Lead Action For Dealer --DONE
+export const addLead = (lead, navigate) => {
   return dispatch => {
     dispatch({ type: "ADD_LEAD_START" });
     axios
-      .post("__POST__ROUTE__TO__DB", lead)
+      .post("http://localhost:5000/api/leads/add", lead, {
+        withCredentials: true
+      })
       .then(res => {
         dispatch({ type: "ADD_LEAD_SUCCESS", payload: res.data });
+        navigate("/dealer/dash");
       })
       .catch(err => {
         dispatch({ type: "ADD_LEAD_FAILURE", payload: err.response });
@@ -132,9 +157,6 @@ export const editLead = (/* takes a  id */) => {
 };
 
 // Get Lead To Edit
-
-///  Get wedding To Edit
-
 export const LeadToEdit = (/*id*/) => {
   return dispatch => {
     dispatch({ type: "GET_LTE_START" });

@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     console.log("MY MODELS", models);
     Dealer.hasMany(models.Lead, {
-      foreignKey: "dealerId"
+      foreignKey: "dealer_id"
     });
     Dealer.hasMany(models.Salesman, {
-      foreignKey: "dealerId"
+      foreignKey: "dealer_id"
     });
   };
   return Dealer;

@@ -39,7 +39,7 @@ router.post("/register", async (req, res) => {
       salesman_username: req.body.salesman_username,
       salesman_password: hash,
       salesman_email: req.body.salesman_email,
-      dealerId: 1
+      dealer_id: 1
     });
     console.log("NEW SALESMAN", newSalesman);
     res.status(201).json(newSalesman);

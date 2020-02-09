@@ -23,7 +23,7 @@ module.exports = {
       salesman_email: {
         type: Sequelize.STRING
       },
-      dealerId: {
+      dealer_id: {
         type: Sequelize.INTEGER,
         references: {
           model: "Dealers",

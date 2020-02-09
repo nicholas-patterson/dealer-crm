@@ -4,7 +4,7 @@ const db = require("../models");
 // Get All leads
 router.get("/", async (req, res) => {
   try {
-    const leads = await db.Leads.findAll();
+    const leads = await db.Lead.findAll();
     res.status(200).json(leads);
   } catch (err) {
     res.status(500).json(err);
@@ -29,6 +29,9 @@ router.get("/:id", async (req, res) => {
 
 // Add Lead
 router.post("/add", async (req, res) => {
+  console.log("DEALER ID", req.session.dealer_user);
+  console.log("--------------------------------");
+  console.log("SESSION", req.session.dealer_user);
   try {
     const newLead = await db.Lead.create({
       lead_firstname: req.body.lead_firstname,
@@ -38,7 +41,8 @@ router.post("/add", async (req, res) => {
       lead_state: req.body.lead_state,
       lead_email: req.body.lead_email,
       lead_phone: req.body.lead_phone,
-      dealerId: 1
+      lead_type: req.body.lead_type,
+      dealer_id: req.session.dealer_user.id
       //salesmanId: 1
     });
     res.status(201).json(newLead);

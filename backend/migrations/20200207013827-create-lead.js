@@ -29,13 +29,16 @@ module.exports = {
       lead_phone: {
         type: Sequelize.STRING
       },
-      dealerId: {
+      lead_type: {
+        type: Sequelize.STRING
+      },
+      dealer_id: {
         type: Sequelize.INTEGER,
         references: {
           model: "Dealers",
           key: "id"
         },
-        salesmanId: {
+        salesman_id: {
           type: Sequelize.INTEGER,
           references: {
             model: "Salesman",

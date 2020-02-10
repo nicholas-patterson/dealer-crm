@@ -69,8 +69,8 @@ const DealerLeadsMain = props => {
                     </td>
                     <td>
                       {lead.lead_street}, {lead.lead_city}, {lead.lead_state}{" "}
-                      {lead.lead_type}
                     </td>
+                    <td>{lead.lead_type}</td>
                     <td className="edit-style">
                       <Icon icon={editOutline} />
                     </td>

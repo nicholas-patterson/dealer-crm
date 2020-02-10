@@ -57,6 +57,7 @@ const DealerDashboard = props => {
   const handleLeadsSubmit = e => {
     e.preventDefault();
     props.addLead(leadInfo, navigate);
+    console.log("LEAD", leadInfo);
     setLeadInfo({
       lead_firstname: "",
       lead_lastname: "",

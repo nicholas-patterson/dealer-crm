@@ -29,6 +29,7 @@ router.get("/:id", async (req, res) => {
 
 // Add Lead
 router.post("/add", async (req, res) => {
+  console.log("LEAD_TYPE", req.body.lead_type);
   console.log("DEALER ID", req.session.dealer_user);
   console.log("--------------------------------");
   console.log("SESSION", req.session.dealer_user);
@@ -45,6 +46,7 @@ router.post("/add", async (req, res) => {
       dealer_id: req.session.dealer_user.id
       //salesmanId: 1
     });
+    console.log("NEW LEAD", req.body.lead_type);
     res.status(201).json(newLead);
   } catch (err) {
     res.status(500).json(err);

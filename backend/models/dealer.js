@@ -11,16 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       dealer_city: DataTypes.STRING,
       dealer_state: DataTypes.STRING,
       dealer_country: DataTypes.STRING,
-      dealer_zipcode: DataTypes.STRING
+      dealer_zipcode: DataTypes.STRING,
+      dealer_type: DataTypes.STRING
     },
     {}
   );
   Dealer.associate = function(models) {
     // associations can be defined here
-    console.log("MY MODELS", models);
     Dealer.hasMany(models.Lead, {
       foreignKey: "dealer_id"
     });
+
     Dealer.hasMany(models.Salesman, {
       foreignKey: "dealer_id"
     });

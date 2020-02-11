@@ -1,16 +1,21 @@
 import React, { useEffect } from "react";
-import { Icon } from "@iconify/react";
-import editOutline from "@iconify/icons-ant-design/edit-outline";
-import deleteOutline from "@iconify/icons-ant-design/delete-outline";
 import { connect } from "react-redux";
-import { getDealerLeads } from "../../actions/index";
+import { getDealerLeads, deleteLead } from "../../actions/index";
+import DealerSingleLeadMain from "./DealerSingleLeadMain";
 
 const DealerLeadsMain = props => {
   useEffect(() => {
     props.getDealerLeads();
   }, []);
 
-  console.log("MY DEALERS LEADS", props.leads.Leads);
+  const handleLeadDelete = id => {
+    console.log("ID", id);
+    props.deleteLead(id);
+    //props.getDealerLeads();
+    console.log("LEAD ID IN HANDLE DELETE", id);
+  };
+
+  console.log("MY DEALERS LEADS", props.leads);
   return (
     <>
       <div className="header-dealer">
@@ -49,51 +54,18 @@ const DealerLeadsMain = props => {
           </thead>
           <td className="spaceunder"></td>
           <tbody>
-            {/* <tr>
-              <td>Nicholas Patterson</td>
-              <td>1500 Redis Lane, Javascript, Js 18999</td>
-              <td>Referral</td>
-              <td className="edit-style">
-                <Icon icon={editOutline} />
-              </td>
-              <td className="delete-style">
-                <Icon icon={deleteOutline} />
-              </td>
-            </tr> */}
-            {props.leads.Leads &&
-              props.leads.Leads.map(lead => {
+            {props.leads &&
+              props.leads.map((lead, index) => {
                 return (
-                  <tr key={lead.id}>
-                    <td>
-                      {lead.lead_firstname} {lead.lead_lastname}
-                    </td>
-                    <td>
-                      {lead.lead_street}, {lead.lead_city}, {lead.lead_state}{" "}
-                    </td>
-                    <td>{lead.lead_type}</td>
-                    <td className="edit-style">
-                      <Icon icon={editOutline} />
-                    </td>
-                    <td className="delete-style">
-                      <Icon icon={deleteOutline} />
-                    </td>
-                  </tr>
+                  <DealerSingleLeadMain
+                    index={index}
+                    key={lead.id}
+                    lead={lead}
+                    handleLeadDelete={handleLeadDelete}
+                  />
                 );
               })}
           </tbody>
-          {/* <tbody>
-            <tr>
-              <td>Elvis Knapman</td>
-              <td>1100 Json WebToken Pl, JWT, 18787</td>
-              <td>Walk in</td>
-              <td className="edit-style">
-                <Icon icon={editOutline} />
-              </td>
-              <td className="delete-style">
-                <Icon icon={deleteOutline} />
-              </td>
-            </tr>
-          </tbody> */}
         </table>
       </div>
     </>
@@ -107,4 +79,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getDealerLeads })(DealerLeadsMain);
+export default connect(mapStateToProps, { getDealerLeads, deleteLead })(
+  DealerLeadsMain
+);

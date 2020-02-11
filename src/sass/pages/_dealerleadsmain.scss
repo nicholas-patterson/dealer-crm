@@ -59,6 +59,13 @@
     td {
       text-align: center;
       padding: 2rem;
+      & .del-icon {
+        cursor: pointer;
+      }
+
+      & .edit-icon {
+        cursor: pointer;
+      }
     }
     tr {
       border-radius: 4px;

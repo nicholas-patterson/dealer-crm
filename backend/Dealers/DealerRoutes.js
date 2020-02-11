@@ -99,6 +99,7 @@ router.get("/all/leads", async (req, res) => {
           model: db.Lead,
           required: true,
           attributes: [
+            "id",
             "lead_firstname",
             "lead_lastname",
             "lead_street",
@@ -117,6 +118,28 @@ router.get("/all/leads", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// Delete Leads By Dealer Session Id
+
+// router.delete("/lead/:id", async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const deleted = await db.Lead.destroy({
+//       where: {
+//         id
+//       }
+//     });
+//     if (deleted === 1) {
+//       console.log("DELETED ROWS", deleted);
+//       res.status(200).json(deleted);
+//     } else {
+//       res.status(400).json({ message: "Lead with the given id was not found" });
+//     }
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 // Logout Dealer
 

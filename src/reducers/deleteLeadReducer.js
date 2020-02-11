@@ -1,32 +1,33 @@
-const initialState = {
-  isLoading: false,
-  deletedLead: [],
-  message: ""
-};
+// const initialState = {
+//   isLoading: false,
+//   deletedLead: [],
+//   message: ""
+// };
 
-export const deletedLeadReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "DELETE_LEAD_START":
-      return {
-        ...state,
-        isLoading: true,
-        message: ""
-      };
+// export const deleteLeadReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case "DELETE_LEAD_START":
+//       return {
+//         ...state,
+//         isLoading: true,
+//         message: ""
+//       };
 
-    case "DELETE_LEAD_SUCCESS":
-      return {
-        ...state,
-        isLoading: false,
-        message: "Lead deleted Successfully",
-        deletedLead: action.payload
-      };
-    case "DELETED_LEAD_FAILURE":
-      return {
-        ...state,
-        isLoading: false,
-        message: "Lead not deleted. Try again"
-      };
-    default:
-      return state;
-  }
-};
+//     case "DELETE_LEAD_SUCCESS":
+//       console.log("ACTION", action);
+//       return {
+//         ...state,
+//         isLoading: false,
+//         message: "Lead deleted Successfully",
+//         deletedLead: [...state.deletedLead]
+//       };
+//     case "DELETED_LEAD_FAILURE":
+//       return {
+//         ...state,
+//         isLoading: false,
+//         message: "Lead not deleted. Try again"
+//       };
+//     default:
+//       return state;
+//   }
+// };

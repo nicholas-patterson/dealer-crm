@@ -91,7 +91,7 @@ export const logoutUser = () => {
   };
 };
 
-// Get Leads by Dealer
+// Get Leads by Dealer -- DONE
 export const getDealerLeads = () => {
   return dispatch => {
     dispatch({ type: "GET_DEALER_LEADS_START" });
@@ -100,7 +100,7 @@ export const getDealerLeads = () => {
         withCredentials: true
       })
       .then(res => {
-        dispatch({ type: "GET_DEALER_LEADS_SUCCESS", payload: res.data });
+        dispatch({ type: "GET_DEALER_LEADS_SUCCESS", payload: res.data.Leads });
       })
       .catch(err => {
         dispatch({ type: "GET_DEALER_LEADS_FAILURE", payload: err.repsonse });
@@ -126,14 +126,19 @@ export const addLead = (lead, navigate) => {
   };
 };
 
-// Delete Lead Action
-export const deleteLead = (/* takes a  id */) => {
+// Delete Lead Action --DONE
+export const deleteLead = id => {
   return dispatch => {
     dispatch({ type: "DELETE_LEAD_START" });
     axios
-      .delete(`_DELETE_ROUTE__TO__DB`)
+      .delete(`http://localhost:5000/api/leads/remove/${id}`, {
+        withCredentials: true
+      })
       .then(res => {
-        dispatch({ type: "DELETE_LEAD_SUCCESS", payload: res.data });
+        dispatch({
+          type: "DELETE_LEAD_SUCCESS",
+          payload: res.data.deletedLead
+        });
       })
       .catch(err => {
         dispatch({ type: "DELETE_LEAD_FAILURE", payload: err.response });

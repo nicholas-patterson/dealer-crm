@@ -23,6 +23,26 @@ export const getDealerLeadReducer = (state = initalState, action) => {
         isLoading: false,
         error: action.payload
       };
+    case "DELETE_LEAD_START":
+      return {
+        ...state,
+        isLoading: true,
+        message: ""
+      };
+    case "DELETE_LEAD_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        leads: state.leads.filter(lead => {
+          return lead.id !== action.payload.id;
+        })
+      };
+    case "DELETED_LEAD_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
+        message: "Lead not deleted. Try again"
+      };
     default:
       return state;
   }

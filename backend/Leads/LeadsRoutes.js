@@ -53,4 +53,68 @@ router.post("/add", async (req, res) => {
   }
 });
 
+// Delete Lead
+router.delete("/remove/:id", (req, res) => {
+  const { id } = req.params;
+  db.Lead.findOne({
+    where: {
+      id
+    }
+  })
+    .then(lead => {
+      console.log("LEAD IN FIRST RES", lead);
+      if (lead == null) {
+        res.status(400).json({ warning: "Lead with given id was not found" });
+      }
+      return db.Lead.destroy({
+        where: {
+          id
+        }
+      })
+        .then(deletedLead => {
+          if (deletedLead === 1) {
+            res.status(200).json({ deletedLead: lead });
+          }
+          console.log("LEAD IN SECOND RES", lead);
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// router.delete("/remove/:id", async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const lead = await db.Lead.findOne({
+//       where: {
+//         id
+//       }
+//     });
+
+//     const deletedLead = await db.Lead.destroy({
+//       where: {
+//         id: lead.id
+//       }
+//     });
+
+//     console.log("LEAD BELOW", lead);
+
+//     if (lead == null) {
+//       res.status(400).json({ warning: "Lead not found" });
+//     } else {
+//       res.status(200).json({ deletedLead: lead });
+//     }
+
+//     //console.log("LEAD FOUND", lead);
+//     //console.log("BETTER LEAD FOUND", lead.get({ plain: true }));
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
 module.exports = router;

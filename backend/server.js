@@ -34,10 +34,14 @@ server.use(
 const dealerRouter = require("./Dealers/DealerRoutes");
 const leadsRouter = require("./Leads/LeadsRoutes");
 const salesmanRouter = require("./Salesman/SalesmanRoutes");
+const imageRouter = require("./Images/ImageRoutes");
+const inventoryRouter = require("./Inventory/InventoryRoutes");
 
 server.use(express.json());
 server.use("/api/dealer", dealerRouter);
 server.use("/api/leads", leadsRouter);
 server.use("/api/sales", salesmanRouter);
+server.use("/api/image", imageRouter);
+server.use("/api/inventory", inventoryRouter);
 
 module.exports = server;

@@ -146,14 +146,16 @@ export const deleteLead = id => {
   };
 };
 
-// Edit Lead Action
-export const editLead = (/* takes a  id */) => {
+// Edit Lead Action -- DONE
+export const editLead = (id, updatedInfo) => {
   return dispatch => {
     dispatch({ type: "EDIT_LEAD_START" });
     axios
-      .delete(`_EDIT_ROUTE__TO__DB`)
+      .put(`http://localhost:5000/api/leads/update/${id}`, updatedInfo, {
+        withCredentials: true
+      })
       .then(res => {
-        dispatch({ type: "EDIT_LEAD_SUCCESS", payload: res.data });
+        dispatch({ type: "EDIT_LEAD_SUCCESS", payload: res.data.updatedBook });
       })
       .catch(err => {
         dispatch({ type: "EDIT_LEAD_FAILURE", payload: err.response });
@@ -161,18 +163,56 @@ export const editLead = (/* takes a  id */) => {
   };
 };
 
-// Get Lead To Edit
-export const LeadToEdit = (/*id*/) => {
+// Add Image Action
+export const addImage = imageData => {
+  console.log("IMAGE DATA IN ACTION", imageData);
   return dispatch => {
-    dispatch({ type: "GET_LTE_START" });
+    dispatch({ type: "ADD_IMAGE_START" });
     axios
-      .get("__GET__REQ__WIH__ID__TO__DB")
+      .post("http://localhost:5000/api/image/add", imageData, {
+        withCredentials: true
+      })
       .then(res => {
-        dispatch({ type: "GET_LTE_SUCCESS", payload: res.data });
+        console.log("RES IN IMAGE ADD", res);
+        dispatch({ type: "ADD_IMAGE_SUCCESS", payload: res.data });
       })
       .catch(err => {
-        console.log(err.response);
-        dispatch({ type: "GET_LTE_FAILURE", payload: err.response });
+        dispatch({ type: "ADD_IMAGE_FAILURE", payload: err.response });
+      });
+  };
+};
+
+// Get Image Action
+export const getImage = () => {
+  return dispatch => {
+    dispatch({ type: "GET_IMAGE_START" });
+    axios
+      .get("	https://api.cloudinary.com/v1_1/dwsqbti0a", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({ type: "GET_IMAGE_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: "GET_IMAGE_FAILURE", payload: err.resonse });
+      });
+  };
+};
+
+//Add Inventory Action
+export const addInventory = inventory => {
+  return dispatch => {
+    dispatch({ type: "ADD_USED_INV_START" });
+    axios
+      .post("http://localhost:5000/api/inventory/add", inventory, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN ADD INVENTORY", res.data);
+        dispatch({ type: "ADD_USED_INV_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: "ADD_USED_INV_FAILURE", payload: err.response });
       });
   };
 };

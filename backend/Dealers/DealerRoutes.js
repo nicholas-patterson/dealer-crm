@@ -119,27 +119,45 @@ router.get("/all/leads", async (req, res) => {
   }
 });
 
-// Delete Leads By Dealer Session Id
-
-// router.delete("/lead/:id", async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const deleted = await db.Lead.destroy({
-//       where: {
-//         id
-//       }
-//     });
-//     if (deleted === 1) {
-//       console.log("DELETED ROWS", deleted);
-//       res.status(200).json(deleted);
-//     } else {
-//       res.status(400).json({ message: "Lead with the given id was not found" });
-//     }
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+// Get Inventory By Dealer Id
+router.get("/all/inventory", async (req, res) => {
+  try {
+    const inventory = await db.Dealer.findAll({
+      attributes: [
+        "dealer_username",
+        "dealer_email",
+        "dealer_name",
+        "dealer_street",
+        "dealer_city",
+        "dealer_state",
+        "dealer_country",
+        "dealer_zipcode"
+      ],
+      where: {
+        id: req.session.dealer_user.id
+      },
+      include: [
+        {
+          model: db.Inventory,
+          required: true,
+          include: [
+            {
+              model: db.Image,
+              required: true,
+              where: {
+                id: Inventories.image_id
+              }
+            }
+          ]
+        }
+      ]
+    });
+    res.status(200).json(inventory);
+    console.log(inventory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Logout Dealer
 

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "@reach/router";
 import Portal from "../Portal";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { addImage, addInventory } from "../../actions/index";
 
 const DealerInventoryMain = props => {
-  console.log("PROPS IN INV", props)
+  console.log("PROPS IN INV", props);
   // new inventory state search
   const [newInventory, setNewInventory] = useState({
     new_year: "",
@@ -25,11 +26,12 @@ const DealerInventoryMain = props => {
     make: "",
     model: "",
     price: "",
-    miles: ""
+    miles: "",
+    info: ""
   });
 
-   // new inventory add state
-   const [newInventoryAdd, setNewInventoryAdd] = useState({
+  // new inventory add state
+  const [newInventoryAdd, setNewInventoryAdd] = useState({
     car_picture: "",
     year: "",
     make: "",
@@ -38,7 +40,7 @@ const DealerInventoryMain = props => {
     miles: ""
   });
 
-  console.log("FILE",usedInventoryAdd)
+  console.log("FILE", usedInventoryAdd);
 
   // new inventory search
   const handleNewInventoryChange = e => {
@@ -53,8 +55,7 @@ const DealerInventoryMain = props => {
   // on click for new inventory
   const handleNewInventoryAdd = e => {
     setShowNewInventoryModal(true);
-    setNewInventoryAdd({...newInventoryAdd, [e.target.name]:e.target.value})
-
+    setNewInventoryAdd({ ...newInventoryAdd, [e.target.name]: e.target.value });
   };
   // on click for used inventory
   const handleUsedInventoryAdd = e => {
@@ -65,7 +66,23 @@ const DealerInventoryMain = props => {
     });
   };
 
-  
+  // handleChange for picture
+  const handleUsedInventoryPicture = e => {
+    setUsedInventoryAdd({ car_picture: e.target.files[0] });
+  };
+
+  // handle Submit for Used Inv form
+  const handleUsedInventorySubmit = e => {
+    console.log("STATE", usedInventoryAdd.car_picture);
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("car_picture", usedInventoryAdd.car_picture);
+    formData.append("upload_preset", "darwin");
+    props.addInventory(usedInventoryAdd);
+    props.addImage(formData);
+    console.log(usedInventoryAdd);
+  };
+
   // Set inventory state to false
   const [showUsedInventoryModal, setShowUsedInventoryModal] = useState(false);
   const [showNewInventoryModal, setShowNewInventoryModal] = useState(false);
@@ -73,25 +90,28 @@ const DealerInventoryMain = props => {
   // handle used inventory close button
   const handleUsedInventoryCloseButton = () => {
     setShowUsedInventoryModal(false);
-  }
+  };
 
   const handleNewInventoryCloseButton = () => {
     setShowNewInventoryModal(false);
-  }
+  };
 
   return (
     <>
       {showUsedInventoryModal ? (
         <Portal>
-          <form className="usedInventoryAddForm">
+          <form
+            className="usedInventoryAddForm"
+            onSubmit={handleUsedInventorySubmit}
+            encType="multipart/form-data"
+          >
             <div className="usedInv-field" id="picture_file">
               <input
                 type="file"
                 id="car_picture"
                 name="car_picture"
                 className="usedInv-group"
-                value={usedInventoryAdd.car_picture}
-                onChange={handleUsedInventoryAdd}
+                onChange={handleUsedInventoryPicture}
               />
               <label for="car_picture">Upload file</label>
             </div>
@@ -176,11 +196,21 @@ const DealerInventoryMain = props => {
               </label>
             </div>
 
-            <textarea type="car info" name="info"></textarea>
+            <textarea
+              onChange={handleUsedInventoryAdd}
+              name="info"
+              value={usedInventoryAdd.info}
+            ></textarea>
 
-            <Link className="usedInv-closeBtn" onClick={handleUsedInventoryCloseButton} to={props.user === "salesman" ? "/sales/dash" : "/dealer/inventory"}>
-                Close
-              </Link>
+            <Link
+              className="usedInv-closeBtn"
+              onClick={handleUsedInventoryCloseButton}
+              to={
+                props.user === "salesman" ? "/sales/dash" : "/dealer/inventory"
+              }
+            >
+              Close
+            </Link>
 
             <button className="usedInv-submitBtn">Submit</button>
           </form>
@@ -189,7 +219,7 @@ const DealerInventoryMain = props => {
       {showNewInventoryModal ? (
         <Portal>
           <form className="newInventoryAddForm">
-          <div className="newInv-field" id="picture_file">
+            <div className="newInv-field" id="picture_file">
               <input
                 type="file"
                 id="car_picture"
@@ -283,9 +313,15 @@ const DealerInventoryMain = props => {
 
             <textarea type="car info" name="info"></textarea>
 
-            <Link className="newInv-closeBtn" onClick={handleNewInventoryCloseButton} to={props.user === "salesman" ? "/sales/dash" : "/dealer/inventory"}>
-                Close
-              </Link>
+            <Link
+              className="newInv-closeBtn"
+              onClick={handleNewInventoryCloseButton}
+              to={
+                props.user === "salesman" ? "/sales/dash" : "/dealer/inventory"
+              }
+            >
+              Close
+            </Link>
 
             <button className="newInv-submitBtn">Submit</button>
           </form>
@@ -327,7 +363,7 @@ const DealerInventoryMain = props => {
                 required
                 className="input-group"
                 value={newInventory.new_make}
-                onChnage={handleNewInventoryChange}
+                onChange={handleNewInventoryChange}
               />
               <label htmlFor="inputField" className="label-name">
                 <span className="content-name">Make</span>
@@ -440,10 +476,12 @@ const DealerInventoryMain = props => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.userReducer.user
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, {})(DealerInventoryMain);
+export default connect(mapStateToProps, { addImage, addInventory })(
+  DealerInventoryMain
+);

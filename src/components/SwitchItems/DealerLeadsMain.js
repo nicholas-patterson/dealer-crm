@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getDealerLeads, deleteLead } from "../../actions/index";
+import { getDealerLeads, deleteLead, editLead } from "../../actions/index";
 import DealerSingleLeadMain from "./DealerSingleLeadMain";
 
 const DealerLeadsMain = props => {
@@ -9,13 +9,9 @@ const DealerLeadsMain = props => {
   }, []);
 
   const handleLeadDelete = id => {
-    console.log("ID", id);
     props.deleteLead(id);
-    //props.getDealerLeads();
-    console.log("LEAD ID IN HANDLE DELETE", id);
   };
 
-  console.log("MY DEALERS LEADS", props.leads);
   return (
     <>
       <div className="header-dealer">
@@ -62,6 +58,9 @@ const DealerLeadsMain = props => {
                     key={lead.id}
                     lead={lead}
                     handleLeadDelete={handleLeadDelete}
+                    user={props.user}
+                    props={props}
+                    leads={props.leads}
                   />
                 );
               })}
@@ -79,6 +78,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getDealerLeads, deleteLead })(
-  DealerLeadsMain
-);
+export default connect(mapStateToProps, {
+  getDealerLeads,
+  deleteLead,
+  editLead
+})(DealerLeadsMain);

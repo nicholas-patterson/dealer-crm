@@ -11,6 +11,7 @@ import { salesLoginReducer } from "./salesLoginReducer";
 import { getDealerLeadReducer } from "./getDealerLeadReducer";
 import { imageReducer } from "./imageReducer";
 import { usedInventoryReducer } from "./usedInventoryReducer";
+import { newInventoryReducer } from "./newInventoryReducer";
 
 export default combineReducers({
   dealerNavigationReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
   salesLoginReducer,
   getDealerLeadReducer,
   imageReducer,
-  usedInventoryReducer
+  usedInventoryReducer,
+  newInventoryReducer
 });

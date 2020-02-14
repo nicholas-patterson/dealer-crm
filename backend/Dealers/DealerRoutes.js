@@ -119,8 +119,8 @@ router.get("/all/leads", async (req, res) => {
   }
 });
 
-// Get Inventory By Dealer Id
-router.get("/all/inventory", async (req, res) => {
+// Get Used Inventory By Dealer Id
+router.get("/all/usedinventory", async (req, res) => {
   try {
     const inventory = await db.Dealer.findAll({
       attributes: [
@@ -139,21 +139,52 @@ router.get("/all/inventory", async (req, res) => {
       include: [
         {
           model: db.Inventory,
-          required: true,
           include: [
             {
-              model: db.Image,
-              required: true,
-              where: {
-                id: Inventories.image_id
-              }
+              model: db.Image
+            }
+          ]
+        }
+      ]
+      //include: [{ all: true, nested: true }]
+    });
+    res.status(200).json(inventory);
+
+    console.log(inventory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Get New Inventory By Dealer ID
+router.get("/all/newinventory", async (req, res) => {
+  try {
+    const inventory = await db.Dealer.findAll({
+      attributes: [
+        "dealer_username",
+        "dealer_email",
+        "dealer_name",
+        "dealer_street",
+        "dealer_city",
+        "dealer_state",
+        "dealer_country",
+        "dealer_zipcode"
+      ],
+      where: {
+        id: req.session.dealer_user.id
+      },
+      include: [
+        {
+          model: db.NewInventory,
+          include: [
+            {
+              model: db.Image
             }
           ]
         }
       ]
     });
     res.status(200).json(inventory);
-    console.log(inventory);
   } catch (err) {
     res.status(500).json(err);
   }

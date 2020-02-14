@@ -32,7 +32,7 @@ router.post("/add", upload.single("car_picture"), (req, res) => {
   cloudinary.v2.uploader.upload(req.file.path, (err, result) => {
     db.Image.create({
       car_picture: result.secure_url,
-      imageId: result.public_id,
+      cloudinary_pic_id: result.public_id,
       dealer_id: req.session.dealer_user.id
     })
       .then(picture => {

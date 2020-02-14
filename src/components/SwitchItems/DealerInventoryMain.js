@@ -1,10 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
 import Portal from "../Portal";
 import { connect } from "react-redux";
-import { addImage, addInventory } from "../../actions/index";
+import {
+  addImage,
+  addUsedInventory,
+  addNewInventory,
+  getUsedInventory,
+  getNewInventory
+} from "../../actions/index";
+//import Carousel from "../Carousel";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345
+  },
+  media: {
+    height: 140,
+    width: "270px"
+  }
+});
 
 const DealerInventoryMain = props => {
+  const classes = useStyles();
   console.log("PROPS IN INV", props);
   // new inventory state search
   const [newInventory, setNewInventory] = useState({
@@ -37,7 +63,8 @@ const DealerInventoryMain = props => {
     make: "",
     model: "",
     price: "",
-    miles: ""
+    miles: "",
+    info: ""
   });
 
   console.log("FILE", usedInventoryAdd);
@@ -66,9 +93,14 @@ const DealerInventoryMain = props => {
     });
   };
 
-  // handleChange for picture
+  // handleChange for usedInv picture
   const handleUsedInventoryPicture = e => {
     setUsedInventoryAdd({ car_picture: e.target.files[0] });
+  };
+
+  // handlechange for newInv picture
+  const handleNewInventoryPicture = e => {
+    setNewInventoryAdd({ car_picture: e.target.files[0] });
   };
 
   // handle Submit for Used Inv form
@@ -78,10 +110,24 @@ const DealerInventoryMain = props => {
     let formData = new FormData();
     formData.append("car_picture", usedInventoryAdd.car_picture);
     formData.append("upload_preset", "darwin");
-    props.addInventory(usedInventoryAdd);
+    props.addUsedInventory(usedInventoryAdd);
     props.addImage(formData);
     console.log(usedInventoryAdd);
   };
+
+  // handleSubmit for New Inv Form
+  const handleNewInventorySubmit = e => {
+    console.log("STATE", newInventoryAdd.car_picture);
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("car_picture", newInventoryAdd.car_picture);
+    formData.append("upload_preset", "darwin");
+    props.addNewInventory(newInventoryAdd);
+    props.addImage(formData);
+    console.log(newInventoryAdd);
+  };
+
+  console.log(props.usedInv);
 
   // Set inventory state to false
   const [showUsedInventoryModal, setShowUsedInventoryModal] = useState(false);
@@ -95,6 +141,21 @@ const DealerInventoryMain = props => {
   const handleNewInventoryCloseButton = () => {
     setShowNewInventoryModal(false);
   };
+
+  useEffect(() => {
+    props.getUsedInventory();
+    props.getNewInventory();
+  }, []);
+
+  const usedInventories = props.usedInv.map(dealer => {
+    return dealer.Inventories;
+  });
+
+  // const idek = inventories.map((inventory, index) => {
+  //   console.log(inventory);
+  // });
+
+  console.log("INVENTORIES", usedInventories[0]);
 
   return (
     <>
@@ -218,15 +279,18 @@ const DealerInventoryMain = props => {
       ) : null}
       {showNewInventoryModal ? (
         <Portal>
-          <form className="newInventoryAddForm">
+          <form
+            className="newInventoryAddForm"
+            onSubmit={handleNewInventorySubmit}
+          >
             <div className="newInv-field" id="picture_file">
               <input
                 type="file"
                 id="car_picture"
                 name="car_picture"
                 className="newInv-group"
-                value={newInventoryAdd.car_picture}
-                onChange={handleNewInventoryAdd}
+                encType="multipart/form-data"
+                onChange={handleNewInventoryPicture}
               />
               <label for="car_picture">Upload file</label>
             </div>
@@ -456,21 +520,61 @@ const DealerInventoryMain = props => {
             </div>
           </form>
         </div>
-        <div className="used--inventory__results">
-          <h3>
-            No Used Inventory, Click{" "}
-            <Link
-              onClick={handleUsedInventoryAdd}
-              to="/dealer/inventory/UsedInventory"
-            >
-              <span className="usedInventoryAddLink"> Here </span>{" "}
-            </Link>
-            To Add{" "}
-            <span role="img" aria-label="crying">
-              😢
-            </span>
-          </h3>
-        </div>
+        {usedInventories[0] === undefined ? (
+          <div className="used--inventory__results">
+            <h3>
+              No Used Inventory, Click{" "}
+              <Link
+                onClick={handleUsedInventoryAdd}
+                to="/dealer/inventory/UsedInventory"
+              >
+                <span className="usedInventoryAddLink"> Here </span>{" "}
+              </Link>
+              To Add{" "}
+              <span role="img" aria-label="crying">
+                😢
+              </span>
+            </h3>
+          </div>
+        ) : (
+          <>
+            <div style={{ display: "flex", marginTop: "3rem" }}>
+              {usedInventories[0].map(inv => {
+                return (
+                  <Card className={classes.root}>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={inv.Image.car_picture}
+                        title="Contemplative Reptile"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {inv.year} {inv.make} {inv.model}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                        >
+                          {inv.info}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <Button size="small" color="primary">
+                        Share
+                      </Button>
+                      <Button size="small" color="primary">
+                        Learn More
+                      </Button>
+                    </CardActions>
+                  </Card>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
@@ -478,10 +582,16 @@ const DealerInventoryMain = props => {
 
 const mapStateToProps = state => {
   return {
+    newInv: state.newInventoryReducer.newInventory,
+    usedInv: state.usedInventoryReducer.inventory,
     user: state.userReducer.user
   };
 };
 
-export default connect(mapStateToProps, { addImage, addInventory })(
-  DealerInventoryMain
-);
+export default connect(mapStateToProps, {
+  addImage,
+  addUsedInventory,
+  addNewInventory,
+  getUsedInventory,
+  getNewInventory
+})(DealerInventoryMain);

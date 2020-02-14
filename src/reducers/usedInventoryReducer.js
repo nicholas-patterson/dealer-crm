@@ -26,6 +26,26 @@ export const usedInventoryReducer = (state = initialState, action) => {
         error: action.payload
       };
 
+    case "GET_USED_INV_START":
+      return {
+        ...state,
+        loading: true
+      };
+
+    case "GET_USED_INV_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        inventory: action.payload
+      };
+
+    case "GET_USED_INV_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+
     default:
       return state;
   }

@@ -182,29 +182,47 @@ export const addImage = imageData => {
   };
 };
 
-// Get Image Action
-export const getImage = () => {
+// Get Used Inventory Action
+export const getUsedInventory = () => {
   return dispatch => {
-    dispatch({ type: "GET_IMAGE_START" });
+    dispatch({ type: "GET_USED_INV_START" });
     axios
-      .get("	https://api.cloudinary.com/v1_1/dwsqbti0a", {
+      .get("http://localhost:5000/api/dealer/all/usedinventory", {
         withCredentials: true
       })
       .then(res => {
-        dispatch({ type: "GET_IMAGE_SUCCESS", payload: res.data });
+        dispatch({ type: "GET_USED_INV_SUCCESS", payload: res.data });
       })
       .catch(err => {
-        dispatch({ type: "GET_IMAGE_FAILURE", payload: err.resonse });
+        dispatch({ type: "GET_USED_INV_FAILURE", payload: err.resonse });
       });
   };
 };
 
-//Add Inventory Action
-export const addInventory = inventory => {
+//Get New Inventory Action
+export const getNewInventory = () => {
+  return dispatch => {
+    dispatch({ type: "GET_NEW_INV_START" });
+    axios
+      .get("http://localhost:5000/api/dealer/all/newinventory", {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN NEW INV", res.data);
+        dispatch({ type: "GET_NEW_INV_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: "GET_NEW_INV_FAILURE", payload: err.resonse });
+      });
+  };
+};
+
+//Add Used Inventory Action --DONE
+export const addUsedInventory = usedInventory => {
   return dispatch => {
     dispatch({ type: "ADD_USED_INV_START" });
     axios
-      .post("http://localhost:5000/api/inventory/add", inventory, {
+      .post("http://localhost:5000/api/usedInventory/add", usedInventory, {
         withCredentials: true
       })
       .then(res => {
@@ -213,6 +231,24 @@ export const addInventory = inventory => {
       })
       .catch(err => {
         dispatch({ type: "ADD_USED_INV_FAILURE", payload: err.response });
+      });
+  };
+};
+
+// Add new Inventory
+export const addNewInventory = newInventory => {
+  return dispatch => {
+    dispatch({ type: "ADD_NEW_INV_START" });
+    axios
+      .post("http://localhost:5000/api/newInventory/add", newInventory, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN ADD NEW INVENTORY", res.data);
+        dispatch({ type: "ADD_NEW_INV_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: "ADD_NEW_INV_FAILURE", payload: err.response });
       });
   };
 };

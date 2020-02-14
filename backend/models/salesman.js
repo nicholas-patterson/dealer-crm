@@ -12,10 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Salesman.associate = function(models) {
-    // associations can be defined here
-    //Salesman.hasMany(models.Lead, {
-    //foreignKey: "salesman_id"
-    //});
+    //associations can be defined here
+    // Salesman.hasMany(models.Lead, {
+    // foreignKey: "salesman_id"
+    // });
+    Salesman.belongsTo(models.Dealer, {
+      foreignKey: "dealer_id"
+    });
   };
   return Salesman;
 };

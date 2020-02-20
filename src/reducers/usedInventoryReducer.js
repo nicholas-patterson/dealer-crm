@@ -1,10 +1,11 @@
 const initialState = {
   inventory: [],
-  loading: false,
+  loading: null,
   error: ""
 };
 
 export const usedInventoryReducer = (state = initialState, action) => {
+  console.log("STATE", state.inventory);
   switch (action.type) {
     case "ADD_USED_INV_START":
       return {
@@ -16,7 +17,7 @@ export const usedInventoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        inventory: action.payload
+        inventory: [...state.inventory, action.payload]
       };
 
     case "ADD_USED_INV_FAILURE":
@@ -36,7 +37,7 @@ export const usedInventoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        inventory: action.payload
+        inventory: [...state.inventory]
       };
 
     case "GET_USED_INV_FAILURE":

@@ -100,11 +100,7 @@ const DealerDashboard = props => {
 
   const leadmodalcase =
     props.user === "salesman" ? "/sales/dash/newlead" : "/dealer/dash/newlead";
-  console.log("LEAD MODAL CASE", leadmodalcase);
 
-  console.log(props.location.pathname);
-  console.log("PROPS IN DASH", props);
-  console.log("LEAD INFO", leadInfo);
   const modalSwitch = () => {
     switch (props.location.pathname) {
       //case "/dealer/dash/newlead":

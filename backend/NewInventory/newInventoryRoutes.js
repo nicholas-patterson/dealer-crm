@@ -47,4 +47,20 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.get("/all/view", async (req, res) => {
+  try {
+    const inventory = await db.NewInventory.findAll({
+      include: {
+        model: db.Image
+      },
+      where: {
+        id: req.session.dealer_user.id
+      }
+    });
+    res.status(200).json(inventory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

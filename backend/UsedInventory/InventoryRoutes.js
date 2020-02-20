@@ -31,6 +31,7 @@ router.post("/add", async (req, res) => {
   console.log("REQ.SESSION IN  INVENTORY", req.session);
   try {
     const newInventory = await db.Inventory.create({
+      car_picture: req.session.image.car_picture,
       year: req.body.year,
       make: req.body.make,
       model: req.body.model,
@@ -40,10 +41,26 @@ router.post("/add", async (req, res) => {
       dealer_id: req.session.dealer_user.id,
       image_id: req.session.image.id
     });
+    console.log(newInventory);
     res.status(201).json(newInventory);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+router.get("/all/view", async (req, res) => {
+  try {
+    const inventory = await db.Inventory.findAll({
+      include: {
+        model: db.Image
+      },
+      where: {
+        id: req.session.dealer_user.id
+      }
+    });
+    res.status(200).json(inventory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 module.exports = router;

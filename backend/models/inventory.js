@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Inventory = sequelize.define(
     "Inventory",
     {
+      car_picture: DataTypes.STRING,
       year: DataTypes.STRING,
       make: DataTypes.STRING,
       model: DataTypes.STRING,

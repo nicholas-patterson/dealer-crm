@@ -163,8 +163,8 @@ export const editLead = (id, updatedInfo) => {
   };
 };
 
-// Add Image Action
-export const addImage = imageData => {
+// Add Image Action and Add Used Inventory
+export const addImage = (imageData, usedInv) => {
   console.log("IMAGE DATA IN ACTION", imageData);
   return dispatch => {
     dispatch({ type: "ADD_IMAGE_START" });
@@ -175,6 +175,16 @@ export const addImage = imageData => {
       .then(res => {
         console.log("RES IN IMAGE ADD", res);
         dispatch({ type: "ADD_IMAGE_SUCCESS", payload: res.data });
+        return axios
+          .post("http://localhost:5000/api/usedInventory/add", usedInv, {
+            withCredentials: true
+          })
+          .then(res => {
+            dispatch({ type: "ADD_USED_INV_SUCCESS", payload: res.data });
+          })
+          .catch(err => {
+            dispatch({ type: "ADD_USED_INV_FAILURE", payload: err.response });
+          });
       })
       .catch(err => {
         dispatch({ type: "ADD_IMAGE_FAILURE", payload: err.response });
@@ -187,7 +197,7 @@ export const getUsedInventory = () => {
   return dispatch => {
     dispatch({ type: "GET_USED_INV_START" });
     axios
-      .get("http://localhost:5000/api/dealer/all/usedinventory", {
+      .get("http://localhost:5000/api/usedInventory/all/view", {
         withCredentials: true
       })
       .then(res => {
@@ -204,7 +214,7 @@ export const getNewInventory = () => {
   return dispatch => {
     dispatch({ type: "GET_NEW_INV_START" });
     axios
-      .get("http://localhost:5000/api/dealer/all/newinventory", {
+      .get("http://localhost:5000/api/newInventory/all/view", {
         withCredentials: true
       })
       .then(res => {
@@ -213,24 +223,6 @@ export const getNewInventory = () => {
       })
       .catch(err => {
         dispatch({ type: "GET_NEW_INV_FAILURE", payload: err.resonse });
-      });
-  };
-};
-
-//Add Used Inventory Action --DONE
-export const addUsedInventory = usedInventory => {
-  return dispatch => {
-    dispatch({ type: "ADD_USED_INV_START" });
-    axios
-      .post("http://localhost:5000/api/usedInventory/add", usedInventory, {
-        withCredentials: true
-      })
-      .then(res => {
-        console.log("RES IN ADD INVENTORY", res.data);
-        dispatch({ type: "ADD_USED_INV_SUCCESS", payload: res.data });
-      })
-      .catch(err => {
-        dispatch({ type: "ADD_USED_INV_FAILURE", payload: err.response });
       });
   };
 };

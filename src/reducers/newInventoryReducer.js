@@ -36,10 +36,32 @@ export const newInventoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        newInventory: [...state.newInventory]
+        newInventory: [...action.payload]
       };
 
     case "GET_NEW_INV_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+
+    case "DELETE_NEW_INV_START":
+      return {
+        ...state,
+        loading: true
+      };
+
+    case "DELETE_NEW_INV_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        newInventory: state.newInventory.filter(newInv => {
+          return newInv.id !== action.payload.id;
+        })
+      };
+
+    case "DELETE_NEW_INV_FAILURE":
       return {
         ...state,
         loading: false,

@@ -22,7 +22,11 @@ router.get("/:id", async (req, res) => {
         id
       }
     });
-    res.status(200).json(dealer);
+    if (dealer === null) {
+      res.status(400).json({ warning: "Dealer with that id is not found" });
+    } else {
+      res.status(200).json(dealer);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -118,77 +122,6 @@ router.get("/all/leads", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-// // Get Used Inventory By Dealer Id
-// router.get("/all/usedinventory", async (req, res) => {
-//   try {
-//     const inventory = await db.Dealer.findAll({
-//       attributes: [
-//         "dealer_username",
-//         "dealer_email",
-//         "dealer_name",
-//         "dealer_street",
-//         "dealer_city",
-//         "dealer_state",
-//         "dealer_country",
-//         "dealer_zipcode"
-//       ],
-//       where: {
-//         id: req.session.dealer_user.id
-//       },
-//       include: [
-//         {
-//           model: db.Inventory,
-//           include: [
-//             {
-//               model: db.Image
-//             }
-//           ]
-//         }
-//       ]
-//       //include: [{ all: true, nested: true }]
-//     });
-//     res.status(200).json(inventory);
-
-//     console.log(inventory);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
-// Get New Inventory By Dealer ID
-// router.get("/all/newinventory", async (req, res) => {
-//   try {
-//     const inventory = await db.Dealer.findAll({
-//       attributes: [
-//         "dealer_username",
-//         "dealer_email",
-//         "dealer_name",
-//         "dealer_street",
-//         "dealer_city",
-//         "dealer_state",
-//         "dealer_country",
-//         "dealer_zipcode"
-//       ],
-//       where: {
-//         id: req.session.dealer_user.id
-//       },
-//       include: [
-//         {
-//           model: db.NewInventory,
-//           include: [
-//             {
-//               model: db.Image
-//             }
-//           ]
-//         }
-//       ]
-//     });
-//     res.status(200).json(inventory);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 
 // Logout Dealer
 

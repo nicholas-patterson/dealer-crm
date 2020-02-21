@@ -4,10 +4,11 @@ import Portal from "../Portal";
 import { connect } from "react-redux";
 import {
   addImage,
-  addUsedInventory,
-  addNewInventory,
+  addNewImage,
+  //addNewInventory,
   getUsedInventory,
-  getNewInventory
+  getNewInventory,
+  newSearchFilter
 } from "../../actions/index";
 //import Carousel from "../Carousel";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,20 +19,31 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext
+} from "pure-react-carousel";
+import "pure-react-carousel/dist/react-carousel.es.css";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345
+    maxWidth: 345,
+    overflowWrap: "break-word",
+    width: 270,
+    boxShadow: "4px 4px 4px solid black"
   },
   media: {
     height: 140,
-    width: "270px"
+    width: 270
   }
 });
 
 const DealerInventoryMain = props => {
   const classes = useStyles();
-  console.log("PROPS IN INV", props);
+
   // new inventory state search
   const [newInventory, setNewInventory] = useState({
     new_year: "",
@@ -67,8 +79,6 @@ const DealerInventoryMain = props => {
     info: ""
   });
 
-  console.log("FILE", usedInventoryAdd);
-
   // new inventory search
   const handleNewInventoryChange = e => {
     setNewInventory({ ...newInventory, [e.target.name]: e.target.value });
@@ -93,6 +103,11 @@ const DealerInventoryMain = props => {
     });
   };
 
+  const handleNewInventorySearch = e => {
+    e.preventDefault();
+    props.newSearchFilter(newInventory);
+  };
+
   // handleChange for usedInv picture
   const handleUsedInventoryPicture = e => {
     setUsedInventoryAdd({ car_picture: e.target.files[0] });
@@ -105,29 +120,29 @@ const DealerInventoryMain = props => {
 
   // handle Submit for Used Inv form
   const handleUsedInventorySubmit = e => {
-    console.log("STATE", usedInventoryAdd.car_picture);
     e.preventDefault();
     let formData = new FormData();
     formData.append("car_picture", usedInventoryAdd.car_picture);
     formData.append("upload_preset", "darwin");
-    props.addUsedInventory(usedInventoryAdd);
-    props.addImage(formData);
-    console.log(usedInventoryAdd);
+    props.addImage(formData, usedInventoryAdd);
+    console.log("In Handle Submit", usedInventoryAdd);
   };
+
+  console.log("SURPRISE", usedInventoryAdd.car_picture);
+
+  // const picture = props.usedInv.map(pic => {
+  //   return pic.Image.car_picture;
+  // });
 
   // handleSubmit for New Inv Form
   const handleNewInventorySubmit = e => {
-    console.log("STATE", newInventoryAdd.car_picture);
     e.preventDefault();
     let formData = new FormData();
     formData.append("car_picture", newInventoryAdd.car_picture);
     formData.append("upload_preset", "darwin");
-    props.addNewInventory(newInventoryAdd);
-    props.addImage(formData);
-    console.log(newInventoryAdd);
+    props.addNewImage(formData, newInventoryAdd);
+    console.log("In Handle Submit New Inv", newInventoryAdd);
   };
-
-  console.log(props.usedInv);
 
   // Set inventory state to false
   const [showUsedInventoryModal, setShowUsedInventoryModal] = useState(false);
@@ -147,16 +162,6 @@ const DealerInventoryMain = props => {
     props.getNewInventory();
   }, []);
 
-  const usedInventories = props.usedInv.map(dealer => {
-    return dealer.Inventories;
-  });
-
-  // const idek = inventories.map((inventory, index) => {
-  //   console.log(inventory);
-  // });
-
-  console.log("INVENTORIES", usedInventories[0]);
-
   return (
     <>
       {showUsedInventoryModal ? (
@@ -164,7 +169,7 @@ const DealerInventoryMain = props => {
           <form
             className="usedInventoryAddForm"
             onSubmit={handleUsedInventorySubmit}
-            encType="multipart/form-data"
+            encType={"multipart/form-data"}
           >
             <div className="usedInv-field" id="picture_file">
               <input
@@ -289,7 +294,7 @@ const DealerInventoryMain = props => {
                 id="car_picture"
                 name="car_picture"
                 className="newInv-group"
-                encType="multipart/form-data"
+                encType={"multipart/form-data"}
                 onChange={handleNewInventoryPicture}
               />
               <label for="car_picture">Upload file</label>
@@ -375,7 +380,11 @@ const DealerInventoryMain = props => {
               </label>
             </div>
 
-            <textarea type="car info" name="info"></textarea>
+            <textarea
+              onChange={handleNewInventoryAdd}
+              name="info"
+              value={newInventoryAdd.info}
+            ></textarea>
 
             <Link
               className="newInv-closeBtn"
@@ -400,8 +409,20 @@ const DealerInventoryMain = props => {
 
       <div className="new--inventory">
         <h3 className="new--inventory__title">New Inventory</h3>
+        {props.newInv.length >= 1 ? (
+          <Link
+            onClick={handleNewInventoryAdd}
+            to="/dealer/inventory/newInventory"
+            className="new--inventory__addBtn"
+          >
+            <span className="usedInventoryAddLink">Add </span>{" "}
+          </Link>
+        ) : null}
         <div className="new--inventory__form">
-          <form className="new--inventory__fields form">
+          <form
+            className="new--inventory__fields form"
+            onSubmit={handleNewInventorySearch}
+          >
             <div className="field">
               <input
                 type="text"
@@ -448,29 +469,103 @@ const DealerInventoryMain = props => {
                 <span className="content-name">Model</span>
               </label>
             </div>
+            <button type="submit">Submit</button>
           </form>
         </div>
-        <div className="new--inventory__results">
-          <h3>
-            No New Inventory, Click{" "}
-            <Link
-              onClick={handleNewInventoryAdd}
-              to="/dealer/inventory/NewInventory"
+        {props.newInv.length === 0 ? (
+          <div className="new--inventory__results">
+            <h3>
+              No New Inventory, Click{" "}
+              <Link
+                onClick={handleNewInventoryAdd}
+                to="/dealer/inventory/NewInventory"
+              >
+                <span className="newInventoryAddLink">Here</span>{" "}
+              </Link>
+              To Add{" "}
+              <span role="img" aria-label="crying">
+                😢
+              </span>
+            </h3>
+          </div>
+        ) : (
+          <>
+            <CarouselProvider
+              naturalSlideWidth={100}
+              naturalSlideHeight={100}
+              totalSlides={props.newInv.length}
+              orientation="horizontal"
+              visibleSlides={3}
+              dragEnabled={false}
+              touchEnabled={false}
+              style={{ position: "relative" }}
             >
-              <span className="newInventoryAddLink">Here</span>{" "}
-            </Link>
-            To Add{" "}
-            <span role="img" aria-label="crying">
-              😢
-            </span>
-          </h3>
-        </div>
+              <Slider style={{ marginTop: "3rem" }}>
+                {props.newInv &&
+                  props.newInv.map((inv, idx) => {
+                    return (
+                      <Slide>
+                        <Card key={idx} className={classes.root}>
+                          <CardActionArea>
+                            <CardMedia
+                              className={classes.media}
+                              image={inv.car_picture}
+                              title={inv.make + " " + inv.model}
+                            />
+                            <CardContent>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h2"
+                              >
+                                {inv.year} {inv.make} {inv.model}
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                              >
+                                {inv.info}
+                              </Typography>
+                            </CardContent>
+                          </CardActionArea>
+                          <CardActions>
+                            <Button size="small" color="primary">
+                              Edit
+                            </Button>
+                            <Button size="small" color="primary">
+                              Delete
+                            </Button>
+                          </CardActions>
+                        </Card>
+                      </Slide>
+                    );
+                  })}
+              </Slider>
+              {props.newInv.length < 4 ? null : (
+                <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
+              )}
+              {props.newInv.length < 4 ? null : (
+                <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
+              )}
+            </CarouselProvider>
+          </>
+        )}
       </div>
 
       {/* Used Inventory */}
 
       <div className="used--inventory">
         <h3 className="used--inventory__title">Used Inventory</h3>
+        {props.usedInv.length >= 1 ? (
+          <Link
+            onClick={handleUsedInventoryAdd}
+            to="/dealer/inventory/UsedInventory"
+            className="used--inventory__addBtn"
+          >
+            <span className="usedInventoryAddLink">Add </span>{" "}
+          </Link>
+        ) : null}
         <div className="used--inventory__form">
           <form className="used-inventory__fields form">
             <div className="field">
@@ -491,13 +586,13 @@ const DealerInventoryMain = props => {
             <div className="field">
               <input
                 type="text"
-                name="new_make"
-                id="used_year"
+                name="used_make"
+                id="used_make"
                 autoComplete="off"
                 required
                 className="input-group"
                 value={usedInventory.used_make}
-                onChnage={handleUsedInventoryChange}
+                onChange={handleUsedInventoryChange}
               />
               <label htmlFor="inputField" className="label-name">
                 <span className="content-name">Make</span>
@@ -520,7 +615,7 @@ const DealerInventoryMain = props => {
             </div>
           </form>
         </div>
-        {usedInventories[0] === undefined ? (
+        {props.usedInv.length === 0 ? (
           <div className="used--inventory__results">
             <h3>
               No Used Inventory, Click{" "}
@@ -538,41 +633,65 @@ const DealerInventoryMain = props => {
           </div>
         ) : (
           <>
-            <div style={{ display: "flex", marginTop: "3rem" }}>
-              {usedInventories[0].map(inv => {
-                return (
-                  <Card className={classes.root}>
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.media}
-                        image={inv.Image.car_picture}
-                        title="Contemplative Reptile"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {inv.year} {inv.make} {inv.model}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {inv.info}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        Share
-                      </Button>
-                      <Button size="small" color="primary">
-                        Learn More
-                      </Button>
-                    </CardActions>
-                  </Card>
-                );
-              })}
-            </div>
+            <CarouselProvider
+              naturalSlideWidth={100}
+              naturalSlideHeight={100}
+              totalSlides={props.usedInv.length}
+              orientation="horizontal"
+              visibleSlides={3}
+              dragEnabled={false}
+              touchEnabled={false}
+              style={{ position: "relative" }}
+            >
+              <Slider style={{ marginTop: "3rem" }}>
+                {props.usedInv &&
+                  props.usedInv.map((inv, idx) => {
+                    return (
+                      <Slide>
+                        <Card key={idx} className={classes.root}>
+                          <CardActionArea>
+                            <CardMedia
+                              className={classes.media}
+                              image={inv.car_picture}
+                              title={inv.make + " " + inv.model}
+                            />
+                            <CardContent>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h2"
+                              >
+                                {inv.year} {inv.make} {inv.model}
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                              >
+                                {inv.info}
+                              </Typography>
+                            </CardContent>
+                          </CardActionArea>
+                          <CardActions>
+                            <Button size="small" color="primary">
+                              Edit
+                            </Button>
+                            <Button size="small" color="primary">
+                              Delete
+                            </Button>
+                          </CardActions>
+                        </Card>
+                      </Slide>
+                    );
+                  })}
+              </Slider>
+              {props.usedInv.length < 4 ? null : (
+                <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
+              )}
+              {props.usedInv.length < 4 ? null : (
+                <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
+              )}
+            </CarouselProvider>
           </>
         )}
       </div>
@@ -582,16 +701,18 @@ const DealerInventoryMain = props => {
 
 const mapStateToProps = state => {
   return {
-    newInv: state.newInventoryReducer.newInventory,
-    usedInv: state.usedInventoryReducer.inventory,
+    newInv: state.newInventoryReducer.newInventory || [],
+    usedInv: state.usedInventoryReducer.inventory || [],
+    loading: state.usedInventoryReducer.loading,
     user: state.userReducer.user
   };
 };
 
 export default connect(mapStateToProps, {
   addImage,
-  addUsedInventory,
-  addNewInventory,
+  addNewImage,
+  //addNewInventory,
   getUsedInventory,
-  getNewInventory
+  getNewInventory,
+  newSearchFilter
 })(DealerInventoryMain);

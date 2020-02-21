@@ -18,11 +18,13 @@ module.exports = (sequelize, DataTypes) => {
   Inventory.associate = function(models) {
     //associations can be defined here
     Inventory.belongsTo(models.Dealer, {
-      foreignKey: "dealer_id"
+      foreignKey: "dealer_id",
+      onDelete: "cascade"
     });
 
     Inventory.belongsTo(models.Image, {
-      foreignKey: "image_id"
+      foreignKey: "image_id",
+      onDelete: "cascade"
     });
   };
   return Inventory;

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@iconify/icons-ant-design": "^1.0.4",
+    "@iconify/icons-ei": "^1.0.3",
     "@iconify/icons-emojione-monotone": "^1.0.4",
     "@iconify/icons-feather": "^1.0.7",
     "@iconify/icons-ic": "^1.0.8",

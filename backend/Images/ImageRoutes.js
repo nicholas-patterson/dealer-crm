@@ -46,4 +46,27 @@ router.post("/add", upload.single("car_picture"), (req, res) => {
   });
 });
 
+router.delete("/delete/:id", (req, res) => {
+  const { id } = req.params;
+  cloudinary.v2.uploader.destroy(
+    req.session.image.cloudinary_pic_id,
+    (err, result) => {
+      console.log("RESULT", result);
+
+      db.Image.destroy({
+        where: {
+          id
+        }
+      })
+        .then(deleted => {
+          console.log("IMAGE DELETED", deleted);
+          res.status(200).json(deleted);
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
+    }
+  );
+});
+
 module.exports = router;

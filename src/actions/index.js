@@ -254,9 +254,78 @@ export const getNewInventory = () => {
   };
 };
 
+//Delete Used Inventory and Image Action
+export const deleteUsedInv = (usedInvId, picId) => {
+  return dispatch => {
+    dispatch({ type: "DELETE_USED_INV_START" });
+    axios
+      .delete(`http://localhost:5000/api/usedInventory/delete/${usedInvId}`, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log(res.data.deletedInventory);
+        dispatch({
+          type: "DELETE_USED_INV_SUCCESS",
+          payload: res.data.deletedInventory
+        });
+        return axios
+          .delete(`http://localhost:5000/api/image/delete/${picId}`, {
+            withCredentials: true
+          })
+          .then(res => {
+            dispatch({ type: "DELETE_IMAGE_SUCCESS", payload: res.data });
+          })
+          .catch(err => {
+            dispatch({ type: "DELETE_IMAGE_FAILURE", payload: err.response });
+          });
+      })
+      .catch(err => {
+        dispatch({ type: "DELETE_USED_INV_FAILURE", payload: err.response });
+      });
+  };
+};
+
+//Delete New Inventory and Image Action
+export const deleteNewInv = (newInvId, picId) => {
+  return dispatch => {
+    dispatch({ type: "DELETE_NEW_INV_START" });
+    axios
+      .delete(`http://localhost:5000/api/newInventory/delete/${newInvId}`, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log(res.data.deletedInventory);
+        dispatch({
+          type: "DELETE_NEW_INV_SUCCESS",
+          payload: res.data.deletedInventory
+        });
+        return axios
+          .delete(`http://localhost:5000/api/image/delete/${picId}`, {
+            withCredentials: true
+          })
+          .then(res => {
+            dispatch({ type: "DELETE_IMAGE_SUCCESS", payload: res.data });
+          })
+          .catch(err => {
+            dispatch({ type: "DELETE_IMAGE_FAILURE", payload: err.response });
+          });
+      })
+      .catch(err => {
+        dispatch({ type: "DELETE_NEW_INV_FAILURE", payload: err.response });
+      });
+  };
+};
+
 export const newSearchFilter = term => {
   return {
     type: "SEARCH_NEW_INV_SUCCESS",
+    payload: term
+  };
+};
+
+export const usedSearchFilter = term => {
+  return {
+    type: "SEARCH_USED_INV_SUCCESS",
     payload: term
   };
 };

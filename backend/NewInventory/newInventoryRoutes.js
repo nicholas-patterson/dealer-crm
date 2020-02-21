@@ -52,16 +52,51 @@ router.get("/all/view", async (req, res) => {
   try {
     const inventory = await db.NewInventory.findAll({
       include: {
-        model: db.Image
-      },
-      where: {
-        id: req.session.dealer_user.id
+        model: db.Image,
+        where: {
+          dealer_id: req.session.dealer_user.id
+        }
       }
     });
     res.status(200).json(inventory);
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+// Delete New Inventory
+router.delete("/delete/:id", (req, res) => {
+  const { id } = req.params;
+  db.NewInventory.findOne({
+    where: {
+      id
+    }
+  })
+    .then(inventory => {
+      console.log("INVENORY IN DELETE", inventory);
+      if (inventory === null) {
+        res
+          .status(400)
+          .json({ warning: "Inventory with that if was not found" });
+      }
+      return db.NewInventory.destroy({
+        where: {
+          id
+        }
+      })
+        .then(deletedInventory => {
+          console.log("DELETED INVENTORY", deletedInventory);
+          if (deletedInventory === 1) {
+            res.status(200).json({ deletedInventory: inventory });
+          }
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;

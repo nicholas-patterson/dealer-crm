@@ -1275,6 +1275,11 @@
   resolved "https://registry.yarnpkg.com/@iconify/icons-ant-design/-/icons-ant-design-1.0.4.tgz#c1f7c1fc1bf689ecfb4ddc809d033b4854032d62"
   integrity sha512-rfYyYOns/jh3n8I6We1zh5gEkwPGhOot4QgxO8yjJL64Ulg0VumG79y/3/qu7pTF9lczHjK/VJGs9LeU5zjK/w==
 
+"@iconify/icons-ei@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-ei/-/icons-ei-1.0.3.tgz#67c9e406e2f19262d4bce45d90b1cdc720667e14"
+  integrity sha512-1qroSRNoq6zgpP9ewBW+Ym8SkYsRiKTKbrqcp2uDdNitZNkeLadkNtSGIzvkQeGayXPsRQJrPjEtO0XQhdLdtw==
+
 "@iconify/icons-emojione-monotone@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@iconify/icons-emojione-monotone/-/icons-emojione-monotone-1.0.4.tgz#e7c2eac1aae93738e4590678c7425c4ec8835e42"

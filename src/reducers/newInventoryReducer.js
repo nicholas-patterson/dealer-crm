@@ -16,7 +16,7 @@ export const newInventoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        newInventory: action.payload
+        newInventory: [...state.newInventory, action.payload]
       };
 
     case "ADD_NEW_INV_FAILURE":
@@ -36,7 +36,7 @@ export const newInventoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        newInventory: action.payload
+        newInventory: [...state.newInventory]
       };
 
     case "GET_NEW_INV_FAILURE":
@@ -44,6 +44,22 @@ export const newInventoryReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload
+      };
+
+    case "SEARCH_NEW_INV_SUCCESS":
+      const result = state.newInventory.filter(newInv => {
+        if (
+          newInv.year === action.payload.new_year &&
+          newInv.make === action.payload.new_make &&
+          newInv.model === action.payload.new_model
+        ) {
+          return newInv;
+        }
+      });
+      return {
+        ...state,
+        loading: false,
+        newInventory: [...result]
       };
 
     default:

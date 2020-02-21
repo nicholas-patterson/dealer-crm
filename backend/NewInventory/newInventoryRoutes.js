@@ -32,8 +32,9 @@ router.get("/:id", async (req, res) => {
 router.post("/add", async (req, res) => {
   try {
     const newInventory = await db.NewInventory.create({
+      car_picture: req.session.image.car_picture,
       year: req.body.year,
-      make: req.body.mmake,
+      make: req.body.make,
       model: req.body.model,
       price: req.body.price,
       miles: req.body.miles,

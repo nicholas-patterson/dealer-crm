@@ -16,13 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Inventory.associate = function(models) {
-    // associations can be defined here
-    // Inventory.belongsToMany(models.Image, {
-    //   as: "images",
-    //   through: models.InventoryImage,
-    //   foreignKey: "inventory_id",
-    //   otherKey: "image_id"
-    // });
+    //associations can be defined here
     Inventory.belongsTo(models.Dealer, {
       foreignKey: "dealer_id"
     });

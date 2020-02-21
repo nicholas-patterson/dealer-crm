@@ -209,6 +209,33 @@ export const getUsedInventory = () => {
   };
 };
 
+// Add NewImage and New Inventory
+export const addNewImage = (image, newInv) => {
+  return dispatch => {
+    dispatch({ type: "ADD_IMAGE_START" });
+    axios
+      .post("http://localhost:5000/api/image/add", image, {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({ type: "ADD_IMAGE_SUCCESS", payload: res.data });
+        return axios
+          .post("http://localhost:5000/api/newInventory/add", newInv, {
+            withCredentials: true
+          })
+          .then(res => {
+            dispatch({ type: "ADD_NEW_INV_SUCCESS", payload: res.data });
+          })
+          .catch(err => {
+            dispatch({ type: "ADD_NEW_INV_FAILURE", payload: err.response });
+          });
+      })
+      .catch(err => {
+        dispatch({ type: "ADD_IMAHE_FAILURE", payload: err.response });
+      });
+  };
+};
+
 //Get New Inventory Action
 export const getNewInventory = () => {
   return dispatch => {
@@ -227,20 +254,9 @@ export const getNewInventory = () => {
   };
 };
 
-// Add new Inventory
-export const addNewInventory = newInventory => {
-  return dispatch => {
-    dispatch({ type: "ADD_NEW_INV_START" });
-    axios
-      .post("http://localhost:5000/api/newInventory/add", newInventory, {
-        withCredentials: true
-      })
-      .then(res => {
-        console.log("RES IN ADD NEW INVENTORY", res.data);
-        dispatch({ type: "ADD_NEW_INV_SUCCESS", payload: res.data });
-      })
-      .catch(err => {
-        dispatch({ type: "ADD_NEW_INV_FAILURE", payload: err.response });
-      });
+export const newSearchFilter = term => {
+  return {
+    type: "SEARCH_NEW_INV_SUCCESS",
+    payload: term
   };
 };

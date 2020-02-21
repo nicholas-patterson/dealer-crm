@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import {
   addImage,
   addNewImage,
-  //addNewInventory,
   getUsedInventory,
   getNewInventory,
-  newSearchFilter
+  newSearchFilter,
+  deleteUsedInv,
+  deleteNewInv
 } from "../../actions/index";
-//import Carousel from "../Carousel";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -27,6 +27,8 @@ import {
   ButtonNext
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import { Icon, InlineIcon } from "@iconify/react";
+import searchIcon from "@iconify/icons-ei/search";
 
 const useStyles = makeStyles({
   root: {
@@ -127,12 +129,6 @@ const DealerInventoryMain = props => {
     props.addImage(formData, usedInventoryAdd);
     console.log("In Handle Submit", usedInventoryAdd);
   };
-
-  console.log("SURPRISE", usedInventoryAdd.car_picture);
-
-  // const picture = props.usedInv.map(pic => {
-  //   return pic.Image.car_picture;
-  // });
 
   // handleSubmit for New Inv Form
   const handleNewInventorySubmit = e => {
@@ -469,7 +465,11 @@ const DealerInventoryMain = props => {
                 <span className="content-name">Model</span>
               </label>
             </div>
-            <button type="submit">Submit</button>
+            <Icon
+              onClick={handleNewInventorySearch}
+              className="newInv_search"
+              icon={searchIcon}
+            />
           </form>
         </div>
         {props.newInv.length === 0 ? (
@@ -503,6 +503,7 @@ const DealerInventoryMain = props => {
               <Slider style={{ marginTop: "3rem" }}>
                 {props.newInv &&
                   props.newInv.map((inv, idx) => {
+                    console.log("HELLO", inv);
                     return (
                       <Slide>
                         <Card key={idx} className={classes.root}>
@@ -533,7 +534,13 @@ const DealerInventoryMain = props => {
                             <Button size="small" color="primary">
                               Edit
                             </Button>
-                            <Button size="small" color="primary">
+                            <Button
+                              onClick={() =>
+                                props.deleteNewInv(inv.id, inv.image_id)
+                              }
+                              size="small"
+                              color="primary"
+                            >
                               Delete
                             </Button>
                           </CardActions>
@@ -613,6 +620,7 @@ const DealerInventoryMain = props => {
                 <span className="content-name">Model</span>
               </label>
             </div>
+            <Icon className="usedInv_search" icon={searchIcon} />
           </form>
         </div>
         {props.usedInv.length === 0 ? (
@@ -646,6 +654,7 @@ const DealerInventoryMain = props => {
               <Slider style={{ marginTop: "3rem" }}>
                 {props.usedInv &&
                   props.usedInv.map((inv, idx) => {
+                    console.log("USED INV", inv.image_id);
                     return (
                       <Slide>
                         <Card key={idx} className={classes.root}>
@@ -676,7 +685,13 @@ const DealerInventoryMain = props => {
                             <Button size="small" color="primary">
                               Edit
                             </Button>
-                            <Button size="small" color="primary">
+                            <Button
+                              onClick={() =>
+                                props.deleteUsedInv(inv.id, inv.image_id)
+                              }
+                              size="small"
+                              color="primary"
+                            >
                               Delete
                             </Button>
                           </CardActions>
@@ -711,8 +726,9 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   addImage,
   addNewImage,
-  //addNewInventory,
   getUsedInventory,
   getNewInventory,
-  newSearchFilter
+  newSearchFilter,
+  deleteUsedInv,
+  deleteNewInv
 })(DealerInventoryMain);

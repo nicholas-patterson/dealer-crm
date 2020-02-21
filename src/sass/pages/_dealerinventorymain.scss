@@ -5,6 +5,13 @@
     font-size: 1.3rem;
     margin-top: 3rem;
   }
+  &__addBtn {
+    margin-top: 1.5rem;
+    display: inline-block;
+    color: #fff;
+    font-weight: 300;
+    border-bottom: 1px solid $primary-blue;
+  }
 }
 
 .new--inventory__results {
@@ -90,6 +97,13 @@
   &__title {
     font-size: 1.3rem;
     margin-top: 3rem;
+  }
+  &__addBtn {
+    margin-top: 1.5rem;
+    display: inline-block;
+    color: #fff;
+    font-weight: 300;
+    border-bottom: 1px solid $primary-blue;
   }
 }
 
@@ -435,4 +449,33 @@
 .newInventoryAddForm .newInv-field input:focus + .newInv-label-name::after,
 .newInventoryAddForm .newInv-field input:valid + .newInv-label-name::after {
   transform: translateX(0%);
+}
+
+// Carousel Styles for USED INV
+
+.slide_backBtn {
+  left: -1.4%;
+  position: absolute;
+  top: 25%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-block;
+  line-height: 2px;
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.slide_nextBtn {
+  position: absolute;
+  top: 25%;
+  left: 91.2%;
+  padding: 1.5rem;
+  height: 41px;
+  width: 40px;
+  border-radius: 50%;
+  display: inline-block;
+  line-height: 2px;
+  font-size: 2rem;
+  font-weight: 300;
 }

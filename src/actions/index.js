@@ -56,6 +56,7 @@ export const loginUser = (user, navigate) => {
         withCredentials: true
       })
       .then(res => {
+        console.log("RES IN LOGIN ACTION", res.data);
         dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data });
         navigate("/dealer/dash");
       })
@@ -327,5 +328,45 @@ export const usedSearchFilter = term => {
   return {
     type: "SEARCH_USED_INV_SUCCESS",
     payload: term
+  };
+};
+
+export const updateEmail = newEmail => {
+  return dispatch => {
+    dispatch({ type: "UPDATE_EMAIL_START" });
+    axios
+      .put("http://localhost:5000/api/dealer/email/update", newEmail, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN EMAIL UPDATE ACTION", res.data);
+        dispatch({
+          type: "UPDATE_EMAIL_SUCCESS",
+          payload: res.data.updatedEmail.dealer_email
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "UPDATE_EMAIL_FAILURE", err });
+      });
+  };
+};
+
+export const updatePassword = newPassword => {
+  return dispatch => {
+    dispatch({ type: "UPDATE_EMAIL_START" });
+    axios
+      .put("http://localhost:5000/api/dealer/password/update", newPassword, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN PASSWORD ACTION", res.data);
+        dispatch({
+          type: "UPDATE_PASSWORD_SUCCESS",
+          payload: res.data.pass.dealer_password
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "UPDATE_PASSWORD_FAILURE", payload: err });
+      });
   };
 };

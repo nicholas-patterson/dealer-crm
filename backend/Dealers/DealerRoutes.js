@@ -69,10 +69,7 @@ router.post("/login", async (req, res) => {
     const comparePass = bcrypt.compareSync(password, user.dealer_password);
     if (comparePass && user) {
       req.session.dealer_user = user;
-      console.log("LOGGED IN DEALER SESSION", req.session.dealer_user);
-      console.log("-----------------");
-      console.log("LOGGED IN DEALER SESSION ID", req.session.dealer_user.id);
-      res.status(201).json({ message: `Welcome ${user.dealer_username}` });
+      res.status(201).json(user);
     } else {
       res.status(400).json({ warning: "Username and Password do not match" });
     }
@@ -121,6 +118,86 @@ router.get("/all/leads", async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+// Update Email
+router.put("/email/update", (req, res) => {
+  const { dealer_email, dealer_password } = req.body;
+  db.Dealer.findOne({
+    where: {
+      dealer_username: req.session.dealer_user.dealer_username
+    }
+  })
+    .then(dealer => {
+      const comparePass = bcrypt.compareSync(
+        dealer_password,
+        dealer.dealer_password
+      );
+      if (comparePass && dealer) {
+        req.session.dealer_user.dealer_email = dealer_email;
+        return db.Dealer.update(
+          {
+            dealer_email: req.session.dealer_user.dealer_email
+          },
+          { returning: true, where: { id: dealer.id } }
+        )
+          .then(([rowsUpdated, [updatedEmail]]) => {
+            res.status(201).json({ rowsUpdated, updatedEmail });
+          })
+          .catch(err => {
+            res.status(400).json(err);
+          });
+      } else {
+        res.status(400).json({ warning: "Password is incorrect" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+// Update Password
+router.put("/password/update", (req, res) => {
+  const { current_password, new_password, confirm_new_password } = req.body;
+  console.log("USERNAME", req.session.dealer_user.dealer_username);
+  db.Dealer.findOne({
+    where: {
+      dealer_username: req.session.dealer_user.dealer_username
+    }
+  })
+    .then(dealer => {
+      console.log(dealer);
+      const comparePass = bcrypt.compareSync(
+        current_password,
+        dealer.dealer_password
+      );
+      console.log("COMPARE PASS", comparePass);
+      if (comparePass && new_password === confirm_new_password) {
+        const hash = bcrypt.hashSync(new_password, 10);
+        console.log("HASH", hash);
+        req.session.dealer_user.dealer_password = hash;
+        return db.Dealer.update(
+          {
+            dealer_password: req.session.dealer_user.dealer_password
+          },
+          { returning: true, where: { id: req.session.dealer_user.id } }
+        )
+          .then(([rowsUpdated, [pass]]) => {
+            console.log("INFO", { rowsUpdated, pass });
+            res.status(201).json({ rowsUpdated, pass });
+          })
+          .catch(err => {
+            res.status(400).json(err);
+          });
+      } else {
+        res.status(400).json({
+          warning: "Current Password is incorrect and/or passwords do not match"
+        });
+      }
+    })
+    .catch(err => {
+      res.status(400).json({ warning: "Dealer not found" });
+    });
 });
 
 // Logout Dealer

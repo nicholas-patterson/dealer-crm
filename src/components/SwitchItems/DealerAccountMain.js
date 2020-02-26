@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { updateEmail, updatePassword } from "../../actions";
 
-const DealerAccountMain = () => {
+const DealerAccountMain = props => {
+  console.log("PROPS IN ACCOUNT PAGE", props);
   const [personalInformation, setPersonalInformation] = useState({
-    first_name: "",
+    username: "",
+    phone: "",
     last_name: "",
-    birthday: "",
-    phone: ""
+    birthday: ""
   });
 
   const [emailInformation, setEmailInformation] = useState({
-    email: "",
-    password: ""
+    dealer_email: props.dealer || "",
+    dealer_password: ""
   });
 
   const [passwordInformation, setPasswordInformation] = useState({
@@ -26,6 +29,7 @@ const DealerAccountMain = () => {
     });
   };
 
+  // handle change for email section
   const handleEmailInformation = e => {
     setEmailInformation({
       ...emailInformation,
@@ -33,10 +37,28 @@ const DealerAccountMain = () => {
     });
   };
 
+  // handle change for password section
   const handlePasswordInformation = e => {
     setPasswordInformation({
       ...passwordInformation,
       [e.target.name]: e.target.value
+    });
+  };
+
+  // handle submit for email section
+  const handleEmailSection = e => {
+    e.preventDefault();
+    console.log("IN SUBMIT EMAIL", emailInformation);
+    setEmailInformation({ dealer_password: "" });
+  };
+
+  const handlePasswordSection = e => {
+    e.preventDefault();
+    console.log("IN SUBMIT PASSWORD", passwordInformation);
+    setPasswordInformation({
+      current_password: "",
+      new_password: "",
+      confirm_new_password: ""
     });
   };
 
@@ -57,16 +79,16 @@ const DealerAccountMain = () => {
             <div className="pi-field">
               <input
                 type="text"
-                name="first_name"
-                id="first_name"
+                name="username"
+                id="username"
                 autoComplete="off"
                 required
                 className="input-group"
-                value={personalInformation.first_name}
+                value={personalInformation.username}
                 onChange={handlePersonalInformationChange}
               />
               <label htmlFor="inputField" className="pi-label-name">
-                <span className="pi-content-name">First Name</span>
+                <span className="pi-content-name">Username</span>
               </label>
             </div>
             <div className="pi-field" id="last_name_grid_column">
@@ -84,7 +106,7 @@ const DealerAccountMain = () => {
                 <span className="pi-content-name">Last Name</span>
               </label>
             </div>
-            <div className="pi-field" id="date-styles">
+            {/* <div className="pi-field" id="date-styles">
               <input
                 type="date"
                 name="birthday"
@@ -98,7 +120,7 @@ const DealerAccountMain = () => {
               <label htmlFor="inputField" className="pi-label-name">
                 <span className="pi-content-name"> Birth date</span>
               </label>
-            </div>
+            </div> */}
             <div className="pi-field" id="phone_grid_column">
               <input
                 type="phone"
@@ -128,16 +150,19 @@ const DealerAccountMain = () => {
           </p>
         </div>
         <div className="email--address__form-section">
-          <form className="email--address__fields">
+          <form
+            className="email--address__fields"
+            onSubmit={handleEmailSection}
+          >
             <div className="ea-field">
               <input
                 type="email"
-                name="email"
+                name="dealer_email"
                 id="email"
                 className="ea-group"
                 autoComplete="off"
                 required
-                value={emailInformation.email}
+                value={emailInformation.dealer_email}
                 onChange={handleEmailInformation}
               />
               <label htmlFor="inputField" className="ea-label-name">
@@ -148,19 +173,25 @@ const DealerAccountMain = () => {
             <div className="ea-field">
               <input
                 type="password"
-                name="password"
+                name="dealer_password"
                 id="password"
                 className="ea-group"
                 autoComplete="off"
                 required
-                value={emailInformation.password}
+                value={emailInformation.dealer_password}
                 onChange={handleEmailInformation}
               />
               <label htmlFor="inputField" className="ea-label-name">
                 <span className="ea-content-name">Password</span>
               </label>
             </div>
-            <button className="ea-submitBtn">Save</button>
+            <button
+              type="submit"
+              onClick={() => props.updateEmail(emailInformation)}
+              className="ea-submitBtn"
+            >
+              Save
+            </button>
           </form>
         </div>
       </div>
@@ -173,7 +204,10 @@ const DealerAccountMain = () => {
           </p>
         </div>
         <div className="password--information__form-section">
-          <form className="password__information__fields">
+          <form
+            onSubmit={handlePasswordSection}
+            className="password__information__fields"
+          >
             <div className="pw-field">
               <input
                 type="password"
@@ -219,7 +253,13 @@ const DealerAccountMain = () => {
                 <span className="pw-content-name"> Confirm Password</span>
               </label>
             </div>
-            <button className="pw-submitBtn">Save</button>
+            <button
+              onClick={() => props.updatePassword(passwordInformation)}
+              type="submit"
+              className="pw-submitBtn"
+            >
+              Save
+            </button>
           </form>
         </div>
       </div>
@@ -227,4 +267,14 @@ const DealerAccountMain = () => {
   );
 };
 
-export default DealerAccountMain;
+const mapStateToProps = state => {
+  console.log("MSTP", state);
+  return {
+    dealer:
+      state.loginReducer.dealer_email || state.loginReducer.user.dealer_email
+  };
+};
+
+export default connect(mapStateToProps, { updateEmail, updatePassword })(
+  DealerAccountMain
+);

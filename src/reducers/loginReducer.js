@@ -1,3 +1,5 @@
+// LOGIN REDUCER FOR DEALER
+
 const initialState = {
   isLogged: false,
   user: {},

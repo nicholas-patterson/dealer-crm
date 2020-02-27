@@ -1,7 +1,9 @@
+// REGISTER REDUCER FOR DEALER
+
 const initialState = {
   user: [],
   isRegistering: false,
-  error: ""
+  error: []
 };
 
 export const registerReducer = (state = initialState, action) => {
@@ -21,7 +23,8 @@ export const registerReducer = (state = initialState, action) => {
     case "REG_USER_FAILURE":
       return {
         ...state,
-        isRegistering: false
+        isRegistering: false,
+        error: action.payload
       };
 
     default:

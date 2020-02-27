@@ -5,6 +5,7 @@ import Logo from "./Logo/Logo";
 import { connect } from "react-redux";
 import { registerUser, getUserType } from "../actions/index";
 import { navigate } from "@reach/router";
+//import Banner from "react-js-banner";
 
 const SignUpForm = props => {
   const [form, setForm] = useState({
@@ -98,4 +99,12 @@ const SignUpForm = props => {
   );
 };
 
-export default connect(null, { registerUser, getUserType })(SignUpForm);
+const mapStateToProps = state => {
+  return {
+    //error: state.registerReducer.error.data.error
+  };
+};
+
+export default connect(mapStateToProps, { registerUser, getUserType })(
+  SignUpForm
+);

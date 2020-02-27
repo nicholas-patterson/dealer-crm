@@ -16,6 +16,7 @@ const StepOne = props => {
           value={props.value.dealer_email}
           onChange={props.handleChange}
           placeholder="Email..."
+          required
         />
       </label>
       <label htmlFor="username">
@@ -27,6 +28,7 @@ const StepOne = props => {
           value={props.value.dealer_username}
           onChange={props.handleChange}
           placeholder="Username..."
+          required
         />
       </label>
       <label htmlFor="password">
@@ -38,6 +40,7 @@ const StepOne = props => {
           value={props.value.dealer_password}
           onChange={props.handleChange}
           placeholder="Password..."
+          required
         />
       </label>
 

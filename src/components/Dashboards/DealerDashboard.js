@@ -9,7 +9,7 @@ import DealerAccountMain from "../SwitchItems/DealerAccountMain";
 import DealerHelpMain from "../SwitchItems/DealerHelpMain";
 import { connect } from "react-redux";
 import { Link } from "@reach/router";
-import { addLead } from "../../actions/index";
+import { addLead, registerSalesman } from "../../actions/index";
 import { navigate } from "@reach/router";
 
 // Select Menu
@@ -72,6 +72,7 @@ const DealerDashboard = props => {
   // handle submit for new salesman form
   const handleSalesSubmit = e => {
     e.preventDefault();
+    props.registerSalesman(salesInfo, navigate);
     console.log(salesInfo);
   };
   // handle submit for new manager form
@@ -329,7 +330,9 @@ const DealerDashboard = props => {
               <Link className="salesperson-closeBtn" to="/dealer/dash">
                 Close
               </Link>
-              <button className="salesperson-submitBtn">Submit</button>
+              <button type="submit" className="salesperson-submitBtn">
+                Submit
+              </button>
             </form>
           </Portal>
         );
@@ -453,4 +456,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { addLead })(DealerDashboard);
+export default connect(mapStateToProps, { addLead, registerSalesman })(
+  DealerDashboard
+);

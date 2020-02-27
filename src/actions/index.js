@@ -31,8 +31,9 @@ export const getUserType = user => {
   };
 };
 
-// Register User Action --DONE
+// Register DEALER Action --DONE
 export const registerUser = (user, navigate) => {
+  console.log(navigate);
   return dispatch => {
     dispatch({ type: "REG_USER_START" });
     axios
@@ -42,7 +43,35 @@ export const registerUser = (user, navigate) => {
         navigate("/login");
       })
       .catch(err => {
-        dispatch({ type: "REG_USER_FAILURE", payload: err.data });
+        console.log(err.response);
+        dispatch({
+          type: "REG_USER_FAILURE",
+          payload: err.response
+        });
+      });
+  };
+};
+
+// Register SALESMAN ACTION
+export const registerSalesman = (user, navigate) => {
+  console.log(navigate);
+  return dispatch => {
+    dispatch({ type: "REG_SALESMAN_START" });
+    axios
+      .post("http://localhost:5000/api/sales/register", user, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN REGISTER SALESMAN", res);
+        dispatch({ type: "REG_SALESMAN_SUCCESS", payload: res.data });
+        navigate("/saleslogin");
+      })
+      .catch(err => {
+        console.log(err.response);
+        dispatch({
+          type: "REG_SALESMAN_FAILURE",
+          payload: err.response
+        });
       });
   };
 };
@@ -250,7 +279,7 @@ export const getNewInventory = () => {
         dispatch({ type: "GET_NEW_INV_SUCCESS", payload: res.data });
       })
       .catch(err => {
-        dispatch({ type: "GET_NEW_INV_FAILURE", payload: err.resonse });
+        dispatch({ type: "GET_NEW_INV_FAILURE", payload: err.response });
       });
   };
 };
@@ -346,7 +375,7 @@ export const updateEmail = newEmail => {
         });
       })
       .catch(err => {
-        dispatch({ type: "UPDATE_EMAIL_FAILURE", err });
+        dispatch({ type: "UPDATE_EMAIL_FAILURE", payload: err.response });
       });
   };
 };
@@ -366,7 +395,7 @@ export const updatePassword = newPassword => {
         });
       })
       .catch(err => {
-        dispatch({ type: "UPDATE_PASSWORD_FAILURE", payload: err });
+        dispatch({ type: "UPDATE_PASSWORD_FAILURE", payload: err.response });
       });
   };
 };

@@ -56,15 +56,17 @@ const App = props => {
           </Router>
         </Suspense>
       ) : (
-        <Router>
-          <DealerDashBoard path="/sales">
-            <DealerDashboardMain path="/dash" />
-            <DealerLeadsMain path="/leads" />
-            <DealerInventoryMain path="/inventory" />
-            <DealerHelpMain path="/help" />
-            <DealerAccountMain path="/account" />
-          </DealerDashBoard>
-        </Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Router>
+            <DealerDashBoard path="/sales">
+              <DealerDashboardMain path="/dash" />
+              <DealerLeadsMain path="/leads" />
+              <DealerInventoryMain path="/inventory" />
+              <DealerHelpMain path="/help" />
+              <DealerAccountMain path="/account" />
+            </DealerDashBoard>
+          </Router>
+        </Suspense>
       )}
     </div>
   );

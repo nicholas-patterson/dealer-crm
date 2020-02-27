@@ -5,7 +5,6 @@ const initialState = {
 };
 
 export const usedInventoryReducer = (state = initialState, action) => {
-  console.log("STATE", state.inventory);
   switch (action.type) {
     case "ADD_USED_INV_START":
       return {

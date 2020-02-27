@@ -1,6 +1,12 @@
 const router = require("express").Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
+const {
+  emailValidation,
+  passwordValidation,
+  signupValidation,
+  usernameValidation
+} = require("../middleware/validation");
 
 // Get All Dealers
 router.get("/", async (req, res) => {
@@ -33,29 +39,35 @@ router.get("/:id", async (req, res) => {
 });
 
 // Register Dealer
-router.post("/register", async (req, res) => {
-  const password = req.body.dealer_password;
-  const hash = bcrypt.hashSync(password, 10);
+router.post(
+  "/register",
+  signupValidation,
+  emailValidation,
+  passwordValidation,
+  usernameValidation,
+  async (req, res) => {
+    const password = req.body.dealer_password;
+    const hash = bcrypt.hashSync(password, 10);
 
-  try {
-    const newDealer = await db.Dealer.create({
-      dealer_email: req.body.dealer_email,
-      dealer_username: req.body.dealer_username,
-      dealer_password: hash,
-      dealer_name: req.body.dealer_name,
-      dealer_street: req.body.dealer_street,
-      dealer_city: req.body.dealer_city,
-      dealer_state: req.body.dealer_state,
-      dealer_country: req.body.dealer_country,
-      dealer_zipcode: req.body.dealer_zipcode,
-      dealer_type: req.body.dealer_type
-    });
-    console.log("NEW DEALER", newDealer);
-    res.status(201).json(newDealer);
-  } catch (err) {
-    res.status(500).json(err);
+    try {
+      const newDealer = await db.Dealer.create({
+        dealer_email: req.body.dealer_email,
+        dealer_username: req.body.dealer_username,
+        dealer_password: hash,
+        dealer_name: req.body.dealer_name,
+        dealer_street: req.body.dealer_street,
+        dealer_city: req.body.dealer_city,
+        dealer_state: req.body.dealer_state,
+        dealer_country: req.body.dealer_country,
+        dealer_zipcode: req.body.dealer_zipcode,
+        dealer_type: req.body.dealer_type
+      });
+      res.status(201).json(newDealer);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   }
-});
+);
 
 // Login Dealer
 router.post("/login", async (req, res) => {
@@ -114,14 +126,13 @@ router.get("/all/leads", async (req, res) => {
       ]
     });
     res.status(200).json(leads);
-    console.log("LEADS BY DEALER ID", leads);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 // Update Email
-router.put("/email/update", (req, res) => {
+router.put("/email/update", emailValidation, (req, res) => {
   const { dealer_email, dealer_password } = req.body;
   db.Dealer.findOne({
     where: {
@@ -157,9 +168,8 @@ router.put("/email/update", (req, res) => {
 });
 
 // Update Password
-router.put("/password/update", (req, res) => {
+router.put("/password/update", passwordValidation, (req, res) => {
   const { current_password, new_password, confirm_new_password } = req.body;
-  console.log("USERNAME", req.session.dealer_user.dealer_username);
   db.Dealer.findOne({
     where: {
       dealer_username: req.session.dealer_user.dealer_username
@@ -171,10 +181,8 @@ router.put("/password/update", (req, res) => {
         current_password,
         dealer.dealer_password
       );
-      console.log("COMPARE PASS", comparePass);
       if (comparePass && new_password === confirm_new_password) {
         const hash = bcrypt.hashSync(new_password, 10);
-        console.log("HASH", hash);
         req.session.dealer_user.dealer_password = hash;
         return db.Dealer.update(
           {

@@ -20,8 +20,12 @@ router.get("/:id", async (req, res) => {
         id
       }
     });
-    console.log(lead);
-    res.status(200).json(lead);
+
+    if (!lead) {
+      res.status(400).json({ error: "Lead with that id does not exist" });
+    } else {
+      res.status(200).json(lead);
+    }
   } catch (err) {
     res.status(500).json(err);
   }

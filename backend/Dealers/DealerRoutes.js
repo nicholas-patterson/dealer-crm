@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
         id
       }
     });
-    if (dealer === null) {
+    if (!dealer) {
       res.status(400).json({ warning: "Dealer with that id is not found" });
     } else {
       res.status(200).json(dealer);
@@ -176,12 +176,11 @@ router.put("/password/update", passwordValidation, (req, res) => {
     }
   })
     .then(dealer => {
-      console.log(dealer);
       const comparePass = bcrypt.compareSync(
         current_password,
         dealer.dealer_password
       );
-      if (comparePass && new_password === confirm_new_password) {
+      if (dealer && comparePass && new_password === confirm_new_password) {
         const hash = bcrypt.hashSync(new_password, 10);
         req.session.dealer_user.dealer_password = hash;
         return db.Dealer.update(

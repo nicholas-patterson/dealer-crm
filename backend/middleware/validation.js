@@ -67,16 +67,19 @@ const signupValidation = (req, res, next) => {
   }
 };
 
-const usernameValidation = (req, res, next) => {
+const usernameValidation = async (req, res, next) => {
   const { dealer_username } = req.body;
 
   const usernameRegex = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
 
-  const usernameCheck = db.Dealer.findOne({
+  const usernameCheck = await db.Dealer.findOne({
     where: {
-      dealer_username
+      dealer_username: dealer_username
     }
   });
+
+  console.log("USERNAME ?", usernameCheck);
+  console.log("------------------");
 
   if (!usernameRegex.test(dealer_username)) {
     res.status(400).json({

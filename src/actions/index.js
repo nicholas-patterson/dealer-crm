@@ -64,7 +64,6 @@ export const registerSalesman = (user, navigate) => {
       .then(res => {
         console.log("RES IN REGISTER SALESMAN", res);
         dispatch({ type: "REG_SALESMAN_SUCCESS", payload: res.data });
-        navigate("/saleslogin");
       })
       .catch(err => {
         console.log(err.response);

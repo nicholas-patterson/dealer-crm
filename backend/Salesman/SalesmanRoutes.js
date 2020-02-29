@@ -1,6 +1,12 @@
 const router = require("express").Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
+const {
+  salesmanEmailValidation,
+  salesmanPasswordValidation,
+  salesmanSignupValidation,
+  salesmanUsernameValidation
+} = require("../middleware/validation");
 
 // Get All Salesman
 router.get("/", async (req, res) => {
@@ -28,25 +34,31 @@ router.get("/:id", async (req, res) => {
 });
 
 // Register Salesman
-router.post("/register", async (req, res) => {
-  const { salesman_password } = req.body;
-  const hash = bcrypt.hashSync(salesman_password, 10);
+router.post(
+  "/register",
+  salesmanSignupValidation,
+  salesmanEmailValidation,
+  salesmanPasswordValidation,
+  salesmanUsernameValidation,
+  async (req, res) => {
+    const { salesman_password } = req.body;
+    const hash = bcrypt.hashSync(salesman_password, 10);
 
-  try {
-    const newSalesman = await db.Salesman.create({
-      salesman_firstname: req.body.salesman_firstname,
-      salesman_lastname: req.body.salesman_lastname,
-      salesman_username: req.body.salesman_username,
-      salesman_password: hash,
-      salesman_email: req.body.salesman_email,
-      dealer_id: req.session.dealer_user.id
-    });
-    console.log("NEW SALESMAN", newSalesman);
-    res.status(201).json(newSalesman);
-  } catch (err) {
-    res.status(500).json(err);
+    try {
+      const newSalesman = await db.Salesman.create({
+        salesman_firstname: req.body.salesman_firstname,
+        salesman_lastname: req.body.salesman_lastname,
+        salesman_username: req.body.salesman_username,
+        salesman_password: hash,
+        salesman_email: req.body.salesman_email,
+        dealer_id: req.session.dealer_user.id
+      });
+      res.status(201).json(newSalesman);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   }
-});
+);
 
 //Login Salesman
 router.post("/login", async (req, res) => {
@@ -62,7 +74,12 @@ router.post("/login", async (req, res) => {
       salesman.salesman_password
     );
     if (comparePass && salesman) {
+      req.session.sales_user = salesman;
       res.status(201).json(salesman);
+    } else {
+      res
+        .status(400)
+        .json({ warning: "Username and/or Password are incorrect" });
     }
   } catch (err) {
     res.status(500).json(err);

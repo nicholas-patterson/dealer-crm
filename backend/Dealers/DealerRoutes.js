@@ -83,7 +83,9 @@ router.post("/login", async (req, res) => {
       req.session.dealer_user = user;
       res.status(201).json(user);
     } else {
-      res.status(400).json({ warning: "Username and Password do not match" });
+      res
+        .status(400)
+        .json({ warning: "Username and/or Password are incorrect" });
     }
   } catch (err) {
     res.status(500).json(err);

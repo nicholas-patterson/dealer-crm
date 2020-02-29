@@ -23,7 +23,8 @@ const DealerDashboard = props => {
     lead_street: "",
     lead_city: "",
     lead_state: "",
-    lead_type: ""
+    lead_type: "",
+    salesman_assign: ""
   });
   const [salesInfo, setSalesInfo] = useState({
     salesman_firstname: "",
@@ -66,13 +67,21 @@ const DealerDashboard = props => {
       lead_street: "",
       lead_city: "",
       lead_state: "",
-      lead_type: ""
+      lead_type: "",
+      salesman_assign: ""
     });
   };
   // handle submit for new salesman form
   const handleSalesSubmit = e => {
     e.preventDefault();
     props.registerSalesman(salesInfo, navigate);
+    setSalesInfo({
+      salesman_firstname: "",
+      salesman_lastname: "",
+      salesman_email: "",
+      salesman_username: "",
+      salesman_password: ""
+    });
     console.log(salesInfo);
   };
   // handle submit for new manager form
@@ -229,6 +238,19 @@ const DealerDashboard = props => {
                 <option value="walk-in">Walk-in</option>
                 <option value="referral">Referral</option>
                 <option value="online">Online</option>
+              </select>
+
+              <select
+                id="salesman-select"
+                className="leads-group"
+                onChange={handleLeadChange}
+                value={leadInfo.salesman_assign}
+                name="salesman_assign"
+              >
+                <option value="">Assign</option>
+                <option>Salesman One</option>
+                <option>Salesman Two</option>
+                <option>Salesman Three</option>
               </select>
 
               <Link

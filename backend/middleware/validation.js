@@ -1,5 +1,6 @@
 const db = require("../models");
 
+// Dealer Routes Validation
 const emailValidation = async (req, res, next) => {
   const { dealer_email } = req.body;
 
@@ -93,9 +94,98 @@ const usernameValidation = async (req, res, next) => {
   }
 };
 
+// Salesman Routes Validation
+
+const salesmanEmailValidation = async (req, res, next) => {
+  const { salesman_email } = req.body;
+
+  const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
+  const emailCheck = await db.Salesman.findOne({
+    where: {
+      salesman_email
+    }
+  });
+
+  if (!emailRegex.test(salesman_email)) {
+    res.status(400).json({ error: "Please enter a valid email" });
+  } else if (emailCheck) {
+    res.status(400).json({ error: "Email already taken" });
+  } else {
+    next();
+  }
+};
+
+const salesmanSignupValidation = (req, res, next) => {
+  const {
+    salesman_firstname,
+    salesman_lastname,
+    salesman_username,
+    salesman_password,
+    salesman_email
+  } = req.body;
+
+  if (
+    !salesman_firstname ||
+    !salesman_lastname ||
+    !salesman_username ||
+    !salesman_password ||
+    !salesman_email
+  ) {
+    res.status(400).json({ error: "All fields are required" });
+  } else {
+    next();
+  }
+};
+
+const salesmanUsernameValidation = async (req, res, next) => {
+  const { salesman_username } = req.body;
+
+  const usernameRegex = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+
+  const usernameCheck = await db.Dealer.findOne({
+    where: {
+      salesman_username
+    }
+  });
+
+  console.log("USERNAME ?", usernameCheck);
+  console.log("------------------");
+
+  if (!usernameRegex.test(salesman_username)) {
+    res.status(400).json({
+      error:
+        "Username must be between 8-20 characters, Can not have _ or . at beginning or at end"
+    });
+  } else if (usernameCheck) {
+    res.status(400).json({ error: "Username already exist" });
+  } else {
+    next();
+  }
+};
+
+const salesmanPasswordValidation = (req, res, next) => {
+  const { salesman_password } = req.body;
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/;
+
+  if (!passwordRegex.test(salesman_password)) {
+    res.status(400).json({
+      error:
+        "Password must be at least 6 characters and include 1 lowercase, 1 uppercase, 1 number, and a special character"
+    });
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   emailValidation,
   passwordValidation,
   signupValidation,
-  usernameValidation
+  usernameValidation,
+  salesmanEmailValidation,
+  salesmanPasswordValidation,
+  salesmanSignupValidation,
+  salesmanUsernameValidation
 };

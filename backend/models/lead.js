@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       lead_state: DataTypes.STRING,
       lead_email: DataTypes.STRING,
       lead_phone: DataTypes.STRING,
-      lead_type: DataTypes.STRING
+      lead_type: DataTypes.STRING,
+      salesman_id: DataTypes.INTEGER
     },
     {}
   );

@@ -33,10 +33,7 @@ router.get("/:id", async (req, res) => {
 
 // Add Lead
 router.post("/add", async (req, res) => {
-  console.log("LEAD_TYPE", req.body.lead_type);
-  console.log("DEALER ID", req.session.dealer_user);
-  console.log("--------------------------------");
-  console.log("SESSION", req.session.dealer_user);
+  console.log("BODDDDY", req.body);
   try {
     const newLead = await db.Lead.create({
       lead_firstname: req.body.lead_firstname,
@@ -47,10 +44,10 @@ router.post("/add", async (req, res) => {
       lead_email: req.body.lead_email,
       lead_phone: req.body.lead_phone,
       lead_type: req.body.lead_type,
+      salesman_id: req.body.salesman_id,
       dealer_id: req.session.dealer_user.id
-      //salesmanId: 1
     });
-    console.log("NEW LEAD", req.body.lead_type);
+    console.log("NEW LEAD", req.body);
     res.status(201).json(newLead);
   } catch (err) {
     res.status(500).json(err);

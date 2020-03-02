@@ -23,6 +23,25 @@ export const addSalespersonReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload
       };
+    case "GET_SALESMANS_START":
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case "GET_SALESMANS_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        person: action.payload
+      };
+
+    case "GET_SALESMANS_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
     default:
       return state;
   }

@@ -4,7 +4,6 @@ import { userReducer } from "./userReducer";
 import { addLeadReducer } from "./addLeadReducer";
 import { addSalespersonReducer } from "./addSalespersonReducer";
 import { deleteSalespersonReducer } from "./deleteSalespersonReducer";
-//import { editLeadReducer } from "./editLeadReducer";
 import { loginReducer } from "./loginReducer";
 import { registerReducer } from "./registerReducer";
 import { salesLoginReducer } from "./salesLoginReducer";
@@ -13,6 +12,7 @@ import { imageReducer } from "./imageReducer";
 import { usedInventoryReducer } from "./usedInventoryReducer";
 import { newInventoryReducer } from "./newInventoryReducer";
 import { salesRegisterReducer } from "./salesRegisterReducer";
+import { getSalesmanLeadReducer } from "./getSalesmanLeadReducer";
 
 export default combineReducers({
   dealerNavigationReducer,
@@ -20,7 +20,6 @@ export default combineReducers({
   addLeadReducer,
   addSalespersonReducer,
   deleteSalespersonReducer,
-  //editLeadReducer,
   loginReducer,
   registerReducer,
   salesLoginReducer,
@@ -28,5 +27,6 @@ export default combineReducers({
   imageReducer,
   usedInventoryReducer,
   newInventoryReducer,
-  salesRegisterReducer
+  salesRegisterReducer,
+  getSalesmanLeadReducer
 });

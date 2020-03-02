@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@reach/router";
 import { connect } from "react-redux";
+import { getSalesmans } from "../../actions/index";
 
 const DealerDashboardMain = props => {
   console.log("DEALERDASHMAIN", props);
@@ -57,7 +58,8 @@ const DealerDashboardMain = props => {
                   "console__control " +
                   (props.user === "salesman" ? "sales_border" : "dealer_border")
                 }
-                onClick={props.salesClick}
+                //onClick={props.salesClick}
+                onClick={getSalesmans()}
               >
                 <p>Add New Salesperson</p>
               </Link>
@@ -226,4 +228,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {})(DealerDashboardMain);
+export default connect(mapStateToProps, { getSalesmans })(DealerDashboardMain);

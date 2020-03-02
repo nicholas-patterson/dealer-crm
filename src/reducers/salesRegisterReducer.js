@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export const salesRegisterReducer = (state = initialState, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case "REG_SALESMAN_START":
       return {

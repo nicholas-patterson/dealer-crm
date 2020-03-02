@@ -53,6 +53,7 @@ router.post(
         salesman_email: req.body.salesman_email,
         dealer_id: req.session.dealer_user.id
       });
+      console.log("SALESMAN", newSalesman);
       res.status(201).json(newSalesman);
     } catch (err) {
       res.status(500).json(err);
@@ -81,6 +82,44 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ warning: "Username and/or Password are incorrect" });
     }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Get Leads by Salesman Id
+router.get("/all/leads", async (req, res) => {
+  try {
+    const [leads] = await db.Salesman.findAll({
+      attributes: [
+        "salesman_firstname",
+        "salesman_lastname",
+        "salesman_username",
+        "salesman_email"
+      ],
+      where: {
+        id: req.session.sales_user.id
+      },
+      include: [
+        {
+          model: db.Lead,
+          required: true,
+          attributes: [
+            "id",
+            "lead_firstname",
+            "lead_lastname",
+            "lead_street",
+            "lead_city",
+            "lead_state",
+            "lead_email",
+            "lead_phone",
+            "lead_type"
+          ]
+        }
+      ]
+    });
+    res.status(200).json(leads);
+    console.log(leads);
   } catch (err) {
     res.status(500).json(err);
   }

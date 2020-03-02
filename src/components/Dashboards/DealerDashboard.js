@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideNav from "../SideNav";
 import Logo from "../Logo/Logo";
 import Portal from "../Portal";
@@ -9,12 +9,17 @@ import DealerAccountMain from "../SwitchItems/DealerAccountMain";
 import DealerHelpMain from "../SwitchItems/DealerHelpMain";
 import { connect } from "react-redux";
 import { Link } from "@reach/router";
-import { addLead, registerSalesman } from "../../actions/index";
+import { addLead, registerSalesman, getSalesmans } from "../../actions/index";
 import { navigate } from "@reach/router";
 
 // Select Menu
 
 const DealerDashboard = props => {
+  useEffect(() => {
+    props.getSalesmans();
+  }, []);
+
+  console.log("PROPS IN DEALER DASH FOR SALESMAN", props);
   const [leadInfo, setLeadInfo] = useState({
     lead_firstname: "",
     lead_lastname: "",
@@ -24,7 +29,7 @@ const DealerDashboard = props => {
     lead_city: "",
     lead_state: "",
     lead_type: "",
-    salesman_assign: ""
+    salesman_id: null
   });
   const [salesInfo, setSalesInfo] = useState({
     salesman_firstname: "",
@@ -58,7 +63,7 @@ const DealerDashboard = props => {
   const handleLeadsSubmit = e => {
     e.preventDefault();
     props.addLead(leadInfo, navigate);
-    console.log("LEAD", leadInfo);
+    console.log("LEAD BEFORE CLEARED FIELDS", leadInfo);
     setLeadInfo({
       lead_firstname: "",
       lead_lastname: "",
@@ -68,8 +73,9 @@ const DealerDashboard = props => {
       lead_city: "",
       lead_state: "",
       lead_type: "",
-      salesman_assign: ""
+      salesman_id: null
     });
+    console.log("LEAD AFTER CLEARED FIELDS", leadInfo);
   };
   // handle submit for new salesman form
   const handleSalesSubmit = e => {
@@ -196,21 +202,6 @@ const DealerDashboard = props => {
                   <span className="leads-content-name">State</span>
                 </label>
               </div>
-              <div className="leads-field">
-                <input
-                  type="email"
-                  id="email"
-                  name="lead_email"
-                  autoComplete="off"
-                  required
-                  className="leads-group"
-                  value={leadInfo.lead_email}
-                  onChange={handleLeadChange}
-                />
-                <label htmlFor="inputField" className="leads-label-name">
-                  <span className="leads-content-name">Email</span>
-                </label>
-              </div>
               <div id="phone-column" className="leads-field">
                 <input
                   type="phone"
@@ -226,6 +217,21 @@ const DealerDashboard = props => {
                   <span className="leads-content-name">Phone</span>
                 </label>
               </div>
+              <div id="email-column" className="leads-field">
+                <input
+                  type="email"
+                  id="email"
+                  name="lead_email"
+                  autoComplete="off"
+                  required
+                  className="leads-group"
+                  value={leadInfo.lead_email}
+                  onChange={handleLeadChange}
+                />
+                <label htmlFor="inputField" className="leads-label-name">
+                  <span className="leads-content-name">Email</span>
+                </label>
+              </div>
 
               <select
                 id="leads-select"
@@ -234,7 +240,7 @@ const DealerDashboard = props => {
                 value={leadInfo.lead_type}
                 name="lead_type"
               >
-                <option value="">Select</option>
+                <option value="">Lead Type</option>
                 <option value="walk-in">Walk-in</option>
                 <option value="referral">Referral</option>
                 <option value="online">Online</option>
@@ -244,13 +250,17 @@ const DealerDashboard = props => {
                 id="salesman-select"
                 className="leads-group"
                 onChange={handleLeadChange}
-                value={leadInfo.salesman_assign}
-                name="salesman_assign"
+                name="salesman_id"
+                value={leadInfo.salesman_id}
               >
-                <option value="">Assign</option>
-                <option>Salesman One</option>
-                <option>Salesman Two</option>
-                <option>Salesman Three</option>
+                <option value={null}>Select A Salesman</option>
+                {props.salesmans.map(salesman => {
+                  return (
+                    <option value={salesman.id} key={salesman.id}>
+                      {salesman.salesman_firstname} {salesman.salesman_lastname}
+                    </option>
+                  );
+                })}
               </select>
 
               <Link
@@ -474,10 +484,13 @@ const DealerDashboard = props => {
 const mapStateToProps = state => {
   return {
     dash: state.dealerNavigationReducer.link,
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    salesmans: state.addSalespersonReducer.person
   };
 };
 
-export default connect(mapStateToProps, { addLead, registerSalesman })(
-  DealerDashboard
-);
+export default connect(mapStateToProps, {
+  addLead,
+  registerSalesman,
+  getSalesmans
+})(DealerDashboard);

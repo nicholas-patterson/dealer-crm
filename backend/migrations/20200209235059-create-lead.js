@@ -39,13 +39,13 @@ module.exports = {
           key: "id"
         }
       },
-      // salesman_id: {
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: "Salesman",
-      //     key: "id"
-      //   }
-      //},
+      salesman_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Salesmans",
+          key: "id"
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

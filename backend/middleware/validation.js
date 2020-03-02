@@ -143,7 +143,7 @@ const salesmanUsernameValidation = async (req, res, next) => {
 
   const usernameRegex = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
 
-  const usernameCheck = await db.Dealer.findOne({
+  const usernameCheck = await db.Salesman.findOne({
     where: {
       salesman_username
     }

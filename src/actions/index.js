@@ -94,7 +94,7 @@ export const loginUser = (user, navigate) => {
   };
 };
 
-// Login SALES User Action --DONE
+// Login SALESMAN User Action --DONE
 export const salesLoginUser = (user, navigate) => {
   return dispatch => {
     dispatch({ type: "LOGIN_SALES_USER_START" });
@@ -108,6 +108,23 @@ export const salesLoginUser = (user, navigate) => {
       })
       .catch(err => {
         dispatch({ type: "LOGIN_SALES_USER_FAILURE", payload: err.response });
+      });
+  };
+};
+
+// GET ALL SALESMAN
+export const getSalesmans = () => {
+  return dispatch => {
+    dispatch({ type: "GET_SALESMANS_START" });
+    axios
+      .get("http://localhost:5000/api/sales/", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({ type: "GET_SALESMANS_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: "GET_SALESMAN_FAILURE", payload: err.response });
       });
   };
 };
@@ -133,6 +150,27 @@ export const getDealerLeads = () => {
       })
       .catch(err => {
         dispatch({ type: "GET_DEALER_LEADS_FAILURE", payload: err.repsonse });
+      });
+  };
+};
+
+// Get Leads by Salesman --DONE
+export const getSalesmanLeads = () => {
+  return dispatch => {
+    dispatch({ type: "GET_SALESMAN_LEADS_START" });
+    axios
+      .get("http://localhost:5000/api/sales/all/leads", {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN ACTION", res);
+        dispatch({
+          type: "GET_SALESMAN_LEADS_SUCCESS",
+          payload: res.data.Leads
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "GET_SALESMAN_LEADS_FAILURE", payload: err.response });
       });
   };
 };

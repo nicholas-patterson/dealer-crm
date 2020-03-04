@@ -32,6 +32,9 @@ module.exports = {
       lead_type: {
         type: Sequelize.STRING
       },
+      salesman_lead: {
+        type: Sequelize.BOOLEAN
+      },
       dealer_id: {
         type: Sequelize.INTEGER,
         references: {

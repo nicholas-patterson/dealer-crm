@@ -154,8 +154,9 @@ const DealerInventoryMain = props => {
   };
 
   useEffect(() => {
-    props.getUsedInventory();
-    props.getNewInventory();
+    return props.user === "dealer"
+      ? props.getUsedInventory() && props.getNewInventory()
+      : undefined;
   }, []);
 
   return (

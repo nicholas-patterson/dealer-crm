@@ -26,15 +26,11 @@ const DealerAccountMain = lazy(() =>
   import("./components/SwitchItems/DealerAccountMain")
 );
 
-// import DealerDashBoard from "./components/Dashboards/DealerDashboard";
-// import DealerDashboardMain from "./components/SwitchItems/DealerDashboardMain";
-// import DealerLeadsMain from "./components/SwitchItems/DealerLeadsMain";
-// import DealerInventoryMain from "./components/SwitchItems/DealerInventoryMain";
-// import DealerHelpMain from "./components/SwitchItems/DealerHelpMain";
-// import DealerAccountMain from "./components/SwitchItems/DealerAccountMain";
+const SalesLeadMain = lazy(() =>
+  import("./components/SwitchItems/SalesLeadMain")
+);
 
 const App = props => {
-  console.log("PROPS IN APP.JS", props);
   return (
     <div className="middle">
       <Router>
@@ -43,7 +39,7 @@ const App = props => {
         <LoginForm path="/login" />
         <SalesLoginForm path="/saleslogin" />
       </Router>
-      {props.user === "dealer" ? (
+      {/* {props.user === "dealer" ? (
         <Suspense fallback={<div>Loading...</div>}>
           <Router>
             <DealerDashBoard path="/dealer">
@@ -60,14 +56,28 @@ const App = props => {
           <Router>
             <DealerDashBoard path="/sales">
               <DealerDashboardMain path="/dash" />
-              <DealerLeadsMain path="/leads" />
+              <SalesLeadMain path="/leads" />
               <DealerInventoryMain path="/inventory" />
               <DealerHelpMain path="/help" />
               <DealerAccountMain path="/account" />
             </DealerDashBoard>
           </Router>
         </Suspense>
-      )}
+      )} */}
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <Router>
+          <DealerDashBoard
+            path={props.user === "dealer" ? "/dealer" : "/sales"}
+          >
+            <DealerDashboardMain path="/dash" />
+            <DealerLeadsMain path="/leads" />
+            <DealerInventoryMain path="/inventory" />
+            <DealerHelpMain path="/help" />
+            <DealerAccountMain path="/account" />
+          </DealerDashBoard>
+        </Router>
+      </Suspense>
     </div>
   );
 };

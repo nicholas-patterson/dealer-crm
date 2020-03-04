@@ -4,21 +4,26 @@ import {
   getDealerLeads,
   deleteLead,
   editLead,
-  getSalesmanLeads
+  getSalesmanLeads,
+  deleteSalesmanLead
 } from "../../actions/index";
 import DealerSingleLeadMain from "./DealerSingleLeadMain";
-import SalesmanSingleLeadMain from "./SalesmanSingleLeadMain";
+import SalesSingleLeadMain from "./SalesSingleLeadMain";
 
 const DealerLeadsMain = props => {
-  console.log("SALES LEADS", props);
+  console.log("PROPS IN DEALER LEADS MAIN", props);
   useEffect(() => {
-    props.user === "salesman"
-      ? props.getSalesmanLeads()
-      : props.getDealerLeads();
+    return props.user === "dealer"
+      ? props.getDealerLeads()
+      : props.getSalesmanLeads();
   }, []);
 
   const handleLeadDelete = id => {
     props.deleteLead(id);
+  };
+
+  const handleSalesmanLeadDelete = id => {
+    props.deleteSalesmanLead(id);
   };
 
   return (
@@ -62,7 +67,6 @@ const DealerLeadsMain = props => {
             {props.user === "dealer"
               ? props.leads &&
                 props.leads.map((lead, index) => {
-                  console.log("DEALER LEAD IN MAP", lead);
                   return (
                     <DealerSingleLeadMain
                       index={index}
@@ -77,15 +81,15 @@ const DealerLeadsMain = props => {
                 })
               : props.sales_leads &&
                 props.sales_leads.map((lead, index) => {
-                  console.log("SALESMAN LEADS IN MAP", lead);
                   return (
-                    <SalesmanSingleLeadMain
+                    <SalesSingleLeadMain
                       index={index}
                       key={lead.id}
                       lead={lead}
                       user={props.user}
                       props={props}
                       leads={props.sales_leads}
+                      handleSalesmanLeadDelete={handleSalesmanLeadDelete}
                     />
                   );
                 })}
@@ -96,18 +100,34 @@ const DealerLeadsMain = props => {
   );
 };
 
+// {props.leads &&
+//   props.leads.map((lead, index) => {
+//     return (
+//       <DealerSingleLeadMain
+//         index={index}
+//         key={lead.id}
+//         lead={lead}
+//         handleLeadDelete={handleLeadDelete}
+//         user={props.user}
+//         props={props}
+//         leads={props.leads}
+//       />
+//     );
+//   })}
+
 const mapStateToProps = state => {
-  console.log("STATE STATE STATE", state);
+  console.log("MSTP", state.getSalesLeadReducer.leads);
   return {
     user: state.userReducer.user,
     leads: state.getDealerLeadReducer.leads,
-    sales_leads: state.getSalesmanLeadReducer.leads
+    sales_leads: state.getSalesLeadReducer.leads
   };
 };
 
 export default connect(mapStateToProps, {
+  getSalesmanLeads,
   getDealerLeads,
   deleteLead,
   editLead,
-  getSalesmanLeads
+  deleteSalesmanLead
 })(DealerLeadsMain);

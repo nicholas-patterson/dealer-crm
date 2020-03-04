@@ -9,14 +9,19 @@ import DealerAccountMain from "../SwitchItems/DealerAccountMain";
 import DealerHelpMain from "../SwitchItems/DealerHelpMain";
 import { connect } from "react-redux";
 import { Link } from "@reach/router";
-import { addLead, registerSalesman, getSalesmans } from "../../actions/index";
+import {
+  addLead,
+  registerSalesman,
+  getSalesmans,
+  addSalesLead
+} from "../../actions/index";
 import { navigate } from "@reach/router";
 
 // Select Menu
 
 const DealerDashboard = props => {
   useEffect(() => {
-    props.getSalesmans();
+    return props.user === "dealer" ? props.getSalesmans() : undefined;
   }, []);
 
   console.log("PROPS IN DEALER DASH FOR SALESMAN", props);
@@ -29,7 +34,9 @@ const DealerDashboard = props => {
     lead_city: "",
     lead_state: "",
     lead_type: "",
-    salesman_id: null
+    salesman_lead: 1,
+    salesman_id: null,
+    dealer_id: null || props.dealer_id
   });
   const [salesInfo, setSalesInfo] = useState({
     salesman_firstname: "",
@@ -62,7 +69,9 @@ const DealerDashboard = props => {
   //  handle Submit for new lead form
   const handleLeadsSubmit = e => {
     e.preventDefault();
-    props.addLead(leadInfo, navigate);
+    props.user === "dealer"
+      ? props.addLead(leadInfo, navigate)
+      : props.addSalesLead(leadInfo, navigate);
     console.log("LEAD BEFORE CLEARED FIELDS", leadInfo);
     setLeadInfo({
       lead_firstname: "",
@@ -246,22 +255,37 @@ const DealerDashboard = props => {
                 <option value="online">Online</option>
               </select>
 
-              <select
-                id="salesman-select"
-                className="leads-group"
-                onChange={handleLeadChange}
-                name="salesman_id"
-                value={leadInfo.salesman_id}
-              >
-                <option value={null}>Select A Salesman</option>
-                {props.salesmans.map(salesman => {
-                  return (
-                    <option value={salesman.id} key={salesman.id}>
-                      {salesman.salesman_firstname} {salesman.salesman_lastname}
-                    </option>
-                  );
-                })}
-              </select>
+              {props.user === "salesman" ? (
+                <input
+                  type="checkbox"
+                  id="salesman_lead"
+                  checked
+                  name="salesman_lead"
+                  value={leadInfo.salesman_lead}
+                  onChange={handleLeadChange}
+                  placeholder="Type"
+                />
+              ) : null}
+
+              {props.user === "dealer" ? (
+                <select
+                  id="salesman-select"
+                  className="leads-group"
+                  onChange={handleLeadChange}
+                  name="salesman_id"
+                  value={leadInfo.salesman_id}
+                >
+                  <option value={null}>Select A Salesman</option>
+                  {props.salesmans.map(salesman => {
+                    return (
+                      <option value={salesman.id} key={salesman.id}>
+                        {salesman.salesman_firstname}{" "}
+                        {salesman.salesman_lastname}
+                      </option>
+                    );
+                  })}
+                </select>
+              ) : null}
 
               <Link
                 className="leads-closeBtn"
@@ -462,6 +486,8 @@ const DealerDashboard = props => {
     }
   };
 
+  console.log("DEALER ID", props.dealer_id);
+
   return (
     <>
       <div className="dealer-container">
@@ -485,12 +511,14 @@ const mapStateToProps = state => {
   return {
     dash: state.dealerNavigationReducer.link,
     user: state.userReducer.user,
-    salesmans: state.addSalespersonReducer.person
+    salesmans: state.addSalespersonReducer.person,
+    dealer_id: state.salesLoginReducer.user.dealer_id
   };
 };
 
 export default connect(mapStateToProps, {
   addLead,
   registerSalesman,
-  getSalesmans
+  getSalesmans,
+  addSalesLead
 })(DealerDashboard);

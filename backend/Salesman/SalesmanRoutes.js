@@ -9,7 +9,7 @@ const {
 } = require("../middleware/validation");
 
 // Get All Salesman
-router.get("/", async (req, res) => {
+router.get("/salesmans", async (req, res) => {
   try {
     const salesmans = await db.Salesman.findAll();
     res.status(200).json(salesmans);
@@ -113,7 +113,10 @@ router.get("/all/leads", async (req, res) => {
             "lead_state",
             "lead_email",
             "lead_phone",
-            "lead_type"
+            "lead_type",
+            "salesman_lead",
+            "dealer_id",
+            "salesman_id"
           ]
         }
       ]

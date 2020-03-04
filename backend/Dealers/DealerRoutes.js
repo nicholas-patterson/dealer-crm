@@ -122,7 +122,10 @@ router.get("/all/leads", async (req, res) => {
             "lead_state",
             "lead_email",
             "lead_phone",
-            "lead_type"
+            "lead_type",
+            "salesman_id",
+            "dealer_id",
+            "salesman_lead"
           ]
         }
       ]

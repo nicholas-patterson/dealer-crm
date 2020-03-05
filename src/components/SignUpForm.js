@@ -3,9 +3,9 @@ import StepOne from "./FormSteps/StepOne";
 import StepTwo from "./FormSteps/StepTwo";
 import Logo from "./Logo/Logo";
 import { connect } from "react-redux";
-import { registerUser, getUserType } from "../actions/index";
+import { registerUser, getUserType, clearError } from "../actions/index";
 import { navigate } from "@reach/router";
-//import Banner from "react-js-banner";
+import Banner from "react-js-banner";
 
 const SignUpForm = props => {
   const [form, setForm] = useState({
@@ -38,6 +38,7 @@ const SignUpForm = props => {
     e.preventDefault();
     props.registerUser(form, navigate);
     props.getUserType("dealer");
+    props.clearError();
     console.log(form);
   };
 
@@ -67,9 +68,14 @@ const SignUpForm = props => {
     }
   };
 
+  console.log("SUF ERRORS", props.errors);
+
   return (
     <>
       <div className="wrapper">
+        {props.errors ? (
+          <Banner title={props.errors} visibility={3000} />
+        ) : null}
         <div className="signup-form">
           <Logo />
           <div className="signup-form__stepper">
@@ -100,11 +106,14 @@ const SignUpForm = props => {
 };
 
 const mapStateToProps = state => {
+  console.log("MSTP", state.registerReducer);
   return {
-    //error: state.registerReducer.error.data.error
+    errors: state.registerReducer.error
   };
 };
 
-export default connect(mapStateToProps, { registerUser, getUserType })(
-  SignUpForm
-);
+export default connect(mapStateToProps, {
+  registerUser,
+  getUserType,
+  clearError
+})(SignUpForm);

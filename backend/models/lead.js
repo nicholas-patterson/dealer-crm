@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       lead_phone: DataTypes.STRING,
       lead_type: DataTypes.STRING,
       salesman_lead: DataTypes.BOOLEAN,
-      salesman_id: DataTypes.INTEGER
+      salesman_id: DataTypes.INTEGER,
+      dealer_id: DataTypes.INTEGER
     },
     {}
   );

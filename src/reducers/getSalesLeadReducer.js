@@ -75,14 +75,20 @@ export const getSalesLeadReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        leads: state.leads.filter(lead => lead.id != action.payload.id)
+        leads: state.leads.filter(lead => lead.id !== action.payload.id)
+      };
+
+    case "CLEAR_ERROR":
+      return {
+        ...state,
+        error: ""
       };
 
     case "DELETE_SALESMAN_LEAD_FAILURE":
       return {
         ...state,
         isLoading: false,
-        error: action.payload
+        error: action.payload.data.error
       };
     default:
       return state;

@@ -3,7 +3,7 @@
 const initialState = {
   user: [],
   isRegistering: false,
-  error: []
+  error: ""
 };
 
 export const registerReducer = (state = initialState, action) => {
@@ -20,11 +20,17 @@ export const registerReducer = (state = initialState, action) => {
         user: action.payload
       };
 
+    case "CLEAR_ERROR":
+      return {
+        ...state,
+        error: ""
+      };
+
     case "REG_USER_FAILURE":
       return {
         ...state,
         isRegistering: false,
-        error: action.payload
+        error: action.payload.data.error
       };
 
     default:

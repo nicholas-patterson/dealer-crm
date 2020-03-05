@@ -31,6 +31,12 @@ export const getUserType = user => {
   };
 };
 
+export const clearError = () => {
+  return {
+    type: "CLEAR_ERROR"
+  };
+};
+
 // Register DEALER Action --DONE
 export const registerUser = (user, navigate) => {
   console.log(navigate);
@@ -66,7 +72,6 @@ export const registerSalesman = (user, navigate) => {
         dispatch({ type: "REG_SALESMAN_SUCCESS", payload: res.data });
       })
       .catch(err => {
-        console.log(err.response);
         dispatch({
           type: "REG_SALESMAN_FAILURE",
           payload: err.response

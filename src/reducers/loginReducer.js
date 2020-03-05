@@ -14,6 +14,11 @@ export const loginReducer = (state = initialState, action) => {
         ...state,
         isLogged: false
       };
+    case "CLEAR_ERROR":
+      return {
+        ...state,
+        error: ""
+      };
     case "LOGIN_USER_SUCCESS":
       return {
         ...state,
@@ -23,10 +28,11 @@ export const loginReducer = (state = initialState, action) => {
       };
 
     case "LOGIN_USER_FAILURE":
+      console.log("FAILURE", action.payload);
       return {
         ...state,
         isLogged: false,
-        error: "Login Failed"
+        error: action.payload.data.warning
       };
 
     case "LOGOUT_USER_START":
@@ -85,11 +91,17 @@ export const loginReducer = (state = initialState, action) => {
         dealer_password: action.payload
       };
 
+    case "CLEAR_ERROR":
+      return {
+        ...state,
+        error: ""
+      };
+
     case "UPDATE_PASSWORD_FAILURE":
       return {
         ...state,
         isLogged: true,
-        error: action.payload
+        error: action.payload.data.error
       };
 
     default:

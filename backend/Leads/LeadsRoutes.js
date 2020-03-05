@@ -78,7 +78,7 @@ router.post("/sales/add", async (req, res) => {
   }
 });
 
-// Edit Lead
+// Edit Lead for Dealer
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -86,22 +86,56 @@ router.put("/update/:id", async (req, res) => {
     const [rowsUpdated, [updatedBook]] = await db.Lead.update(
       {
         lead_firstname: req.body.lead_firstname,
-        lead_lastname: req.body.lastname,
+        lead_lastname: req.body.lead_lastname,
         lead_street: req.body.lead_street,
         lead_city: req.body.lead_city,
         lead_state: req.body.lead_state,
         lead_email: req.body.lead_email,
         lead_phone: req.body.lead_phone,
         lead_type: req.body.lead_type,
-        dealer_id: req.session.dealer_user.id
+        dealer_id: req.session.dealer_user.id,
+        salesman_lead: req.body.salesman_lead,
+        salesman_id: req.body.salesman_id
       },
       { returning: true, where: { id } }
     );
-    console.log("ROWS UDATED", rowsUpdated);
     if (rowsUpdated === 0) {
       res
         .status(400)
         .json({ warning: "Lead with that id was not found and or updated" });
+    } else {
+      res.status(200).json({ rowsUpdated, updatedBook });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Edit Lead for Salesman checks is lead was created by salesman or not
+router.put("/update/sales/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [rowsUpdated, [updatedBook]] = await db.Lead.update(
+      {
+        lead_firstname: req.body.lead_firstname,
+        lead_lastname: req.body.lead_lastname,
+        lead_street: req.body.lead_street,
+        lead_city: req.body.lead_city,
+        lead_state: req.body.lead_state,
+        lead_email: req.body.lead_email,
+        lead_phone: req.body.lead_phone,
+        lead_type: req.body.lead_type,
+        dealer_id: req.body.dealer_id,
+        salesman_lead: req.body.salesman_lead,
+        salesman_id: req.session.sales_user.id
+      },
+      { returning: true, where: { id } }
+    );
+    if (!salesman_lead) {
+      res
+        .status(400)
+        .json({ warning: "Lead wad created by Dealer...Dealer must delete" });
     } else {
       res.status(200).json({ rowsUpdated, updatedBook });
     }

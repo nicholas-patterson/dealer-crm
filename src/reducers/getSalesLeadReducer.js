@@ -43,6 +43,28 @@ export const getSalesLeadReducer = (state = initialState, action) => {
         error: action.payload
       };
 
+    case "EDIT_SALES_LEADS_START":
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case "EDIT_SALES_LEADS_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        leads: state.leads.map(lead =>
+          lead.id === action.payload.id ? action.payload : lead
+        )
+      };
+
+    case "EDIT_SALES_LEADS_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+
     case "DELETE_SALESMAN_LEAD_START":
       return {
         ...state,

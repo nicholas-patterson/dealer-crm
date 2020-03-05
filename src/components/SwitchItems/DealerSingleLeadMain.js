@@ -12,7 +12,8 @@ const DealerSingleLeadMain = ({
   index,
   user,
   props,
-  leads
+  leads,
+  dealer_id
 }) => {
   const [modal, setModal] = useState(false);
   const [leadEditInfo, setLeadEditInfo] = useState({
@@ -22,12 +23,18 @@ const DealerSingleLeadMain = ({
     lead_phone: props.leads[index].lead_phone || "",
     lead_street: props.leads[index].lead_street || "",
     lead_city: props.leads[index].lead_city || "",
-    lead_state: props.leads[index].lead_state | "",
-    lead_type: props.leads[index].lead_type || ""
+    lead_state: props.leads[index].lead_state || "",
+    lead_type: props.leads[index].lead_type || "",
+    dealer_id: null || dealer_id,
+    salesman_lead: props.leads[index].salesman_lead || null,
+    salesman_id: props.leads[index].salesman_id || null
   });
 
-  console.log("MY LEAD DATA IN DSLM", leads);
+  console.log("PROPS LEAD IN EDIT", props.leads[index].lead_state);
 
+  console.log("MY LEAD DATA IN DSLM", leads);
+  console.log("DEALR ID", dealer_id);
+  console.log("LEAD", lead);
   // sets modal to true when click on edit button
   const handleLeadEdit = () => {
     setModal(true);
@@ -36,6 +43,7 @@ const DealerSingleLeadMain = ({
   //submits edited lead
   const handleLeadsEditSubmit = e => {
     e.preventDefault();
+    console.log("LEAD EDIT IN SUBMIT", leadEditInfo);
   };
 
   const handleEditLeadChange = e => {

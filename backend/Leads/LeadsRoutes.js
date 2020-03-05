@@ -189,7 +189,7 @@ router.delete("/remove/sales/:id", (req, res) => {
       console.log("LEAD IN FIRST RES", lead);
       if (!lead.salesman_lead) {
         res.status(400).json({
-          warning: "Lead Was Assigned By Dealer. Must Have Dealer Delete Lead"
+          error: "Lead Was Assigned By Dealer. Must Have Dealer Delete Lead"
         });
       } else {
         return db.Lead.destroy({

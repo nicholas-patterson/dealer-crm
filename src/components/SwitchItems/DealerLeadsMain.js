@@ -6,10 +6,12 @@ import {
   editLead,
   getSalesmanLeads,
   deleteSalesmanLead,
-  editSalesLead
+  editSalesLead,
+  clearError
 } from "../../actions/index";
 import DealerSingleLeadMain from "./DealerSingleLeadMain";
 import SalesSingleLeadMain from "./SalesSingleLeadMain";
+import Banner from "react-js-banner";
 
 const DealerLeadsMain = props => {
   console.log("PROPS IN DEALER LEADS MAIN", props);
@@ -25,10 +27,12 @@ const DealerLeadsMain = props => {
 
   const handleSalesmanLeadDelete = id => {
     props.deleteSalesmanLead(id);
+    props.clearError();
   };
 
   return (
     <>
+      {props.errors ? <Banner title={props.errors} visibleTime={3000} /> : null}
       <div className="header-dealer">
         <div className="header-dealer__name">Dealership: Ford</div>
         <div className="header-dealer__notifications">Notifications</div>
@@ -111,7 +115,8 @@ const mapStateToProps = state => {
     leads: state.getDealerLeadReducer.leads,
     sales_leads: state.getSalesLeadReducer.leads,
     dealer_id: state.loginReducer.user.id,
-    sales_dealer_id: state.salesLoginReducer.user.id
+    sales_dealer_id: state.salesLoginReducer.user.id,
+    errors: state.getSalesLeadReducer.error
   };
 };
 
@@ -121,5 +126,6 @@ export default connect(mapStateToProps, {
   deleteLead,
   editLead,
   deleteSalesmanLead,
-  editSalesLead
+  editSalesLead,
+  clearError
 })(DealerLeadsMain);

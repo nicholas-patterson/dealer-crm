@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Logo from "./Logo/Logo";
 import { connect } from "react-redux";
-import { loginUser, getUserType } from "../actions/index";
+import { loginUser, getUserType, clearError } from "../actions/index";
 import { navigate } from "@reach/router";
 import { Link } from "@reach/router";
+import Banner from "react-js-banner";
 
 const LogInForm = props => {
+  console.log("PROPS IN LOGIN", props);
   const [user, setUser] = useState({
     username: "",
     password: ""
@@ -20,8 +22,8 @@ const LogInForm = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(user);
     props.loginUser(user, navigate);
+    props.clearError();
   };
 
   const handleSalesForm = e => {
@@ -31,6 +33,9 @@ const LogInForm = props => {
   return (
     <>
       <div className="wrapper">
+        {props.errors ? (
+          <Banner title={props.errors} visibleTime={3000} />
+        ) : null}
         <div className="login-form">
           <Logo />
           <div className="login-form-container">
@@ -99,4 +104,12 @@ const LogInForm = props => {
   );
 };
 
-export default connect(null, { loginUser, getUserType })(LogInForm);
+const mapStateToProps = state => {
+  return {
+    errors: state.loginReducer.error
+  };
+};
+
+export default connect(mapStateToProps, { loginUser, getUserType, clearError })(
+  LogInForm
+);

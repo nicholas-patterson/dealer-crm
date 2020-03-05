@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { updateEmail, updatePassword } from "../../actions";
+import { updateEmail, updatePassword, clearError } from "../../actions";
+import Banner from "react-js-banner";
 
 const DealerAccountMain = props => {
   console.log("PROPS IN ACCOUNT PAGE", props);
@@ -54,7 +55,7 @@ const DealerAccountMain = props => {
 
   const handlePasswordSection = e => {
     e.preventDefault();
-    console.log("IN SUBMIT PASSWORD", passwordInformation);
+    props.clearError();
     setPasswordInformation({
       current_password: "",
       new_password: "",
@@ -64,6 +65,7 @@ const DealerAccountMain = props => {
 
   return (
     <>
+      {props.errors ? <Banner title={props.errors} visibleTime={3000} /> : null}
       <h2 className="pi-title">My Details</h2>
       <h4 className="pi-subtitle">Personal Information</h4>
 
@@ -271,10 +273,13 @@ const mapStateToProps = state => {
   console.log("MSTP", state);
   return {
     dealer:
-      state.loginReducer.dealer_email || state.loginReducer.user.dealer_email
+      state.loginReducer.dealer_email || state.loginReducer.user.dealer_email,
+    errors: state.loginReducer.error
   };
 };
 
-export default connect(mapStateToProps, { updateEmail, updatePassword })(
-  DealerAccountMain
-);
+export default connect(mapStateToProps, {
+  updateEmail,
+  updatePassword,
+  clearError
+})(DealerAccountMain);

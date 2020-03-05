@@ -1,10 +1,10 @@
-const initalState = {
+const initialState = {
   lead: [],
   isLoading: false,
   error: ""
 };
 
-export const addLeadReducer = (state = initalState, action) => {
+export const addLeadReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_LEAD_START":
       return {

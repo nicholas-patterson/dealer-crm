@@ -456,6 +456,28 @@ export const getSalesmanLeads = () => {
   };
 };
 
+// Edit Salesman Leads --DONE
+export const editSalesLead = (lead_id, lead_info) => {
+  return dispatch => {
+    dispatch({ type: "EDIT_SALES_LEADS_START" });
+    axios
+      .put(
+        `http://localhost:5000/api/leads/update/sales/${lead_id}`,
+        lead_info,
+        {
+          withCredentials: true
+        }
+      )
+      .then(res => {
+        dispatch({ type: "EDIT_SALES_LEADS_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: "EDIT_SALES_LEADS_FAILURE", payload: err.response });
+      });
+  };
+};
+
+// Delete Salesman Lead -- DONE
 export const deleteSalesmanLead = lead_id => {
   return dispatch => {
     dispatch({ type: "DELETE_SALESMAN_LEAD_START" });

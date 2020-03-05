@@ -36,6 +36,25 @@ const passwordValidation = (req, res, next) => {
   }
 };
 
+const dealerPasswordUpdateValidation = (req, res, next) => {
+  const { new_password, confirm_new_password } = req.body;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/;
+
+  if (new_password !== confirm_new_password) {
+    res.status(400).json({ error: "Passwords do not match" });
+  } else if (
+    !passwordRegex.test(new_password) ||
+    !passwordRegex.test(confirm_new_password)
+  ) {
+    res.status(400).json({
+      error:
+        "Password must be at least 6 characters and include 1 lowercase, 1 uppercase, 1 number, and a special character"
+    });
+  } else {
+    next();
+  }
+};
+
 const signupValidation = (req, res, next) => {
   const {
     dealer_email,
@@ -79,9 +98,6 @@ const usernameValidation = async (req, res, next) => {
     }
   });
 
-  console.log("USERNAME ?", usernameCheck);
-  console.log("------------------");
-
   if (!usernameRegex.test(dealer_username)) {
     res.status(400).json({
       error:
@@ -89,6 +105,30 @@ const usernameValidation = async (req, res, next) => {
     });
   } else if (usernameCheck) {
     res.status(400).json({ error: "Username already exist" });
+  } else {
+    next();
+  }
+};
+
+const dealerSignInValidation = async (req, res, next) => {
+  const { username, password } = req.body;
+
+  const usernameCheck = await db.Dealer.findOne({
+    where: {
+      dealer_username: username
+    }
+  });
+
+  console.log(usernameCheck);
+
+  if (username.length < 8 || username.length > 20) {
+    res.status(400).json({ warning: "Please enter a valid usename" });
+  } else if (!username) {
+    res.status(400).json({ warning: "You must enter a username" });
+  } else if (!password) {
+    res.status(400).json({ warning: "you must enter a pasword" });
+  } else if (!usernameCheck) {
+    res.status(400).json({ warning: "Username does not exist" });
   } else {
     next();
   }
@@ -187,5 +227,7 @@ module.exports = {
   salesmanEmailValidation,
   salesmanPasswordValidation,
   salesmanSignupValidation,
-  salesmanUsernameValidation
+  salesmanUsernameValidation,
+  dealerSignInValidation,
+  dealerPasswordUpdateValidation
 };

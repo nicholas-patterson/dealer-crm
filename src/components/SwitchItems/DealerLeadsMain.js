@@ -5,7 +5,8 @@ import {
   deleteLead,
   editLead,
   getSalesmanLeads,
-  deleteSalesmanLead
+  deleteSalesmanLead,
+  editSalesLead
 } from "../../actions/index";
 import DealerSingleLeadMain from "./DealerSingleLeadMain";
 import SalesSingleLeadMain from "./SalesSingleLeadMain";
@@ -67,6 +68,7 @@ const DealerLeadsMain = props => {
             {props.user === "dealer"
               ? props.leads &&
                 props.leads.map((lead, index) => {
+                  console.log("LEAD IN MAP", lead);
                   return (
                     <DealerSingleLeadMain
                       index={index}
@@ -76,6 +78,7 @@ const DealerLeadsMain = props => {
                       user={props.user}
                       props={props}
                       leads={props.leads}
+                      dealer_id={props.dealer_id}
                     />
                   );
                 })
@@ -90,6 +93,7 @@ const DealerLeadsMain = props => {
                       props={props}
                       leads={props.sales_leads}
                       handleSalesmanLeadDelete={handleSalesmanLeadDelete}
+                      sales_dealer_id={props.sales_dealer_id}
                     />
                   );
                 })}
@@ -100,27 +104,14 @@ const DealerLeadsMain = props => {
   );
 };
 
-// {props.leads &&
-//   props.leads.map((lead, index) => {
-//     return (
-//       <DealerSingleLeadMain
-//         index={index}
-//         key={lead.id}
-//         lead={lead}
-//         handleLeadDelete={handleLeadDelete}
-//         user={props.user}
-//         props={props}
-//         leads={props.leads}
-//       />
-//     );
-//   })}
-
 const mapStateToProps = state => {
-  console.log("MSTP", state.getSalesLeadReducer.leads);
+  console.log("MSTP", state);
   return {
     user: state.userReducer.user,
     leads: state.getDealerLeadReducer.leads,
-    sales_leads: state.getSalesLeadReducer.leads
+    sales_leads: state.getSalesLeadReducer.leads,
+    dealer_id: state.loginReducer.user.id,
+    sales_dealer_id: state.salesLoginReducer.user.id
   };
 };
 
@@ -129,5 +120,6 @@ export default connect(mapStateToProps, {
   getDealerLeads,
   deleteLead,
   editLead,
-  deleteSalesmanLead
+  deleteSalesmanLead,
+  editSalesLead
 })(DealerLeadsMain);

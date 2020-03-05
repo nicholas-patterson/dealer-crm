@@ -5,7 +5,9 @@ const {
   emailValidation,
   passwordValidation,
   signupValidation,
-  usernameValidation
+  usernameValidation,
+  dealerSignInValidation,
+  dealerPasswordUpdateValidation
 } = require("../middleware/validation");
 
 // Get All Dealers
@@ -70,7 +72,7 @@ router.post(
 );
 
 // Login Dealer
-router.post("/login", async (req, res) => {
+router.post("/login", dealerSignInValidation, async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await db.Dealer.findOne({
@@ -173,7 +175,7 @@ router.put("/email/update", emailValidation, (req, res) => {
 });
 
 // Update Password
-router.put("/password/update", passwordValidation, (req, res) => {
+router.put("/password/update", dealerPasswordUpdateValidation, (req, res) => {
   const { current_password, new_password, confirm_new_password } = req.body;
   db.Dealer.findOne({
     where: {
@@ -201,10 +203,6 @@ router.put("/password/update", passwordValidation, (req, res) => {
           .catch(err => {
             res.status(400).json(err);
           });
-      } else {
-        res.status(400).json({
-          warning: "Current Password is incorrect and/or passwords do not match"
-        });
       }
     })
     .catch(err => {

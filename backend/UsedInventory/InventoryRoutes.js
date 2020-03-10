@@ -43,6 +43,7 @@ router.post("/add", async (req, res) => {
     });
     console.log(newInventory);
     res.status(201).json(newInventory);
+    // Notification that dealer added an item to Used Inventory
   } catch (err) {
     res.status(500).json(err);
   }
@@ -90,6 +91,7 @@ router.delete("/delete/:id", (req, res) => {
           console.log("DELETED INVENTORY", deletedInventory);
           if (deletedInventory === 1) {
             res.status(200).json({ deletedInventory: inventory });
+            // Notification that dealer has deleted a used inventory item
           }
         })
         .catch(err => {

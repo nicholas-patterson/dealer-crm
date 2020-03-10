@@ -5,6 +5,7 @@ import WelcomePage from "./components/WelcomePage";
 import SignUpForm from "./components/SignUpForm";
 import LoginForm from "./components/LogInForm";
 import SalesLoginForm from "./components/SalesLoginForm";
+import Loading from "./components/Loading";
 // Import for lazy load
 
 const DealerDashBoard = lazy(() =>
@@ -39,33 +40,8 @@ const App = props => {
         <LoginForm path="/login" />
         <SalesLoginForm path="/saleslogin" />
       </Router>
-      {/* {props.user === "dealer" ? (
-        <Suspense fallback={<div>Loading...</div>}>
-          <Router>
-            <DealerDashBoard path="/dealer">
-              <DealerDashboardMain path="/dash" />
-              <DealerLeadsMain path="/leads" />
-              <DealerInventoryMain path="/inventory" />
-              <DealerHelpMain path="/help" />
-              <DealerAccountMain path="/account" />
-            </DealerDashBoard>
-          </Router>
-        </Suspense>
-      ) : (
-        <Suspense fallback={<div>Loading...</div>}>
-          <Router>
-            <DealerDashBoard path="/sales">
-              <DealerDashboardMain path="/dash" />
-              <SalesLeadMain path="/leads" />
-              <DealerInventoryMain path="/inventory" />
-              <DealerHelpMain path="/help" />
-              <DealerAccountMain path="/account" />
-            </DealerDashBoard>
-          </Router>
-        </Suspense>
-      )} */}
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Router>
           <DealerDashBoard
             path={props.user === "dealer" ? "/dealer" : "/sales"}

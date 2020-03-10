@@ -43,6 +43,7 @@ router.post("/add", async (req, res) => {
       image_id: req.session.image.id
     });
     res.status(201).json(newInventory);
+    // Notification that dealer has added a new item to new inventory
   } catch (err) {
     res.status(500).json(err);
   }
@@ -88,6 +89,7 @@ router.delete("/delete/:id", (req, res) => {
           console.log("DELETED INVENTORY", deletedInventory);
           if (deletedInventory === 1) {
             res.status(200).json({ deletedInventory: inventory });
+            // Notification to dealer that they deleted a new inv item
           }
         })
         .catch(err => {

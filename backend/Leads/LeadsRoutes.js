@@ -111,6 +111,7 @@ router.put("/update/:id", async (req, res) => {
         .json({ warning: "Lead with that id was not found and or updated" });
     } else {
       res.status(200).json({ rowsUpdated, updatedBook });
+      // Sends notification to dealer that they have updated a lead
     }
   } catch (err) {
     res.status(500).json(err);
@@ -144,6 +145,7 @@ router.put("/update/sales/:id", async (req, res) => {
         .json({ warning: "Lead wad created by Dealer...Dealer must delete" });
     } else {
       res.status(200).json({ rowsUpdated, updatedBook });
+      // Sends notification to salesman that they have updated one of their leads
     }
   } catch (err) {
     res.status(500).json(err);
@@ -171,6 +173,7 @@ router.delete("/remove/:id", (req, res) => {
         .then(deletedLead => {
           if (deletedLead === 1) {
             res.status(200).json({ deletedLead: lead });
+            // Notification that dealer has deleted one of their leads
           }
           console.log("LEAD IN SECOND RES", lead);
         })
@@ -207,6 +210,7 @@ router.delete("/remove/sales/:id", (req, res) => {
             if (deletedLead === 1) {
               res.status(200).json({ deletedLead: lead });
             }
+            // Notification that salesman has deleted one of their leads
           })
           .catch(err => {
             res.status(500).json(err);

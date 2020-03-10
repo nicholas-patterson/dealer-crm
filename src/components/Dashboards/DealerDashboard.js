@@ -17,12 +17,25 @@ import {
 } from "../../actions/index";
 import { navigate } from "@reach/router";
 
+import io from "socket.io-client";
+
+const socket = io("http://localhost:5000", {
+  transports: ["websocket"]
+  //multiplex: "false"
+});
+
 // Select Menu
 
 const DealerDashboard = props => {
   useEffect(() => {
     return props.user === "dealer" ? props.getSalesmans() : undefined;
   }, []);
+
+  useEffect(() => {
+    socket.on("leadadd", message => {
+      console.log(message);
+    });
+  }, [props.leads]);
 
   console.log("PROPS IN DEALER DASH FOR SALESMAN", props);
   const [leadInfo, setLeadInfo] = useState({
@@ -512,7 +525,8 @@ const mapStateToProps = state => {
     dash: state.dealerNavigationReducer.link,
     user: state.userReducer.user,
     salesmans: state.addSalespersonReducer.person,
-    dealer_id: state.salesLoginReducer.user.dealer_id
+    dealer_id: state.salesLoginReducer.user.dealer_id,
+    leads: state.getDealerLeadReducer.leads
   };
 };
 

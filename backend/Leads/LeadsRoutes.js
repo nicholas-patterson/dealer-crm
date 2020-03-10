@@ -31,8 +31,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Add Lead
+// Add Lead For Dealer Session
 router.post("/add", async (req, res) => {
+  const io = req.app.get("socketio");
   console.log("BODDDDY", req.body);
   try {
     const newLead = await db.Lead.create({
@@ -47,14 +48,17 @@ router.post("/add", async (req, res) => {
       salesman_id: req.body.salesman_id,
       dealer_id: req.session.dealer_user.id
     });
-    console.log("NEW LEAD", req.body);
     res.status(201).json(newLead);
+    // IF salesman_id IS NULL lead is not created for specific salesman. But if salesman_id is a number it's the id of the salesman from select menu value.
+    // When dealer creates a lead for salesman how do I get that notification to come to salesman socket.
+    // I would need salesman socket id. But i won't have the salesman socket id until they login.
+    io.emit("leadadd", "You added a lead");
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// Add Lead For Salesman
+// Add Lead For Salesman Session
 router.post("/sales/add", async (req, res) => {
   console.log("BODDDDY", req.body);
   try {
@@ -71,6 +75,8 @@ router.post("/sales/add", async (req, res) => {
       salesman_id: req.session.sales_user.id,
       dealer_id: req.body.dealer_id
     });
+    // Would give a notification only to the salesman who added a lead to their list
+    // Would be easy because salesman would already be logged in so they would have a session and socket id
     console.log("NEW LEAD", req.body);
     res.status(201).json(newLead);
   } catch (err) {

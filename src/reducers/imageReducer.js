@@ -57,8 +57,6 @@ export const imageReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         images: state.images.filter(img => {
-          console.log("IMG IN REDUCER", img);
-          console.log("ACTION PAYLOAD IN IMG REDUCER", action.payload);
           return img.id !== action.payload.id;
         })
       };

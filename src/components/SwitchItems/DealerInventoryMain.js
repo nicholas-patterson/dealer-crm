@@ -127,7 +127,15 @@ const DealerInventoryMain = props => {
     formData.append("car_picture", usedInventoryAdd.car_picture);
     formData.append("upload_preset", "darwin");
     props.addImage(formData, usedInventoryAdd);
-    console.log("In Handle Submit", usedInventoryAdd);
+    setUsedInventoryAdd({
+      car_picture: "",
+      year: "",
+      make: "",
+      model: "",
+      price: "",
+      miles: "",
+      info: ""
+    });
   };
 
   // handleSubmit for New Inv Form
@@ -137,7 +145,15 @@ const DealerInventoryMain = props => {
     formData.append("car_picture", newInventoryAdd.car_picture);
     formData.append("upload_preset", "darwin");
     props.addNewImage(formData, newInventoryAdd);
-    console.log("In Handle Submit New Inv", newInventoryAdd);
+    setNewInventoryAdd({
+      car_picture: "",
+      year: "",
+      make: "",
+      model: "",
+      price: "",
+      miles: "",
+      info: ""
+    });
   };
 
   // Set inventory state to false
@@ -504,7 +520,6 @@ const DealerInventoryMain = props => {
               <Slider style={{ marginTop: "3rem" }}>
                 {props.newInv &&
                   props.newInv.map((inv, idx) => {
-                    console.log("HELLO", inv);
                     return (
                       <Slide>
                         <Card key={idx} className={classes.root}>
@@ -655,7 +670,6 @@ const DealerInventoryMain = props => {
               <Slider style={{ marginTop: "3rem" }}>
                 {props.usedInv &&
                   props.usedInv.map((inv, idx) => {
-                    console.log("USED INV", inv.image_id);
                     return (
                       <Slide>
                         <Card key={idx} className={classes.root}>

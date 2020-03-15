@@ -18,3 +18,23 @@
 @import "pages/managerform";
 @import "pages/_dealeraccountmain.scss";
 @import "pages/loading";
+
+.page {
+  position: relative;
+}
+
+.fade-appear,
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-appear-active,
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms linear 150ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}

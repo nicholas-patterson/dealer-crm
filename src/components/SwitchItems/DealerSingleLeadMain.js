@@ -30,11 +30,6 @@ const DealerSingleLeadMain = ({
     salesman_id: props.leads[index].salesman_id || null
   });
 
-  console.log("PROPS LEAD IN EDIT", props.leads[index].lead_state);
-
-  console.log("MY LEAD DATA IN DSLM", leads);
-  console.log("DEALR ID", dealer_id);
-  console.log("LEAD", lead);
   // sets modal to true when click on edit button
   const handleLeadEdit = () => {
     setModal(true);

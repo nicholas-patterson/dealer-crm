@@ -83,7 +83,6 @@ export const newInventoryReducer = (state = initialState, action) => {
         loading: false,
         newInventory: [...result]
       };
-
     default:
       return state;
   }

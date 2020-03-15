@@ -30,9 +30,6 @@ const SalesSingleLeadMain = ({
     salesman_id: leads[index].salesman_id || null
   });
 
-  console.log("LEADS", leads);
-  console.log("DEALER ID", sales_dealer_id);
-
   const handleSalesLeadEdit = () => {
     setModal(true);
   };
@@ -48,7 +45,7 @@ const SalesSingleLeadMain = ({
       [e.target.name]: e.target.value
     });
   };
-  console.log("PROPS IN SSLM", lead);
+
   return (
     <>
       {modal ? (

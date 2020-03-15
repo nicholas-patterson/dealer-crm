@@ -13,6 +13,8 @@ import { usedInventoryReducer } from "./usedInventoryReducer";
 import { newInventoryReducer } from "./newInventoryReducer";
 import { salesRegisterReducer } from "./salesRegisterReducer";
 import { getSalesLeadReducer } from "./getSalesLeadReducer";
+import { getSalesNewInventoryReducer } from "./getSalesNewInventoryReducer";
+import { getSalesUsedInventoryReducer } from "./getSalesUsedInventoryReducer";
 
 export default combineReducers({
   dealerNavigationReducer,
@@ -28,5 +30,7 @@ export default combineReducers({
   imageReducer,
   usedInventoryReducer,
   newInventoryReducer,
-  salesRegisterReducer
+  salesRegisterReducer,
+  getSalesNewInventoryReducer,
+  getSalesUsedInventoryReducer
 });

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const db = require("../models");
+const emitter = require("../config/io");
 
 // Get All New Inventory
 router.get("/", async (req, res) => {
@@ -43,6 +44,10 @@ router.post("/add", async (req, res) => {
       image_id: req.session.image.id
     });
     res.status(201).json(newInventory);
+    emitter.emitToDealer(req.session.dealer_user.id, "new_inventory_added", {
+      inventory: newInventory,
+      message: "You added a new item to inventory"
+    });
     // Notification that dealer has added a new item to new inventory
   } catch (err) {
     res.status(500).json(err);
@@ -88,6 +93,10 @@ router.delete("/delete/:id", (req, res) => {
         .then(deletedInventory => {
           console.log("DELETED INVENTORY", deletedInventory);
           if (deletedInventory === 1) {
+            emitter.emitToDealer(inventory.dealer_id, "new_inventory_deleted", {
+              inventory,
+              message: "You deleted an item from new inventory"
+            });
             res.status(200).json({ deletedInventory: inventory });
             // Notification to dealer that they deleted a new inv item
           }

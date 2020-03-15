@@ -65,7 +65,6 @@ const SideNav = props => {
       ) : null}
       <div className="sidebar__links">
         <Link
-          // to="/dealer/dash"
           to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
           onClick={handleDashboardClick}
           className={
@@ -82,7 +81,6 @@ const SideNav = props => {
           dashboard
         </Link>
         <Link
-          //to="/dealer/leads"
           to={props.user === "salesman" ? "/sales/leads" : "/dealer/leads"}
           className={
             "sidebar__link " +
@@ -99,7 +97,6 @@ const SideNav = props => {
           leads
         </Link>
         <Link
-          //to="/dealer/inventory"
           to={
             props.user === "salesman" ? "/sales/inventory" : "/dealer/inventory"
           }
@@ -117,23 +114,26 @@ const SideNav = props => {
           <Icon className="iconify" icon={carGarage} />
           inventory
         </Link>
-        <Link
-          to={props.user === "salesman" ? "/sales/account" : "/dealer/account"}
-          //to="/dealer/account"
-          className={
-            "sidebar__link " +
-            (props.link === "account" && props.user !== "salesman"
-              ? "border "
-              : null) +
-            (props.link === "account" && props.user === "salesman"
-              ? " saleman-border"
-              : null)
-          }
-          onClick={handleAccountClick}
-        >
-          <Icon className="iconify" icon={settingsIcon} />
-          Account
-        </Link>
+        {props.user === "dealer" ? (
+          <Link
+            to={
+              props.user === "salesman" ? "/sales/account" : "/dealer/account"
+            }
+            className={
+              "sidebar__link " +
+              (props.link === "account" && props.user !== "salesman"
+                ? "border "
+                : null) +
+              (props.link === "account" && props.user === "salesman"
+                ? " saleman-border"
+                : null)
+            }
+            onClick={handleAccountClick}
+          >
+            <Icon className="iconify" icon={settingsIcon} />
+            Account
+          </Link>
+        ) : null}
         <Link
           to={props.user === "salesman" ? "/sales/help" : "/dealer/help"}
           //to="/dealer/help"
@@ -153,7 +153,6 @@ const SideNav = props => {
         </Link>
         <Link
           to={props.user === "salesman" ? "/sales/logout" : "/dealer/logout"}
-          //to="/dealer/logout"
           className={
             "sidebar__link " +
             (props.link === "logout" && props.user !== "salesman"

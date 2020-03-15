@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const db = require("../models");
+const emitter = require("../config/io");
 
 // Get All leads
 router.get("/", async (req, res) => {
@@ -49,10 +50,26 @@ router.post("/add", async (req, res) => {
       dealer_id: req.session.dealer_user.id
     });
     res.status(201).json(newLead);
+
     // IF salesman_id IS NULL lead is not created for specific salesman. But if salesman_id is a number it's the id of the salesman from select menu value.
-    // When dealer creates a lead for salesman how do I get that notification to come to salesman socket.
-    // I would need salesman socket id. But i won't have the salesman socket id until they login.
-    io.emit("leadadd", "You added a lead");
+    console.log(req.body.salesman_id);
+    if (req.body.salesman_id) {
+      emitter.emitToSalesman(req.body.salesman_id, "sales_lead", {
+        lead: newLead,
+        message: "Your dealer assigned you a new lead"
+      });
+
+      emitter.emitToDealer(req.session.dealer_user.id, "sales_lead", {
+        lead: newLead,
+        message: "You gave a salesman a new lead"
+      });
+    } else {
+      console.log(req.session.dealer_user.id);
+      emitter.emitToDealer(req.session.dealer_user.id, "dealer_lead", {
+        lead: newLead,
+        message: "You added a new lead"
+      });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -75,9 +92,13 @@ router.post("/sales/add", async (req, res) => {
       salesman_id: req.session.sales_user.id,
       dealer_id: req.body.dealer_id
     });
-    // Would give a notification only to the salesman who added a lead to their list
-    // Would be easy because salesman would already be logged in so they would have a session and socket id
+
     console.log("NEW LEAD", req.body);
+    emitter.emitToSalesman(req.session.sales_user.id, "lead_added", {
+      lead: newLead,
+      messaage: "You added a new lead"
+    });
+
     res.status(201).json(newLead);
   } catch (err) {
     res.status(500).json(err);
@@ -110,8 +131,13 @@ router.put("/update/:id", async (req, res) => {
         .status(400)
         .json({ warning: "Lead with that id was not found and or updated" });
     } else {
+      emitter.emitToDealer(req.session.dealer_user.id, "dealer_lead_updated", {
+        rowsUpdated,
+        updatedBook,
+        message: "You updated a lead"
+      });
+
       res.status(200).json({ rowsUpdated, updatedBook });
-      // Sends notification to dealer that they have updated a lead
     }
   } catch (err) {
     res.status(500).json(err);
@@ -142,8 +168,14 @@ router.put("/update/sales/:id", async (req, res) => {
     if (!salesman_lead) {
       res
         .status(400)
-        .json({ warning: "Lead wad created by Dealer...Dealer must delete" });
+        .json({ warning: "Lead wad created by Dealer...Dealer must edit" });
     } else {
+      emitter.emitToSalesman(req.session.sales_user.id, "sales_lead_updated", {
+        rowsUpdated,
+        updatedBook,
+        message: "You updated a lead"
+      });
+
       res.status(200).json({ rowsUpdated, updatedBook });
       // Sends notification to salesman that they have updated one of their leads
     }
@@ -172,6 +204,11 @@ router.delete("/remove/:id", (req, res) => {
       })
         .then(deletedLead => {
           if (deletedLead === 1) {
+            emitter.emitToDealer(lead.dealer_id, "lead_deleted", {
+              lead,
+              message: "You deleted a lead"
+            });
+
             res.status(200).json({ deletedLead: lead });
             // Notification that dealer has deleted one of their leads
           }
@@ -208,6 +245,7 @@ router.delete("/remove/sales/:id", (req, res) => {
         })
           .then(deletedLead => {
             if (deletedLead === 1) {
+              emitter.emitToDealer(lead.dealer_id, "lead_deleted", { lead });
               res.status(200).json({ deletedLead: lead });
             }
             // Notification that salesman has deleted one of their leads

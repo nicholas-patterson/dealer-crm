@@ -17,13 +17,6 @@ import {
 } from "../../actions/index";
 import { navigate } from "@reach/router";
 
-import io from "socket.io-client";
-
-const socket = io("http://localhost:5000", {
-  transports: ["websocket"]
-  //multiplex: "false"
-});
-
 // Select Menu
 
 const DealerDashboard = props => {
@@ -31,13 +24,6 @@ const DealerDashboard = props => {
     return props.user === "dealer" ? props.getSalesmans() : undefined;
   }, []);
 
-  useEffect(() => {
-    socket.on("leadadd", message => {
-      console.log(message);
-    });
-  }, [props.leads]);
-
-  console.log("PROPS IN DEALER DASH FOR SALESMAN", props);
   const [leadInfo, setLeadInfo] = useState({
     lead_firstname: "",
     lead_lastname: "",
@@ -85,7 +71,6 @@ const DealerDashboard = props => {
     props.user === "dealer"
       ? props.addLead(leadInfo, navigate)
       : props.addSalesLead(leadInfo, navigate);
-    console.log("LEAD BEFORE CLEARED FIELDS", leadInfo);
     setLeadInfo({
       lead_firstname: "",
       lead_lastname: "",
@@ -97,7 +82,6 @@ const DealerDashboard = props => {
       lead_type: "",
       salesman_id: null
     });
-    console.log("LEAD AFTER CLEARED FIELDS", leadInfo);
   };
   // handle submit for new salesman form
   const handleSalesSubmit = e => {
@@ -110,12 +94,10 @@ const DealerDashboard = props => {
       salesman_username: "",
       salesman_password: ""
     });
-    console.log(salesInfo);
   };
   // handle submit for new manager form
   const handleManagerSubmit = e => {
     e.preventDefault();
-    console.log(managerInfo);
   };
 
   const pageSwitch = () => {
@@ -141,7 +123,6 @@ const DealerDashboard = props => {
 
   const modalSwitch = () => {
     switch (props.location.pathname) {
-      //case "/dealer/dash/newlead":
       case leadmodalcase:
         return (
           <Portal>
@@ -498,8 +479,6 @@ const DealerDashboard = props => {
         return null;
     }
   };
-
-  console.log("DEALER ID", props.dealer_id);
 
   return (
     <>

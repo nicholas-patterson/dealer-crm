@@ -68,8 +68,6 @@ const SignUpForm = props => {
     }
   };
 
-  console.log("SUF ERRORS", props.errors);
-
   return (
     <>
       <div className="wrapper">
@@ -106,7 +104,6 @@ const SignUpForm = props => {
 };
 
 const mapStateToProps = state => {
-  console.log("MSTP", state.registerReducer);
   return {
     errors: state.registerReducer.error
   };

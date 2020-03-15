@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const {
   salesmanEmailValidation,
   salesmanPasswordValidation,
@@ -54,7 +55,11 @@ router.post(
         dealer_id: req.session.dealer_user.id
       });
       console.log("SALESMAN", newSalesman);
-      res.status(201).json(newSalesman);
+      let d = JSON.parse(JSON.stringify(newSalesman));
+      d.userRole = "salesman";
+      d.token = await jwt.sign(d, process.env.JWT_SECRET);
+
+      res.status(201).json(d);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -76,7 +81,11 @@ router.post("/login", async (req, res) => {
     );
     if (comparePass && salesman) {
       req.session.sales_user = salesman;
-      res.status(201).json(salesman);
+      let d = JSON.parse(JSON.stringify(salesman));
+      d.userRole = "salesman";
+
+      d.token = jwt.sign(d, process.env.JWT_SECRET);
+      res.status(201).json(d);
     } else {
       res
         .status(400)
@@ -123,6 +132,61 @@ router.get("/all/leads", async (req, res) => {
     });
     res.status(200).json(leads);
     console.log(leads);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Get New Inventory For Salesman Inventory Page
+router.get("/newInventory/all", async (req, res) => {
+  try {
+    const [newInventory] = await db.Salesman.findAll({
+      attributes: [
+        "salesman_firstname",
+        "salesman_lastname",
+        "salesman_username",
+        "salesman_email"
+      ],
+      include: [
+        {
+          model: db.Dealer,
+          include: [
+            {
+              model: db.NewInventory
+            }
+          ]
+        }
+      ]
+    });
+    res.status(200).json(newInventory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Get Used Inventory For Salesman Inventory Page
+router.get("/usedInventory/all", async (req, res) => {
+  try {
+    const [usedInventory] = await db.Salesman.findAll({
+      attributes: [
+        "salesman_firstname",
+        "salesman_lastname",
+        "salesman_username",
+        "salesman_email"
+      ],
+      include: [
+        {
+          model: db.Dealer,
+          include: [
+            {
+              model: db.Inventory
+            }
+          ]
+        }
+      ]
+    });
+    console.log(usedInventory);
+    res.status(200).json(usedInventory);
   } catch (err) {
     res.status(500).json(err);
   }

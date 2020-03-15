@@ -39,7 +39,6 @@ export const clearError = () => {
 
 // Register DEALER Action --DONE
 export const registerUser = (user, navigate) => {
-  console.log(navigate);
   return dispatch => {
     dispatch({ type: "REG_USER_START" });
     axios
@@ -49,7 +48,6 @@ export const registerUser = (user, navigate) => {
         navigate("/login");
       })
       .catch(err => {
-        console.log(err.response);
         dispatch({
           type: "REG_USER_FAILURE",
           payload: err.response
@@ -58,9 +56,8 @@ export const registerUser = (user, navigate) => {
   };
 };
 
-// Register SALESMAN ACTION
+// Register SALESMAN ACTION --DONE
 export const registerSalesman = (user, navigate) => {
-  console.log(navigate);
   return dispatch => {
     dispatch({ type: "REG_SALESMAN_START" });
     axios
@@ -68,7 +65,6 @@ export const registerSalesman = (user, navigate) => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN REGISTER SALESMAN", res);
         dispatch({ type: "REG_SALESMAN_SUCCESS", payload: res.data });
       })
       .catch(err => {
@@ -89,7 +85,6 @@ export const loginUser = (user, navigate) => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN LOGIN ACTION", res.data);
         dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data });
         navigate("/dealer/dash");
       })
@@ -117,7 +112,7 @@ export const salesLoginUser = (user, navigate) => {
   };
 };
 
-// GET ALL SALESMAN
+// GET ALL SALESMAN --DONE
 export const getSalesmans = () => {
   return dispatch => {
     dispatch({ type: "GET_SALESMANS_START" });
@@ -177,7 +172,7 @@ export const addLead = (lead, navigate) => {
   };
 };
 
-//Add New Lead Action For Salesman
+//Add New Lead Action For Salesman --DONE
 export const addSalesLead = (lead, navigate) => {
   return dispatch => {
     dispatch({ type: "ADD_SALES_LEAD_START" });
@@ -186,7 +181,6 @@ export const addSalesLead = (lead, navigate) => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN ADD SALES LEAD", res);
         dispatch({ type: "ADD_SALES_LEAD_SUCCESS", payload: res.data });
         navigate("/sales/dash");
       })
@@ -233,9 +227,8 @@ export const editLead = (id, updatedInfo) => {
   };
 };
 
-// Add Image Action and Add Used Inventory
+// Add Image Action and Add Used Inventory For Dealer --DONE
 export const addImage = (imageData, usedInv) => {
-  console.log("IMAGE DATA IN ACTION", imageData);
   return dispatch => {
     dispatch({ type: "ADD_IMAGE_START" });
     axios
@@ -243,7 +236,6 @@ export const addImage = (imageData, usedInv) => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN IMAGE ADD", res);
         dispatch({ type: "ADD_IMAGE_SUCCESS", payload: res.data });
         return axios
           .post("http://localhost:5000/api/usedInventory/add", usedInv, {
@@ -262,7 +254,7 @@ export const addImage = (imageData, usedInv) => {
   };
 };
 
-// Get Used Inventory Action
+// Get Used Inventory Action For Dealer --DONE
 export const getUsedInventory = () => {
   return dispatch => {
     dispatch({ type: "GET_USED_INV_START" });
@@ -279,7 +271,7 @@ export const getUsedInventory = () => {
   };
 };
 
-// Add NewImage and New Inventory
+// Add NewImage and New Inventory For Dealer --DONE
 export const addNewImage = (image, newInv) => {
   return dispatch => {
     dispatch({ type: "ADD_IMAGE_START" });
@@ -306,7 +298,7 @@ export const addNewImage = (image, newInv) => {
   };
 };
 
-//Get New Inventory Action
+//Get New Inventory Action For Dealer --DONE
 export const getNewInventory = () => {
   return dispatch => {
     dispatch({ type: "GET_NEW_INV_START" });
@@ -315,7 +307,6 @@ export const getNewInventory = () => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN NEW INV", res.data);
         dispatch({ type: "GET_NEW_INV_SUCCESS", payload: res.data });
       })
       .catch(err => {
@@ -324,7 +315,7 @@ export const getNewInventory = () => {
   };
 };
 
-//Delete Used Inventory and Image Action
+//Delete Used Inventory and Image Action For Dealer --DONE
 export const deleteUsedInv = (usedInvId, picId) => {
   return dispatch => {
     dispatch({ type: "DELETE_USED_INV_START" });
@@ -333,7 +324,6 @@ export const deleteUsedInv = (usedInvId, picId) => {
         withCredentials: true
       })
       .then(res => {
-        console.log(res.data.deletedInventory);
         dispatch({
           type: "DELETE_USED_INV_SUCCESS",
           payload: res.data.deletedInventory
@@ -355,7 +345,7 @@ export const deleteUsedInv = (usedInvId, picId) => {
   };
 };
 
-//Delete New Inventory and Image Action
+//Delete New Inventory and Image Action For Dealer --DONE
 export const deleteNewInv = (newInvId, picId) => {
   return dispatch => {
     dispatch({ type: "DELETE_NEW_INV_START" });
@@ -364,7 +354,6 @@ export const deleteNewInv = (newInvId, picId) => {
         withCredentials: true
       })
       .then(res => {
-        console.log(res.data.deletedInventory);
         dispatch({
           type: "DELETE_NEW_INV_SUCCESS",
           payload: res.data.deletedInventory
@@ -400,6 +389,7 @@ export const usedSearchFilter = term => {
   };
 };
 
+// Update Email For Dealer --DONE
 export const updateEmail = newEmail => {
   return dispatch => {
     dispatch({ type: "UPDATE_EMAIL_START" });
@@ -408,7 +398,6 @@ export const updateEmail = newEmail => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN EMAIL UPDATE ACTION", res.data);
         dispatch({
           type: "UPDATE_EMAIL_SUCCESS",
           payload: res.data.updatedEmail.dealer_email
@@ -420,6 +409,7 @@ export const updateEmail = newEmail => {
   };
 };
 
+// Update Password For Dealer --DONE
 export const updatePassword = newPassword => {
   return dispatch => {
     dispatch({ type: "UPDATE_EMAIL_START" });
@@ -428,7 +418,6 @@ export const updatePassword = newPassword => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN PASSWORD ACTION", res.data);
         dispatch({
           type: "UPDATE_PASSWORD_SUCCESS",
           payload: res.data.pass.dealer_password
@@ -440,7 +429,7 @@ export const updatePassword = newPassword => {
   };
 };
 
-// Get Leads by Salesman --DONE
+// Get Leads by Salesman For Salesman --DONE
 export const getSalesmanLeads = () => {
   return dispatch => {
     dispatch({ type: "GET_SALES_LEADS_START" });
@@ -449,7 +438,6 @@ export const getSalesmanLeads = () => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN ACTION", res);
         dispatch({
           type: "GET_SALES_LEADS_SUCCESS",
           payload: res.data.Leads
@@ -461,7 +449,7 @@ export const getSalesmanLeads = () => {
   };
 };
 
-// Edit Salesman Leads --DONE
+// Edit Salesman Leads For Salesman --DONE
 export const editSalesLead = (lead_id, lead_info) => {
   return dispatch => {
     dispatch({ type: "EDIT_SALES_LEADS_START" });
@@ -482,7 +470,7 @@ export const editSalesLead = (lead_id, lead_info) => {
   };
 };
 
-// Delete Salesman Lead -- DONE
+// Delete Salesman Lead For Salesman -- DONE
 export const deleteSalesmanLead = lead_id => {
   return dispatch => {
     dispatch({ type: "DELETE_SALESMAN_LEAD_START" });
@@ -498,6 +486,46 @@ export const deleteSalesmanLead = lead_id => {
           type: "DELETE_SALESMAN_LEAD_FAILURE",
           payload: err.response
         });
+      });
+  };
+};
+
+// Get All Dealer New Inventory For Salesman
+export const getNewInventorySales = () => {
+  return dispatch => {
+    dispatch({ type: "GET_SALESMAN_NEW_INVENTORY_START" });
+    axios
+      .get("http://localhost:5000/api/sales/newInventory/all", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({
+          type: "GET_SALESMAN_NEW_INVENTORY_SUCCESS",
+          payload: res.data
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "GET_SALESMAN_NEW_INVENTORY_FAILURE", payload: err });
+      });
+  };
+};
+
+// Get All Dealer Used Inventory For Salesman
+export const getUsedInventorySales = () => {
+  return dispatch => {
+    dispatch({ type: "GET_SALESMAN_USED_INVENTORY_START" });
+    axios
+      .get("http://localhost:5000/api/sales/usedInventory/all", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({
+          type: "GET_SALESMAN_USED_INVENTORY_SUCCESS",
+          payload: res.data
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "GET_SALESMAN_USED_INVENTORY_FAILURE", payload: err });
       });
   };
 };

@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const emitter = require("../config/io");
 const {
   emailValidation,
   passwordValidation,
@@ -64,7 +66,13 @@ router.post(
         dealer_zipcode: req.body.dealer_zipcode,
         dealer_type: req.body.dealer_type
       });
-      res.status(201).json(newDealer);
+      let d = JSON.parse(JSON.stringify(newDealer));
+      delete d.dealer_password;
+      d.userRole = "dealer";
+
+      d.token = await jwt.sign(d, process.env.JWT_SECRET);
+
+      res.status(201).json(d);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -83,7 +91,14 @@ router.post("/login", dealerSignInValidation, async (req, res) => {
     const comparePass = bcrypt.compareSync(password, user.dealer_password);
     if (comparePass && user) {
       req.session.dealer_user = user;
-      res.status(201).json(user);
+      let d = JSON.parse(JSON.stringify(user));
+      delete d.dealer_password;
+      d.userRole = "dealer";
+      emitter.emitToDealer(d.id, "dealer_login", d);
+
+      d.token = await jwt.sign(d, process.env.JWT_SECRET);
+
+      res.status(201).json(d);
     } else {
       res
         .status(400)

@@ -28,7 +28,6 @@ export const loginReducer = (state = initialState, action) => {
       };
 
     case "LOGIN_USER_FAILURE":
-      console.log("FAILURE", action.payload);
       return {
         ...state,
         isLogged: false,
@@ -63,7 +62,6 @@ export const loginReducer = (state = initialState, action) => {
       };
 
     case "UPDATE_EMAIL_SUCCESS":
-      console.log("PAYLOAD IN REDUCER", action.payload);
       return {
         ...state.user,
         isLogged: true,
@@ -84,7 +82,6 @@ export const loginReducer = (state = initialState, action) => {
       };
 
     case "UPDATE_PASSWORD_SUCCESS":
-      console.log("PAYLOAD IN REDUCER PASSWORD", action.payload);
       return {
         ...state.user,
         isLogged: true,

@@ -6,8 +6,8 @@ import SignUpForm from "./components/SignUpForm";
 import LoginForm from "./components/LogInForm";
 import SalesLoginForm from "./components/SalesLoginForm";
 import Loading from "./components/Loading";
-// Import for lazy load
 
+// Import for lazy load
 const DealerDashBoard = lazy(() =>
   import("./components/Dashboards/DealerDashboard")
 );
@@ -25,10 +25,6 @@ const DealerHelpMain = lazy(() =>
 );
 const DealerAccountMain = lazy(() =>
   import("./components/SwitchItems/DealerAccountMain")
-);
-
-const SalesLeadMain = lazy(() =>
-  import("./components/SwitchItems/SalesLeadMain")
 );
 
 const App = props => {

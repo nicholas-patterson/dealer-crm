@@ -5,8 +5,6 @@ const StepTwo = props => {
     props.prev();
   };
 
-  console.log(props.value);
-
   return (
     <form className="signup-stepTwo">
       <input

@@ -7,7 +7,6 @@ import { Link } from "@reach/router";
 import Banner from "react-js-banner";
 
 const LogInForm = props => {
-  console.log("PROPS IN LOGIN", props);
   const [user, setUser] = useState({
     username: "",
     password: ""

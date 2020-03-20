@@ -7,9 +7,15 @@ import roundHelpOutline from "@iconify/icons-ic/round-help-outline";
 import sharpLogOut from "@iconify/icons-ic/sharp-log-out";
 import settingsIcon from "@iconify/icons-feather/settings";
 import { connect } from "react-redux";
-import { getDashboardLink, getLeadsLink } from "../actions";
+import {
+  getDashboardLink,
+  getLeadsLink,
+  logoutUser,
+  logoutSalesman
+} from "../actions";
 import { Link } from "@reach/router";
 import Portal from "./Portal";
+import { navigate } from "@reach/router";
 
 const SideNav = props => {
   const [modal, setModal] = useState(false);
@@ -58,7 +64,17 @@ const SideNav = props => {
               >
                 Close
               </Link>
-              <button className="logout_confirm__confirmBtn">Confirm</button>
+              <button
+                type="button"
+                onClick={() =>
+                  props.user === "dealer"
+                    ? props.logoutUser(navigate)
+                    : props.logoutSalesman(navigate)
+                }
+                className="logout_confirm__confirmBtn"
+              >
+                Confirm
+              </button>
             </div>
           </div>
         </Portal>
@@ -151,6 +167,7 @@ const SideNav = props => {
           <Icon className="iconify" icon={roundHelpOutline} />
           help
         </Link>
+
         <Link
           to={props.user === "salesman" ? "/sales/logout" : "/dealer/logout"}
           className={
@@ -179,6 +196,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getDashboardLink, getLeadsLink })(
-  SideNav
-);
+export default connect(mapStateToProps, {
+  getDashboardLink,
+  getLeadsLink,
+  logoutUser,
+  logoutSalesman
+})(SideNav);

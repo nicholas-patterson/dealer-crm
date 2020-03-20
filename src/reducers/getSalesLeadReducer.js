@@ -9,7 +9,8 @@ export const getSalesLeadReducer = (state = initialState, action) => {
     case "GET_SALES_LEADS_START":
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ""
       };
     case "GET_SALES_LEADS_SUCCESS":
       return {
@@ -17,6 +18,13 @@ export const getSalesLeadReducer = (state = initialState, action) => {
         isLoading: false,
         leads: action.payload
       };
+
+    case "CLEAR_ERROR":
+      return {
+        ...state,
+        error: ""
+      };
+
     case "GET_SALES_LEADS_FAILURE":
       return {
         ...state,
@@ -76,12 +84,6 @@ export const getSalesLeadReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         leads: state.leads.filter(lead => lead.id !== action.payload.id)
-      };
-
-    case "CLEAR_ERROR":
-      return {
-        ...state,
-        error: ""
       };
 
     case "DELETE_SALESMAN_LEAD_FAILURE":

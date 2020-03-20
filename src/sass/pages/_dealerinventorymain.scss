@@ -220,6 +220,13 @@
     grid-column: 1/3;
   }
 
+  .picture_url {
+    color: #000;
+    font-size: 1.4rem;
+    display: inline-block;
+    padding-left: 2rem;
+  }
+
   input[type="file"] {
     opacity: 0;
     position: absolute;
@@ -350,6 +357,13 @@
 
   #picture_file {
     grid-column: 1/3;
+  }
+
+  .picture_url {
+    color: #000;
+    font-size: 1.4rem;
+    display: inline-block;
+    padding-left: 2rem;
   }
 
   input[type="file"] {

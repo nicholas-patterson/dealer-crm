@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "@reach/router";
 import { connect } from "react-redux";
-import { getSalesmans } from "../../actions/index";
+import { getSalesmans, getNotifications } from "../../actions/index";
 
 import io from "socket.io-client";
 
 const DealerDashboardMain = props => {
-  const [notifications, setNotifications] = useState([]);
-
   const socket = io("http://localhost:5000", {
     transports: ["websocket"],
     multiplex: false,
@@ -19,11 +17,8 @@ const DealerDashboardMain = props => {
   useEffect(() => {
     socket.on("message", message => {
       console.log("FROM BACKEND", message);
-      setNotifications([...notifications, message.data.message]);
     });
   }, [props.user === "dealer" ? props.dealer_leads : props.salesman_leads]);
-
-  console.log("NOTIFICATIONS", notifications);
 
   return (
     <>
@@ -105,7 +100,7 @@ const DealerDashboardMain = props => {
             </div>
           </div>
 
-          {/* START RECENT ACTIVITY */}
+          {/* START RECENT ACTIVITY SECTION*/}
           <div className="recent-activity">
             <h2
               className={
@@ -125,6 +120,8 @@ const DealerDashboardMain = props => {
                 data-inline="false"
               ></span>
             </h2>
+
+            {/* Start of Recent Activity List */}
             <div className="recent-activity__items">
               <div className="recent-activity__item">
                 <div className="recent-activity__item__box recent-activity__item__icon">

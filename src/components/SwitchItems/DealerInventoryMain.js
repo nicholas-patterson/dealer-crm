@@ -9,7 +9,9 @@ import {
   getNewInventory,
   newSearchFilter,
   deleteUsedInv,
-  deleteNewInv
+  deleteNewInv,
+  getNewInventorySales,
+  getUsedInventorySales
 } from "../../actions/index";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -29,6 +31,7 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { Icon, InlineIcon } from "@iconify/react";
 import searchIcon from "@iconify/icons-ei/search";
+import NoImage from "../../images/no_image_avail.jpg";
 
 const useStyles = makeStyles({
   root: {
@@ -163,20 +166,47 @@ const DealerInventoryMain = props => {
   // handle used inventory close button
   const handleUsedInventoryCloseButton = () => {
     setShowUsedInventoryModal(false);
+    setUsedInventoryAdd({
+      car_picture: "",
+      year: "",
+      make: "",
+      model: "",
+      price: "",
+      miles: "",
+      info: ""
+    });
   };
 
   const handleNewInventoryCloseButton = () => {
     setShowNewInventoryModal(false);
+    setNewInventoryAdd({
+      car_picture: "",
+      year: "",
+      make: "",
+      model: "",
+      price: "",
+      miles: "",
+      info: ""
+    });
   };
 
   useEffect(() => {
-    return props.user === "dealer"
-      ? props.getUsedInventory() && props.getNewInventory()
-      : undefined;
+    props.user === "dealer"
+      ? props.getUsedInventory() || props.getNewInventory()
+      : props.getUsedInventorySales() || props.getNewInventorySales();
   }, []);
+
+  console.log("NEW INVENTORY - SALES", props.sales_newInv);
+  console.log("USED INVENTORY - SALES", props.sales_usedInv);
+
+  console.log("NEW INVENTORY - DEALER", props.newInv);
+  console.log("USED INVENTORY - DEALER", props.usedInv);
+
+  console.log("NEW INVENTORY ADD", newInventoryAdd);
 
   return (
     <>
+      {/* Used Inventory Modal to Add Inventory only for dealer */}
       {showUsedInventoryModal ? (
         <Portal>
           <form
@@ -193,6 +223,9 @@ const DealerInventoryMain = props => {
                 onChange={handleUsedInventoryPicture}
               />
               <label for="car_picture">Upload file</label>
+              <span className="picture_url">
+                {usedInventoryAdd.car_picture.name}
+              </span>
             </div>
 
             <div className="usedInv-field">
@@ -295,6 +328,7 @@ const DealerInventoryMain = props => {
           </form>
         </Portal>
       ) : null}
+      {/* New Inventory Modal to add New Inventory only for dealer */}
       {showNewInventoryModal ? (
         <Portal>
           <form
@@ -311,6 +345,9 @@ const DealerInventoryMain = props => {
                 onChange={handleNewInventoryPicture}
               />
               <label for="car_picture">Upload file</label>
+              <span className="picture_url">
+                {newInventoryAdd.car_picture.name}
+              </span>
             </div>
 
             <div className="newInv-field">
@@ -413,6 +450,7 @@ const DealerInventoryMain = props => {
           </form>
         </Portal>
       ) : null}
+      {/* Begins actual Inventory Page */}
       <div className="header-dealer">
         <div className="header-dealer__name">Dealership: Ford</div>
         <div className="header-dealer__notifications">Notifications</div>
@@ -422,7 +460,8 @@ const DealerInventoryMain = props => {
 
       <div className="new--inventory">
         <h3 className="new--inventory__title">New Inventory</h3>
-        {props.newInv.length >= 1 ? (
+        {/* User === Dealer && New Inventory Length >= 1 show add button */}
+        {props.user === "dealer" && props.newInv.length >= 1 ? (
           <Link
             onClick={handleNewInventoryAdd}
             to="/dealer/inventory/newInventory"
@@ -431,6 +470,9 @@ const DealerInventoryMain = props => {
             <span className="usedInventoryAddLink">Add </span>{" "}
           </Link>
         ) : null}
+        {/* End Of Logic For New Inventory Add Button */}
+
+        {/* New Inventory Search form for dealers and salesman */}
         <div className="new--inventory__form">
           <form
             className="new--inventory__fields form"
@@ -489,17 +531,98 @@ const DealerInventoryMain = props => {
             />
           </form>
         </div>
-        {props.newInv.length === 0 ? (
+        {/* End of code for new inv search fields for dealers and salesmans */}
+
+        {props.user === "dealer" ? (
+          props.newInv.length === 0 ? (
+            <div className="new--inventory__results">
+              <h3>
+                No New Inventory, Click{" "}
+                <Link
+                  onClick={handleNewInventoryAdd}
+                  to="/dealer/inventory/NewInventory"
+                >
+                  <span className="newInventoryAddLink">Here</span>{" "}
+                </Link>
+                To Add{" "}
+                <span role="img" aria-label="crying">
+                  😢
+                </span>
+              </h3>
+            </div>
+          ) : (
+            <>
+              <CarouselProvider
+                naturalSlideWidth={100}
+                naturalSlideHeight={100}
+                totalSlides={props.newInv.length}
+                orientation="horizontal"
+                visibleSlides={3}
+                dragEnabled={false}
+                touchEnabled={false}
+                style={{ position: "relative" }}
+              >
+                <Slider style={{ marginTop: "3rem" }}>
+                  {props.newInv &&
+                    props.newInv.map((inv, idx) => {
+                      return (
+                        <Slide>
+                          <Card key={idx} className={classes.root}>
+                            <CardActionArea>
+                              <CardMedia
+                                className={classes.media}
+                                image={inv.car_picture}
+                                title={inv.make + " " + inv.model}
+                              />
+                              <CardContent>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h2"
+                                >
+                                  {inv.year} {inv.make} {inv.model}
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                                >
+                                  {inv.info}
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                              <Button size="small" color="primary">
+                                Edit
+                              </Button>
+                              <Button
+                                onClick={() =>
+                                  props.deleteNewInv(inv.id, inv.image_id)
+                                }
+                                size="small"
+                                color="primary"
+                              >
+                                Delete
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Slide>
+                      );
+                    })}
+                </Slider>
+                {props.newInv.length < 4 ? null : (
+                  <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
+                )}
+                {props.newInv.length < 4 ? null : (
+                  <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
+                )}
+              </CarouselProvider>
+            </>
+          )
+        ) : props.sales_newInv.length === 0 ? (
           <div className="new--inventory__results">
             <h3>
-              No New Inventory, Click{" "}
-              <Link
-                onClick={handleNewInventoryAdd}
-                to="/dealer/inventory/NewInventory"
-              >
-                <span className="newInventoryAddLink">Here</span>{" "}
-              </Link>
-              To Add{" "}
+              Dealer Has No Inventory{" "}
               <span role="img" aria-label="crying">
                 😢
               </span>
@@ -510,7 +633,7 @@ const DealerInventoryMain = props => {
             <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={100}
-              totalSlides={props.newInv.length}
+              totalSlides={props.sales_newInv.length}
               orientation="horizontal"
               visibleSlides={3}
               dragEnabled={false}
@@ -518,8 +641,8 @@ const DealerInventoryMain = props => {
               style={{ position: "relative" }}
             >
               <Slider style={{ marginTop: "3rem" }}>
-                {props.newInv &&
-                  props.newInv.map((inv, idx) => {
+                {props.sales_newInv &&
+                  props.sales_newInv.map((inv, idx) => {
                     return (
                       <Slide>
                         <Card key={idx} className={classes.root}>
@@ -546,7 +669,7 @@ const DealerInventoryMain = props => {
                               </Typography>
                             </CardContent>
                           </CardActionArea>
-                          <CardActions>
+                          {/* <CardActions>
                             <Button size="small" color="primary">
                               Edit
                             </Button>
@@ -559,16 +682,16 @@ const DealerInventoryMain = props => {
                             >
                               Delete
                             </Button>
-                          </CardActions>
+                          </CardActions> */}
                         </Card>
                       </Slide>
                     );
                   })}
               </Slider>
-              {props.newInv.length < 4 ? null : (
+              {props.sales_newInv.length < 4 ? null : (
                 <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
               )}
-              {props.newInv.length < 4 ? null : (
+              {props.sales_newInv.length < 4 ? null : (
                 <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
               )}
             </CarouselProvider>
@@ -580,7 +703,8 @@ const DealerInventoryMain = props => {
 
       <div className="used--inventory">
         <h3 className="used--inventory__title">Used Inventory</h3>
-        {props.usedInv.length >= 1 ? (
+        {/* User === Salesman && Used Inventory Length >= 1 show add button */}
+        {props.user === "dealer" && props.usedInv.length >= 1 ? (
           <Link
             onClick={handleUsedInventoryAdd}
             to="/dealer/inventory/UsedInventory"
@@ -589,6 +713,10 @@ const DealerInventoryMain = props => {
             <span className="usedInventoryAddLink">Add </span>{" "}
           </Link>
         ) : null}
+
+        {/* End Of Logic For New Inventory Add Button */}
+
+        {/* New Inventory Search form for dealers and salesman */}
         <div className="used--inventory__form">
           <form className="used-inventory__fields form">
             <div className="field">
@@ -639,17 +767,98 @@ const DealerInventoryMain = props => {
             <Icon className="usedInv_search" icon={searchIcon} />
           </form>
         </div>
-        {props.usedInv.length === 0 ? (
+        {/* End of code for used inv search fields for dealers and salesmans */}
+
+        {props.user === "dealer" ? (
+          props.usedInv.length === 0 ? (
+            <div className="used--inventory__results">
+              <h3>
+                No Used Inventory, Click{" "}
+                <Link
+                  onClick={handleUsedInventoryAdd}
+                  to="/dealer/inventory/UsedInventory"
+                >
+                  <span className="usedInventoryAddLink"> Here </span>{" "}
+                </Link>
+                To Add{" "}
+                <span role="img" aria-label="crying">
+                  😢
+                </span>
+              </h3>
+            </div>
+          ) : (
+            <>
+              <CarouselProvider
+                naturalSlideWidth={100}
+                naturalSlideHeight={100}
+                totalSlides={props.usedInv.length}
+                orientation="horizontal"
+                visibleSlides={3}
+                dragEnabled={false}
+                touchEnabled={false}
+                style={{ position: "relative" }}
+              >
+                <Slider style={{ marginTop: "3rem" }}>
+                  {props.usedInv &&
+                    props.usedInv.map((inv, idx) => {
+                      return (
+                        <Slide>
+                          <Card key={idx} className={classes.root}>
+                            <CardActionArea>
+                              <CardMedia
+                                className={classes.media}
+                                image={inv.car_picture}
+                                title={inv.make + " " + inv.model}
+                              />
+                              <CardContent>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h2"
+                                >
+                                  {inv.year} {inv.make} {inv.model}
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                                >
+                                  {inv.info}
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                              <Button size="small" color="primary">
+                                Edit
+                              </Button>
+                              <Button
+                                onClick={() =>
+                                  props.deleteUsedInv(inv.id, inv.image_id)
+                                }
+                                size="small"
+                                color="primary"
+                              >
+                                Delete
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Slide>
+                      );
+                    })}
+                </Slider>
+                {props.usedInv.length < 4 ? null : (
+                  <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
+                )}
+                {props.usedInv.length < 4 ? null : (
+                  <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
+                )}
+              </CarouselProvider>
+            </>
+          )
+        ) : props.sales_usedInv.length === 0 ? (
           <div className="used--inventory__results">
             <h3>
-              No Used Inventory, Click{" "}
-              <Link
-                onClick={handleUsedInventoryAdd}
-                to="/dealer/inventory/UsedInventory"
-              >
-                <span className="usedInventoryAddLink"> Here </span>{" "}
-              </Link>
-              To Add{" "}
+              Dealer Has No Inventory{" "}
               <span role="img" aria-label="crying">
                 😢
               </span>
@@ -660,7 +869,7 @@ const DealerInventoryMain = props => {
             <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={100}
-              totalSlides={props.usedInv.length}
+              totalSlides={props.sales_usedInv.length}
               orientation="horizontal"
               visibleSlides={3}
               dragEnabled={false}
@@ -668,8 +877,8 @@ const DealerInventoryMain = props => {
               style={{ position: "relative" }}
             >
               <Slider style={{ marginTop: "3rem" }}>
-                {props.usedInv &&
-                  props.usedInv.map((inv, idx) => {
+                {props.sales_usedInv &&
+                  props.sales_usedInv.map((inv, idx) => {
                     return (
                       <Slide>
                         <Card key={idx} className={classes.root}>
@@ -696,7 +905,7 @@ const DealerInventoryMain = props => {
                               </Typography>
                             </CardContent>
                           </CardActionArea>
-                          <CardActions>
+                          {/* <CardActions>
                             <Button size="small" color="primary">
                               Edit
                             </Button>
@@ -709,16 +918,16 @@ const DealerInventoryMain = props => {
                             >
                               Delete
                             </Button>
-                          </CardActions>
+                          </CardActions> */}
                         </Card>
                       </Slide>
                     );
                   })}
               </Slider>
-              {props.usedInv.length < 4 ? null : (
+              {props.sales_usedInv.length < 4 ? null : (
                 <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
               )}
-              {props.usedInv.length < 4 ? null : (
+              {props.sales_usedInv.length < 4 ? null : (
                 <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
               )}
             </CarouselProvider>
@@ -733,8 +942,11 @@ const mapStateToProps = state => {
   return {
     newInv: state.newInventoryReducer.newInventory || [],
     usedInv: state.usedInventoryReducer.inventory || [],
+    sales_newInv: state.getSalesNewInventoryReducer.salesNewInventory || [],
+    sales_usedInv: state.getSalesUsedInventoryReducer.salesUsedInventory || [],
     loading: state.usedInventoryReducer.loading,
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    loading: state.getSalesUsedInventoryReducer.loading
   };
 };
 
@@ -745,5 +957,7 @@ export default connect(mapStateToProps, {
   getNewInventory,
   newSearchFilter,
   deleteUsedInv,
-  deleteNewInv
+  deleteNewInv,
+  getNewInventorySales,
+  getUsedInventorySales
 })(DealerInventoryMain);

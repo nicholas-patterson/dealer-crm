@@ -35,7 +35,6 @@ const DealerLeadsMain = props => {
         {props.errors ? (
           <Banner title={props.errors} visibleTime={3000} />
         ) : null}
-
         <div className="header-dealer">
           <div className="header-dealer__name">Dealership: Ford</div>
           <div className="header-dealer__notifications">Notifications</div>

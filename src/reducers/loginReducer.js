@@ -3,8 +3,8 @@
 const initialState = {
   isLogged: false,
   user: {},
-  //token: null,
-  error: ""
+  error: "",
+  logout_message: ""
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -24,7 +24,6 @@ export const loginReducer = (state = initialState, action) => {
         ...state,
         isLogged: true,
         user: action.payload
-        // token: action.payload.token
       };
 
     case "LOGIN_USER_FAILURE":
@@ -38,14 +37,12 @@ export const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         isLogged: true
-        //token: action.payload
       };
     case "LOGOUT_USER_SUCCESS":
       return {
         ...state,
         isLogged: false,
-        user: action.payload
-        //token: localStorage.clear()
+        logout_message: action.payload
       };
 
     case "LOGOUT_USER_FAILURE":

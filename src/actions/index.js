@@ -94,6 +94,40 @@ export const loginUser = (user, navigate) => {
   };
 };
 
+export const logoutUser = navigate => {
+  return dispatch => {
+    dispatch({ type: "LOGOUT_USER_START" });
+    axios
+      .get("http://localhost:5000/api/dealer/logout/user", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({ type: "LOGOUT_USER_SUCCESS", payload: res.data });
+        navigate("/");
+      })
+      .catch(err => {
+        dispatch({ type: "LOGOUT_USER_FAILURE", payload: err.response });
+      });
+  };
+};
+
+export const logoutSalesman = navigate => {
+  return dispatch => {
+    dispatch({ type: "LOGOUT_SALES_START" });
+    axios
+      .get("http://localhost:5000/api/sales/logout/salesman", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({ type: "LOGOUT_SALES_SUCCESS", payload: res.data });
+        navigate("/");
+      })
+      .catch(err => {
+        dispatch({ type: "LOGOUT_SALES_FAILURE", payload: err.response });
+      });
+  };
+};
+
 // Login SALESMAN User Action --DONE
 export const salesLoginUser = (user, navigate) => {
   return dispatch => {
@@ -126,14 +160,6 @@ export const getSalesmans = () => {
       .catch(err => {
         dispatch({ type: "GET_SALESMANS_FAILURE", payload: err.response });
       });
-  };
-};
-
-/// Logout User Action
-
-export const logoutUser = () => {
-  return {
-    type: "LOGOUT_USER_SUCCESS"
   };
 };
 
@@ -501,7 +527,7 @@ export const getNewInventorySales = () => {
       .then(res => {
         dispatch({
           type: "GET_SALESMAN_NEW_INVENTORY_SUCCESS",
-          payload: res.data
+          payload: res.data.Dealer.NewInventories
         });
       })
       .catch(err => {
@@ -519,9 +545,10 @@ export const getUsedInventorySales = () => {
         withCredentials: true
       })
       .then(res => {
+        console.log("RES IN ACTION USED INV SALES", res);
         dispatch({
           type: "GET_SALESMAN_USED_INVENTORY_SUCCESS",
-          payload: res.data
+          payload: res.data.Dealer.Inventories
         });
       })
       .catch(err => {

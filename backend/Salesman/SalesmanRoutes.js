@@ -192,4 +192,20 @@ router.get("/usedInventory/all", async (req, res) => {
   }
 });
 
+// Logout Salesman
+router.get("/logout/salesman", (req, res) => {
+  if (req.session) {
+    req.session.destroy(error => {
+      if (error) {
+        res.status(500).json({ error: "Server could not log you out" });
+      } else {
+        res.clearCookie("_dealerCRM", { path: "/" });
+        res.status(200).json({ message: "Thanks for visiting" });
+      }
+    });
+  } else {
+    res.status(200).json({ message: "You are already logged out" });
+  }
+});
+
 module.exports = router;

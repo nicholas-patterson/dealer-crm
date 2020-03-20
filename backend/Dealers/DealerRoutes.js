@@ -226,5 +226,19 @@ router.put("/password/update", dealerPasswordUpdateValidation, (req, res) => {
 });
 
 // Logout Dealer
+router.get("/logout/user", (req, res) => {
+  if (req.session) {
+    req.session.destroy(error => {
+      if (error) {
+        res.status(500).json({ error: "Server could not log you out" });
+      } else {
+        res.clearCookie("_dealerCRM");
+        res.status(200).json({ message: "Thanks for visiting" });
+      }
+    });
+  } else {
+    res.status(200).json({ message: "You are already logged out" });
+  }
+});
 
 module.exports = router;

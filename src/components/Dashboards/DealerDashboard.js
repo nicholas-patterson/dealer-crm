@@ -514,4 +514,4 @@ export default connect(mapStateToProps, {
   registerSalesman,
   getSalesmans,
   addSalesLead
-})(DealerDashboard);
+})(React.memo(DealerDashboard));

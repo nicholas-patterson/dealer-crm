@@ -12,7 +12,15 @@ const {
 // Get All Salesman
 router.get("/salesmans", async (req, res) => {
   try {
-    const salesmans = await db.Salesman.findAll();
+    const salesmans = await db.Salesman.findAll({
+      attributes: [
+        "salesman_firstname",
+        "salesman_lastname",
+        "salesman_username",
+        "salesman_email",
+        "dealer_id"
+      ]
+    });
     res.status(200).json(salesmans);
   } catch (err) {
     res.status(500).json(err);

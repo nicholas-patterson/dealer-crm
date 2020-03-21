@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { updateEmail, updatePassword, clearError } from "../../actions";
+import {
+  updateEmail,
+  updatePassword,
+  updateUsername,
+  clearError
+} from "../../actions";
 import Banner from "react-js-banner";
 
 const DealerAccountMain = props => {
-  console.log("PROPS IN ACCOUNT PAGE", props);
   const [personalInformation, setPersonalInformation] = useState({
-    username: "",
-    phone: "",
-    last_name: "",
-    birthday: ""
+    dealer_username: props.dealer_username || "",
+    dealer_password: ""
   });
 
   const [emailInformation, setEmailInformation] = useState({
@@ -26,8 +28,13 @@ const DealerAccountMain = props => {
   const handlePersonalInformationChange = e => {
     setPersonalInformation({
       ...personalInformation,
-      [e.target.name]: e.tatrget.value
+      [e.target.name]: e.target.value
     });
+  };
+
+  const handlePersonalInformationSection = e => {
+    e.preventDefault();
+    setPersonalInformation({ dealer_password: "" });
   };
 
   // handle change for email section
@@ -53,6 +60,7 @@ const DealerAccountMain = props => {
     setEmailInformation({ dealer_password: "" });
   };
 
+  // handle Submit for Password Section
   const handlePasswordSection = e => {
     e.preventDefault();
     props.clearError();
@@ -77,16 +85,19 @@ const DealerAccountMain = props => {
           </p>
         </div>
         <div className="personal--information__form-section">
-          <form className="personal--information__fields">
+          <form
+            className="personal--information__fields"
+            onSubmit={handlePersonalInformationSection}
+          >
             <div className="pi-field">
               <input
                 type="text"
-                name="username"
+                name="dealer_username"
                 id="username"
                 autoComplete="off"
                 required
                 className="input-group"
-                value={personalInformation.username}
+                value={personalInformation.dealer_username}
                 onChange={handlePersonalInformationChange}
               />
               <label htmlFor="inputField" className="pi-label-name">
@@ -96,50 +107,27 @@ const DealerAccountMain = props => {
             <div className="pi-field" id="last_name_grid_column">
               <input
                 type="text"
-                name="last_name"
-                id="last_name"
+                name="dealer_password"
+                id="pass"
                 autoComplete="off"
                 required
                 className="input-group"
-                value={personalInformation.last_name}
+                value={personalInformation.dealer_password}
                 onChange={handlePersonalInformationChange}
               />
               <label htmlFor="inputField" className="pi-label-name">
-                <span className="pi-content-name">Last Name</span>
-              </label>
-            </div>
-            {/* <div className="pi-field" id="date-styles">
-              <input
-                type="date"
-                name="birthday"
-                id="birthday"
-                autoComplete="off"
-                required
-                className="input-group"
-                value={personalInformation.birthday}
-                onChange={handlePersonalInformationChange}
-              />
-              <label htmlFor="inputField" className="pi-label-name">
-                <span className="pi-content-name"> Birth date</span>
-              </label>
-            </div> */}
-            <div className="pi-field" id="phone_grid_column">
-              <input
-                type="phone"
-                name="phone"
-                id="phone"
-                autoComplete="off"
-                required
-                className="input-group"
-                value={personalInformation.phone}
-                onChange={handlePersonalInformationChange}
-              />
-              <label htmlFor="inputField" className="pi-label-name">
-                <span className="pi-content-name">Phone Number</span>
+                <span className="pi-content-name">Password</span>
               </label>
             </div>
 
-            <button className="pi-submitBtn">Save</button>
+            <button
+              type="submit"
+              onClick={() => props.updateUsername(personalInformation)}
+              className="ea-submitBtn"
+              className="pi-submitBtn"
+            >
+              Save
+            </button>
           </form>
         </div>
       </div>
@@ -274,6 +262,9 @@ const mapStateToProps = state => {
   return {
     dealer:
       state.loginReducer.dealer_email || state.loginReducer.user.dealer_email,
+    dealer_username:
+      state.loginReducer.dealer_username ||
+      state.loginReducer.user.dealer_username,
     errors: state.loginReducer.error
   };
 };
@@ -281,5 +272,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   updateEmail,
   updatePassword,
+  updateUsername,
   clearError
 })(DealerAccountMain);

@@ -3,8 +3,6 @@ const db = require("../models");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
 
-//Create Inventory
-
 // Image Upload Configuration
 const storage = multer.diskStorage({
   filename: function(req, file, callback) {

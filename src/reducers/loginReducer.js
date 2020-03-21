@@ -2,7 +2,7 @@
 
 const initialState = {
   isLogged: false,
-  user: {},
+  user: {}, // change to object if it gives problems
   error: "",
   logout_message: ""
 };
@@ -72,6 +72,26 @@ export const loginReducer = (state = initialState, action) => {
         error: action.payload
       };
 
+    case "UPDATE_USERNAME_START":
+      return {
+        ...state,
+        isLogged: true
+      };
+
+    case "UPDATE_USERNAME_SUCCESS":
+      return {
+        ...state.user,
+        isLogged: true,
+        dealer_username: action.payload
+      };
+
+    case "UPDATE_USERNAME_FAILURE":
+      return {
+        ...state,
+        isLogged: true,
+        error: action.payload.data.error
+      };
+
     case "UPDATE_PASSWORD_START":
       return {
         ...state,
@@ -81,7 +101,7 @@ export const loginReducer = (state = initialState, action) => {
     case "UPDATE_PASSWORD_SUCCESS":
       return {
         ...state.user,
-        isLogged: true,
+        //isLogged: true,
         dealer_password: action.payload
       };
 

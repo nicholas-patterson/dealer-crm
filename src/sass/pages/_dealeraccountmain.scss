@@ -1,6 +1,6 @@
 /* Styles For Personal Information */
 /* Styles For Heading And Sub-Heading Width of Section and Flex*/
-.pi-title{
+.pi-title {
   font-size: 3rem;
   font-weight: 400;
   letter-spacing: 0.2rem;
@@ -10,7 +10,7 @@
 .pi-subtitle {
   font-weight: 400;
   letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
+  border-bottom: 2px solid $primary-blue;
   padding-bottom: 1.3rem;
   margin-bottom: 4rem;
 }
@@ -27,57 +27,55 @@
   }
 }
 
-
 /*Form Styles and Grid*/
-  .personal--information__form-section {
-  width: 60%; 
-  margin-left: 10rem; 
-   .personal--information__fields{
+.personal--information__form-section {
+  width: 60%;
+  margin-left: 10rem;
+  .personal--information__fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5rem;
 
-    #last_name_grid_column{
-    grid-column: 2/3;
+    #last_name_grid_column {
+      grid-column: 2/3;
     }
-    #phone_grid_column{
-    grid-column: 1/2;
+    #phone_grid_column {
+      grid-column: 1/2;
     }
-    #date-styles{
+    #date-styles {
       width: 60%;
     }
-    }
-    .pi-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-
-    }
+  }
+  .pi-submitBtn {
+    grid-column: 1/3;
+    width: 25%;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    font-weight: 400;
+    text-transform: uppercase;
+    border-radius: 4px;
+    min-width: 8rem;
+    background: $primary_blue;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 1.4rem;
+    border: #2eb85c;
+  }
   .pi-field {
     width: 100%;
     position: relative;
     overflow: hidden;
-    .input-group{
+    .input-group {
       width: 100%;
-      color:#000;
+      color: white;
       font-size: 1.5rem;
       padding-top: 2.7rem;
-      padding-bottom: .5rem;
+      padding-bottom: 0.5rem;
       border: none;
       outline: none;
       background-color: $background;
     }
-      .pi-label-name{
+    .pi-label-name {
       position: absolute;
       bottom: 0px;
       left: 0;
@@ -86,46 +84,60 @@
       pointer-events: none;
       border-bottom: 1px solid white;
       color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .pi-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
+      &::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-bottom: 3px solid $primary-blue;
+        left: 0px;
+        bottom: -1px;
+        transform: translateX(-101%);
+        transition: all 0.3s ease;
+      }
+      .pi-content-name {
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        transition: all 0.3s ease;
       }
     }
-  
   }
+}
 
+/* Code for content-name */
+.personal--information__form-section
+  .pi-field
+  input:focus
+  + .pi-label-name
+  .pi-content-name,
+.personal--information__form-section
+  .pi-field
+  input:valid
+  + .pi-label-name
+  .pi-content-name {
+  transform: translateY(-150%);
+  font-size: 1.4rem;
+  color: $primary-blue;
+}
 
-  /* Code for content-name */
-  .personal--information__form-section .pi-field input:focus + .pi-label-name .pi-content-name, .personal--information__form-section .pi-field input:valid + .pi-label-name .pi-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
+/* Code for content name */
 
-  /* Code for content name */
-
-  .personal--information__form-section .pi-field input:focus + .pi-label-name::after, .personal--information__form .pi-field input:valid + .pi-label-name::after{
-    transform: translateX(0%);      
-  }
+.personal--information__form-section
+  .pi-field
+  input:focus
+  + .pi-label-name::after,
+.personal--information__form .pi-field input:valid + .pi-label-name::after {
+  transform: translateX(0%);
+}
 
 /* Reset For Birth Date: Removes default format text */
-input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"]:in-range::-webkit-datetime-edit-month-field, input[type="date"]:in-range::-webkit-datetime-edit-day-field, input[type="date"]:in-range::-webkit-datetime-edit-text { color: transparent; }
-
-
+input[type="date"]:in-range::-webkit-datetime-edit-year-field,
+input[type="date"]:in-range::-webkit-datetime-edit-month-field,
+input[type="date"]:in-range::-webkit-datetime-edit-day-field,
+input[type="date"]:in-range::-webkit-datetime-edit-text {
+  color: transparent;
+}
 
 /* Email Address Styles*/
 
@@ -133,16 +145,15 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
   margin-top: 8rem;
   font-weight: 400;
   letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
+  border-bottom: 2px solid $primary-blue;
   padding-bottom: 1.3rem;
   margin-bottom: 4rem;
 }
 
-
-.email--address__information{
+.email--address__information {
   width: 100%;
   display: flex;
-   .email--address__desc {
+  .email--address__desc {
     color: #e4e4e4;
     font-size: 1.7rem;
     font-weight: 300;
@@ -153,51 +164,51 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
 
 /* Form Styles */
 
-.email--address__form-section{
+.email--address__form-section {
   width: 60%;
   margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
+
+  .email--address__fields {
+    .ea-submitBtn {
+      grid-column: 1/3;
+      width: 25%;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      font-weight: 400;
+      text-transform: uppercase;
+      border-radius: 4px;
+      min-width: 8rem;
+      background: $primary_blue;
+      cursor: pointer;
+      letter-spacing: 1px;
+      font-size: 1.4rem;
+      border: #2eb85c;
+      margin-top: 2.5rem;
     }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
+    .ea-field {
       width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      .ea-group {
+        width: 100%;
+        color: white;
+        font-size: 1.5rem;
+        padding-top: 2.7rem;
+        padding-bottom: 0.5rem;
+        border: none;
+        outline: none;
+        background-color: $background;
+      }
+      .ea-label-name {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        pointer-events: none;
+        border-bottom: 1px solid white;
+        color: white;
         &::after {
           content: "";
           position: absolute;
@@ -217,768 +228,24 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
         }
       }
     }
-  } 
-}
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-
-.email--address__information{
-  width: 100%;
-  display: flex;
-   .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
   }
 }
 
-/* Form Styles */
-
-.email--address__form-section{
-  width: 60%;
-  margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
-    }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
-      width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  } 
+/* Code for content-name */
+.email--address__form-section
+  .ea-field
+  input:focus
+  + .ea-label-name
+  .ea-content-name,
+.email--address__form-section
+  .ea-field
+  input:valid
+  + .ea-label-name
+  .ea-content-name {
+  transform: translateY(-150%);
+  font-size: 1.4rem;
+  color: $primary-blue;
 }
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-
-.email--address__information{
-  width: 100%;
-  display: flex;
-   .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-.email--address__form-section{
-  width: 60%;
-  margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
-    }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
-      width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  } 
-}
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-
-.email--address__information{
-  width: 100%;
-  display: flex;
-   .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-.email--address__form-section{
-  width: 60%;
-  margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
-    }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
-      width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  } 
-}
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-
-.email--address__information{
-  width: 100%;
-  display: flex;
-   .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-.email--address__form-section{
-  width: 60%;
-  margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
-    }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
-      width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  } 
-}
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-
-.email--address__information{
-  width: 100%;
-  display: flex;
-   .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-.email--address__form-section{
-  width: 60%;
-  margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
-    }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
-      width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  } 
-}
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-
-.email--address__information{
-  width: 100%;
-  display: flex;
-   .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-.email--address__form-section{
-  width: 60%;
-  margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
-    }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
-      width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  } 
-}
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-
-.email--address__information{
-  width: 100%;
-  display: flex;
-   .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-.email--address__form-section{
-  width: 60%;
-  margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
-    }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
-      width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  } 
-}
-
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
-
-  /* Code for content name */
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-
-
-
-
-
 
 /* Pasword Section Styles*/
 
@@ -986,16 +253,15 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
   margin-top: 8rem;
   font-weight: 400;
   letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
+  border-bottom: 2px solid $primary-blue;
   padding-bottom: 1.3rem;
   margin-bottom: 4rem;
 }
 
-
-.password--information{
+.password--information {
   width: 100%;
   display: flex;
-   .password--information__desc{
+  .password--information__desc {
     color: #e4e4e4;
     font-size: 1.7rem;
     font-weight: 300;
@@ -1005,7 +271,6 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
 }
 
 /* Form Styles */
-
 
 /* Email Address Styles*/
 
@@ -1013,16 +278,15 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
   margin-top: 8rem;
   font-weight: 400;
   letter-spacing: 0.2rem;
-  border-bottom: 2px solid  $primary-blue;
+  border-bottom: 2px solid $primary-blue;
   padding-bottom: 1.3rem;
   margin-bottom: 4rem;
 }
 
-
-.email--address__information{
+.email--address__information {
   width: 100%;
   display: flex;
-   .email--address__desc {
+  .email--address__desc {
     color: #e4e4e4;
     font-size: 1.7rem;
     font-weight: 300;
@@ -1033,51 +297,51 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
 
 /* Form Styles */
 
-.email--address__form-section{
+.email--address__form-section {
   width: 60%;
   margin-left: 10rem;
-    
-   .email--address__fields{
-    .ea-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
+
+  .email--address__fields {
+    .ea-submitBtn {
+      grid-column: 1/3;
+      width: 25%;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      font-weight: 400;
+      text-transform: uppercase;
+      border-radius: 4px;
+      min-width: 8rem;
+      background: $primary_blue;
+      cursor: pointer;
+      letter-spacing: 1px;
+      font-size: 1.4rem;
+      border: #2eb85c;
+      margin-top: 2.5rem;
     }
-  .ea-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .ea-group{
+    .ea-field {
       width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .ea-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      .ea-group {
+        width: 100%;
+        color: white;
+        font-size: 1.5rem;
+        padding-top: 2.7rem;
+        padding-bottom: 0.5rem;
+        border: none;
+        outline: none;
+        background-color: $background;
+      }
+      .ea-label-name {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        pointer-events: none;
+        border-bottom: 1px solid white;
+        color: white;
         &::after {
           content: "";
           position: absolute;
@@ -1097,66 +361,76 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
         }
       }
     }
-  } 
+  }
 }
 
-  /* Code for content-name */
-  .email--address__form-section .ea-field input:focus + .ea-label-name .ea-content-name, .email--address__form-section .ea-field input:valid + .ea-label-name .ea-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
+/* Code for content-name */
+.email--address__form-section
+  .ea-field
+  input:focus
+  + .ea-label-name
+  .ea-content-name,
+.email--address__form-section
+  .ea-field
+  input:valid
+  + .ea-label-name
+  .ea-content-name {
+  transform: translateY(-150%);
+  font-size: 1.4rem;
+  color: $primary-blue;
+}
 
-  /* Code for content name */
+/* Code for content name */
 
-  .email--address__form-section .ea-field input:focus + .ea-label-name::after, .email--address__form .ea-field input:valid + .ea-label-name::after{
-    transform: translateX(0%);      
-  }
-.password--information__form-section{
+.email--address__form-section .ea-field input:focus + .ea-label-name::after,
+.email--address__form .ea-field input:valid + .ea-label-name::after {
+  transform: translateX(0%);
+}
+.password--information__form-section {
   width: 60%;
   margin-left: 10rem;
-    
-   .password__information__fields{
-    .pw-submitBtn{ 
-        grid-column: 1/3;
-        width: 25%;
-        padding: 1.2rem 2rem;
-        text-align: center;
-        font-weight: 400;
-        text-transform: uppercase;
-        border-radius: 4px;
-        min-width: 8rem;
-        background: $primary_blue;
-        cursor: pointer;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        border: #2EB85C;
-        margin-top: 2.5rem;
+
+  .password__information__fields {
+    .pw-submitBtn {
+      grid-column: 1/3;
+      width: 25%;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      font-weight: 400;
+      text-transform: uppercase;
+      border-radius: 4px;
+      min-width: 8rem;
+      background: $primary_blue;
+      cursor: pointer;
+      letter-spacing: 1px;
+      font-size: 1.4rem;
+      border: #2eb85c;
+      margin-top: 2.5rem;
     }
-  .pw-field {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    .pw-group{
+    .pw-field {
       width: 100%;
-      color:#000;
-      font-size: 1.5rem;
-      padding-top: 2.7rem;
-      padding-bottom: .5rem;
-      border: none;
-      outline: none;
-      background-color: $background;
-    }
-      .pw-label-name{
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      pointer-events: none;
-      border-bottom: 1px solid white;
-      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      .pw-group {
+        width: 100%;
+        color: white;
+        font-size: 1.5rem;
+        padding-top: 2.7rem;
+        padding-bottom: 0.5rem;
+        border: none;
+        outline: none;
+        background-color: $background;
+      }
+      .pw-label-name {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        pointer-events: none;
+        border-bottom: 1px solid white;
+        color: white;
         &::after {
           content: "";
           position: absolute;
@@ -1176,18 +450,34 @@ input[type="date"]:in-range::-webkit-datetime-edit-year-field, input[type="date"
         }
       }
     }
-  } 
+  }
 }
 
-  /* Code for content-name */
-  .password--information__form-section .pw-field input:focus + .pw-label-name .pw-content-name, .password--information__form-section .pw-field input:valid + .pw-label-name .pw-content-name{
-    transform: translateY(-150%);
-    font-size: 1.4rem;
-    color: $primary-blue;
-  }
+/* Code for content-name */
+.password--information__form-section
+  .pw-field
+  input:focus
+  + .pw-label-name
+  .pw-content-name,
+.password--information__form-section
+  .pw-field
+  input:valid
+  + .pw-label-name
+  .pw-content-name {
+  transform: translateY(-150%);
+  font-size: 1.4rem;
+  color: $primary-blue;
+}
 
-  /* Code for content name */
+/* Code for content name */
 
-  .password--information__form-section .pw-field input:focus + .pw-label-name::after, .password--information__form-section .pw-field input:valid + .pw-label-name::after{
-    transform: translateX(0%);      
-  }
+.password--information__form-section
+  .pw-field
+  input:focus
+  + .pw-label-name::after,
+.password--information__form-section
+  .pw-field
+  input:valid
+  + .pw-label-name::after {
+  transform: translateX(0%);
+}

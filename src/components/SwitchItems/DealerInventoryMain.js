@@ -11,7 +11,9 @@ import {
   deleteUsedInv,
   deleteNewInv,
   getNewInventorySales,
-  getUsedInventorySales
+  getUsedInventorySales,
+  editUsedInventory,
+  editNewInventory
 } from "../../actions/index";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -31,7 +33,8 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { Icon, InlineIcon } from "@iconify/react";
 import searchIcon from "@iconify/icons-ei/search";
-import NoImage from "../../images/no_image_avail.jpg";
+import DealerNewInvSingle from "./DealerNewInvSingle";
+import DealerUsedInvSingle from "./DealerUsedInvSingle";
 
 const useStyles = makeStyles({
   root: {
@@ -566,47 +569,13 @@ const DealerInventoryMain = props => {
                   {props.newInv &&
                     props.newInv.map((inv, idx) => {
                       return (
-                        <Slide>
-                          <Card key={idx} className={classes.root}>
-                            <CardActionArea>
-                              <CardMedia
-                                className={classes.media}
-                                image={inv.car_picture}
-                                title={inv.make + " " + inv.model}
-                              />
-                              <CardContent>
-                                <Typography
-                                  gutterBottom
-                                  variant="h5"
-                                  component="h2"
-                                >
-                                  {inv.year} {inv.make} {inv.model}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  color="textSecondary"
-                                  component="p"
-                                >
-                                  {inv.info}
-                                </Typography>
-                              </CardContent>
-                            </CardActionArea>
-                            <CardActions>
-                              <Button size="small" color="primary">
-                                Edit
-                              </Button>
-                              <Button
-                                onClick={() =>
-                                  props.deleteNewInv(inv.id, inv.image_id)
-                                }
-                                size="small"
-                                color="primary"
-                              >
-                                Delete
-                              </Button>
-                            </CardActions>
-                          </Card>
-                        </Slide>
+                        <DealerNewInvSingle
+                          inv={inv}
+                          idx={idx}
+                          deleteNewInv={props.deleteNewInv}
+                          classes={classes}
+                          props={props}
+                        />
                       );
                     })}
                 </Slider>
@@ -802,47 +771,13 @@ const DealerInventoryMain = props => {
                   {props.usedInv &&
                     props.usedInv.map((inv, idx) => {
                       return (
-                        <Slide>
-                          <Card key={idx} className={classes.root}>
-                            <CardActionArea>
-                              <CardMedia
-                                className={classes.media}
-                                image={inv.car_picture}
-                                title={inv.make + " " + inv.model}
-                              />
-                              <CardContent>
-                                <Typography
-                                  gutterBottom
-                                  variant="h5"
-                                  component="h2"
-                                >
-                                  {inv.year} {inv.make} {inv.model}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  color="textSecondary"
-                                  component="p"
-                                >
-                                  {inv.info}
-                                </Typography>
-                              </CardContent>
-                            </CardActionArea>
-                            <CardActions>
-                              <Button size="small" color="primary">
-                                Edit
-                              </Button>
-                              <Button
-                                onClick={() =>
-                                  props.deleteUsedInv(inv.id, inv.image_id)
-                                }
-                                size="small"
-                                color="primary"
-                              >
-                                Delete
-                              </Button>
-                            </CardActions>
-                          </Card>
-                        </Slide>
+                        <DealerUsedInvSingle
+                          inv={inv}
+                          idx={idx}
+                          deleteUsedInv={props.deleteUsedInv}
+                          classes={classes}
+                          props={props}
+                        />
                       );
                     })}
                 </Slider>
@@ -959,5 +894,7 @@ export default connect(mapStateToProps, {
   deleteUsedInv,
   deleteNewInv,
   getNewInventorySales,
-  getUsedInventorySales
+  getUsedInventorySales,
+  editNewInventory,
+  editUsedInventory
 })(DealerInventoryMain);

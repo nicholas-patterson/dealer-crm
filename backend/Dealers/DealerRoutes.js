@@ -189,6 +189,42 @@ router.put("/email/update", emailValidation, (req, res) => {
     });
 });
 
+// Update Username
+router.put("/username/update", usernameValidation, (req, res) => {
+  const { dealer_username, dealer_password } = req.body;
+  db.Dealer.findOne({
+    where: {
+      dealer_username: req.session.dealer_user.dealer_username
+    }
+  })
+    .then(dealer => {
+      const comparePass = bcrypt.compareSync(
+        dealer_password,
+        dealer.dealer_password
+      );
+      if (comparePass && dealer) {
+        req.session.dealer_user.dealer_username = dealer_username;
+        return db.Dealer.update(
+          {
+            dealer_username: req.session.dealer_user.dealer_username
+          },
+          { returning: true, where: { id: dealer.id } }
+        )
+          .then(([rowsUpdated, [updatedUsername]]) => {
+            res.status(201).json({ rowsUpdated, updatedUsername });
+          })
+          .catch(err => {
+            res.status(400).json(err);
+          });
+      } else {
+        res.status(400).json({ warning: "Password is incorrect" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 // Update Password
 router.put("/password/update", dealerPasswordUpdateValidation, (req, res) => {
   const { current_password, new_password, confirm_new_password } = req.body;

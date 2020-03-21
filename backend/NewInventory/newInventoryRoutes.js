@@ -70,6 +70,36 @@ router.get("/all/view", async (req, res) => {
   }
 });
 
+//Update New Inventory For Dealer
+router.put("/update/newInv/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rowsUpdated, [updatedInventory]] = await db.NewInventory.update(
+      {
+        car_picture: req.session.image.car_picture,
+        year: req.body.year,
+        make: req.body.make,
+        model: req.body.model,
+        price: req.body.price,
+        miles: req.body.miles,
+        info: req.body.info,
+        dealer_id: req.session.dealer_user.id,
+        image_id: req.session.image.id
+      },
+      { returning: true, where: { id } }
+    );
+    if (rowsUpdated === 0) {
+      res.status(400).json({
+        warning: "Inventory with that id was not found and or updated"
+      });
+    } else {
+      res.status(200).json({ rowsUpdated, updatedInventory });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Delete New Inventory
 router.delete("/delete/:id", (req, res) => {
   const { id } = req.params;

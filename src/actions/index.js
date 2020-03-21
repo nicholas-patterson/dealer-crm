@@ -455,6 +455,27 @@ export const updatePassword = newPassword => {
   };
 };
 
+//Update Username For Dealer
+export const updateUsername = newUsername => {
+  return dispatch => {
+    dispatch({ type: "UPDATE_USERNAME_START" });
+    axios
+      .put("http://localhost:5000/api/dealer/username/update", newUsername, {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log("RES IN USERNAME", res.data.updatedUsername);
+        dispatch({
+          type: "UPDATE_USERNAME_SUCCESS",
+          payload: res.data.updatedUsername.dealer_username
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "UPDATE_USERNAME_FAILURE", payload: err.response });
+      });
+  };
+};
+
 // Get Leads by Salesman For Salesman --DONE
 export const getSalesmanLeads = () => {
   return dispatch => {
@@ -553,6 +574,56 @@ export const getUsedInventorySales = () => {
       })
       .catch(err => {
         dispatch({ type: "GET_SALESMAN_USED_INVENTORY_FAILURE", payload: err });
+      });
+  };
+};
+
+// Edit New Inv Route
+export const editNewInventory = (invId, updatedInv) => {
+  return dispatch => {
+    dispatch({ type: "EDIT_NEW_INV_START" });
+    axios
+      .put(
+        `http://localhost:5000/api/newInventory/update/newInv/${invId}`,
+        updatedInv,
+        {
+          withCredentials: true
+        }
+      )
+      .then(res => {
+        console.log("RES IN EDIT NEW INV ACTION", res.data);
+        dispatch({
+          type: "EDIT_NEW_INV_SUCCESS",
+          payload: res.data.updatedInventory
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "EDIT_NEW_INV_FAILURE", payload: err.response });
+      });
+  };
+};
+
+// Edit Used Inv Route
+export const editUsedInventory = (invId, updatedInv) => {
+  return dispatch => {
+    dispatch({ type: "EDIT_USED_INV_START" });
+    axios
+      .put(
+        `http://localhost:5000/api/usedInventory/update/usedInv/${invId}`,
+        updatedInv,
+        {
+          withCredentials: true
+        }
+      )
+      .then(res => {
+        console.log("RES IN EDIT USED", res);
+        dispatch({
+          type: "EDIT_USED_INV_SUCCESS",
+          payload: res.data.updatedInventory
+        });
+      })
+      .catch(err => {
+        dispatch({ type: "EDIT_USED_INV_FAILURE", payload: err.reponse });
       });
   };
 };

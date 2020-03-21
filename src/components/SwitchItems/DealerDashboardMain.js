@@ -250,9 +250,11 @@ const mapStateToProps = state => {
     salesman: state.salesLoginReducer.user,
     dealer_leads: state.getDealerLeadReducer.leads,
     salesman_leads: state.getSalesLeadReducer.leads,
-    dealer_token: state.loginReducer.user.token,
+    dealer_token: state.loginReducer.token || state.loginReducer.user.token,
     salesman_token: state.salesLoginReducer.user.token
   };
 };
 
-export default connect(mapStateToProps, { getSalesmans })(DealerDashboardMain);
+export default connect(mapStateToProps, { getSalesmans })(
+  React.memo(DealerDashboardMain)
+);

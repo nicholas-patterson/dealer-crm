@@ -38,4 +38,4 @@ class Portal extends Component {
   }
 }
 
-export default Portal;
+export default React.memo(Portal);

@@ -46,6 +46,28 @@ export const usedInventoryReducer = (state = initialState, action) => {
         error: action.payload
       };
 
+    case "EDIT_USED_INV_START":
+      return {
+        ...state,
+        loading: true
+      };
+
+    case "EDIT_USED_INV_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        inventory: state.inventory.map(inv =>
+          inv.id === action.payload.id ? action.payload : inv
+        )
+      };
+
+    case "EDIT_USED_INV_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+
     case "DELETE_USED_INV_START":
       return {
         ...state,

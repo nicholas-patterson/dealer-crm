@@ -627,3 +627,48 @@ export const editUsedInventory = (invId, updatedInv) => {
       });
   };
 };
+
+export const getDealerNotifications = () => {
+  return dispatch => {
+    dispatch({ type: "GET_DEALER_NOTIFICATIONS_START" });
+    axios
+      .get("http://localhost:5000/api/dealer/notifications/all", {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch({
+          type: "GET_DEALER_NOTIFICATIONS_SUCCESS",
+          payload: res.data
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: "GET_DEALER_NOTIFICATIONS_FAILURE",
+          payload: err.response
+        });
+      });
+  };
+};
+
+export const getSalesmanNotifications = () => {
+  return dispatch => {
+    dispatch({ type: "GET_SALESMAN_NOTIFICATIONS_START" });
+    axios
+      .get("http://localhost:5000/api/sales/notifications/sales/all", {
+        withCredentials: true
+      })
+      .then(res => {
+        console.log(res);
+        dispatch({
+          type: "GET_SALESMAN_NOTIFICATIONS_SUCCESS",
+          payload: res.data
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: "GET_SALESMAN_NOTIFICATIONS_FAILURE",
+          payload: err.response
+        });
+      });
+  };
+};

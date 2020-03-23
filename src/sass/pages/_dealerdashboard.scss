@@ -164,9 +164,9 @@
       font-weight: 300;
       font-size: 1.5rem;
 
-      & > :not(last-child) {
-        margin-right: 2rem;
-      }
+      // & > :not(last-child) {
+      //   margin-right: 2rem;
+      // }
 
       &:nth-child(odd) {
         background-color: #3e4854;

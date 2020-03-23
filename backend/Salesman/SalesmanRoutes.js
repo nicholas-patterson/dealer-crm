@@ -8,12 +8,15 @@ const {
   salesmanSignupValidation,
   salesmanUsernameValidation
 } = require("../middleware/validation");
+const emitter = require("../config/io");
+const { Op } = require("sequelize");
 
 // Get All Salesman
 router.get("/salesmans", async (req, res) => {
   try {
     const salesmans = await db.Salesman.findAll({
       attributes: [
+        "id",
         "salesman_firstname",
         "salesman_lastname",
         "salesman_username",
@@ -66,6 +69,11 @@ router.post(
       let d = JSON.parse(JSON.stringify(newSalesman));
       d.userRole = "salesman";
       d.token = await jwt.sign(d, process.env.JWT_SECRET);
+
+      emitter.emitToDealer(req.session.dealer_user.id, "new_salesman", {
+        salesman: newSalesman,
+        message: "You added a new salesman"
+      });
 
       res.status(201).json(d);
     } catch (err) {
@@ -195,6 +203,27 @@ router.get("/usedInventory/all", async (req, res) => {
     });
     console.log(usedInventory);
     res.status(200).json(usedInventory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Get Salesman Notifications
+router.get("/notifications/sales/all", async (req, res) => {
+  try {
+    const notifications = await db.SalesmanNotification.findAll({
+      where: {
+        salesmans_id: req.session.sales_user.id,
+        [Op.or]: [
+          { title: "sales_lead" },
+          { title: "lead_added" },
+          { title: "sales_lead_updated" },
+          { title: "lead_deleted" }
+        ]
+      }
+    });
+    console.log(notifications);
+    res.status(200).json(notifications);
   } catch (err) {
     res.status(500).json(err);
   }

@@ -234,4 +234,4 @@ const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
   );
 };
 
-export default React.memo(DealerNewInvSingle);
+export default DealerNewInvSingle;

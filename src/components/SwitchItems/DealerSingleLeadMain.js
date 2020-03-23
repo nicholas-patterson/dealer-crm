@@ -222,4 +222,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {})(React.memo(DealerSingleLeadMain));
+export default connect(mapStateToProps, {})(DealerSingleLeadMain);

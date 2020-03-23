@@ -233,4 +233,4 @@ const DealerUsedInvSingle = ({ inv, idx, deleteUsedInv, classes, props }) => {
   );
 };
 
-export default React.memo(DealerUsedInvSingle);
+export default DealerUsedInvSingle;

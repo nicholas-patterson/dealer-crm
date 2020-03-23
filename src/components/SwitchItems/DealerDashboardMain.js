@@ -1,7 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "@reach/router";
 import { connect } from "react-redux";
-import { getSalesmans, getNotifications } from "../../actions/index";
+import {
+  getSalesmans,
+  getDealerNotifications,
+  getSalesmanNotifications
+} from "../../actions/index";
+import { mdiDeleteAlertOutline } from "@mdi/js";
+import { mdiBadgeAccountAlertOutline } from "@mdi/js";
+import { mdiCarConnected } from "@mdi/js";
+import { mdiAccountPlusOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import Moment from "react-moment";
 
 import io from "socket.io-client";
 
@@ -15,10 +25,84 @@ const DealerDashboardMain = props => {
   });
 
   useEffect(() => {
+    return props.user === "dealer" ? props.getDealerNotifications() : undefined;
+  }, []);
+
+  useEffect(() => {
+    return props.user === "salesman"
+      ? props.getSalesmanNotifications()
+      : undefined;
+  }, []);
+
+  useEffect(() => {
     socket.on("message", message => {
-      console.log("FROM BACKEND", message);
+      console.log("SOCKET MESSAGE", message);
+      props.user === "dealer"
+        ? props.getDealerNotifications()
+        : props.getSalesmanNotifications();
     });
   }, [props.user === "dealer" ? props.dealer_leads : props.salesman_leads]);
+
+  console.log("DEALER_NOTIFICATIONS", props.dealer_notifications);
+  console.log("SALESMAN_NOTIFICATIONS", props.salesman_notifications);
+
+  const renderIcon = notification => {
+    if (notification.title === "dealer_lead") {
+      return (
+        <Icon
+          path={mdiBadgeAccountAlertOutline}
+          title="Delete Lead"
+          size={1.5}
+          color="#39c"
+        />
+      );
+    } else if (notification.title === "new_inventory_added") {
+      return (
+        <Icon
+          path={mdiCarConnected}
+          title="Delete Lead"
+          size={1.5}
+          color="#39c"
+        />
+      );
+    } else if (notification.title === "new_salesman") {
+      return (
+        <Icon
+          path={mdiAccountPlusOutline}
+          title="Delete Lead"
+          size={1.5}
+          color="#39c"
+        />
+      );
+    } else if (notification.title === "lead_deleted") {
+      return (
+        <Icon
+          path={mdiDeleteAlertOutline}
+          title="Delete Lead"
+          size={1.5}
+          color="#39c"
+        />
+      );
+    } else if (notification.title === "sales_lead") {
+      return (
+        <Icon
+          path={mdiBadgeAccountAlertOutline}
+          title="Delete Lead"
+          size={1.5}
+          color="#39c"
+        />
+      );
+    } else if (notification.title === "lead_added") {
+      return (
+        <Icon
+          path={mdiBadgeAccountAlertOutline}
+          title="Delete Lead"
+          size={1.5}
+          color="#39c"
+        />
+      );
+    }
+  };
 
   return (
     <>
@@ -77,7 +161,7 @@ const DealerDashboardMain = props => {
                       : "dealer_border")
                   }
                   //onClick={props.salesClick}
-                  onClick={getSalesmans()}
+                  onClick={() => getSalesmans()}
                 >
                   <p>Add New Salesperson</p>
                 </Link>
@@ -123,116 +207,44 @@ const DealerDashboardMain = props => {
 
             {/* Start of Recent Activity List */}
             <div className="recent-activity__items">
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:account-badge-alert-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new lead
-                </div>
-                <div className="recent-activity__item__time">Just now</div>
-              </div>
-
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:alert-rhombus-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new salesperson
-                </div>
-                <div className="recent-activity__item__time">1 hour ago</div>
-              </div>
-
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:alert-rhombus-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new manager
-                </div>
-                <div className="recent-activity__item__time">3 hours ago</div>
-              </div>
-
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:alert-circle-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new vehicle
-                </div>
-                <div className="recent-activity__item__time">4 hours ago</div>
-              </div>
-
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:alert-circle-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new vehicle
-                </div>
-                <div className="recent-activity__item__time">4 hours ago</div>
-              </div>
-
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:account-badge-alert-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new lead
-                </div>
-                <div className="recent-activity__item__time">6 hours ago</div>
-              </div>
-
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:account-badge-alert-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new lead
-                </div>
-                <div className="recent-activity__item__time">6 hours ago</div>
-              </div>
-              <div className="recent-activity__item">
-                <div className="recent-activity__item__box recent-activity__item__icon">
-                  <span
-                    className="iconify"
-                    data-icon="mdi:account-badge-alert-outline"
-                    data-inline="false"
-                  ></span>
-                </div>
-                <div className="recent-activity__item__box recent-activity__item__text">
-                  You added a new lead
-                </div>
-                <div className="recent-activity__item__time">6 hours ago</div>
-              </div>
+              {props.user === "dealer"
+                ? props.dealer_notifications.map(notification => {
+                    return (
+                      <div className="recent-activity__item">
+                        <div className="recent-activity__item__box recent-activity__item__icon">
+                          <span>{renderIcon(notification)}</span>
+                        </div>
+                        <div className="recent-activity__item__box recent-activity__item__text">
+                          {notification.data.message}
+                        </div>
+                        <div className="recent-activity__item__time">
+                          <Moment fromNow ago>
+                            {notification.createdAt}
+                          </Moment>{" "}
+                          ago
+                        </div>
+                      </div>
+                    );
+                  })
+                : props.salesman_notifications.map(notification => {
+                    console.log(notification);
+                    return (
+                      <div className="recent-activity__item">
+                        <div className="recent-activity__item__box recent-activity__item__icon">
+                          <span>{renderIcon(notification)}</span>
+                        </div>
+                        <div className="recent-activity__item__box recent-activity__item__text">
+                          {notification.data.message}
+                        </div>
+                        <div className="recent-activity__item__time">
+                          <Moment fromNow ago>
+                            {notification.createdAt}
+                          </Moment>{" "}
+                          ago
+                        </div>
+                      </div>
+                    );
+                  })}
             </div>
             {/* END RECENT ACTIVITY */}
 
@@ -251,10 +263,14 @@ const mapStateToProps = state => {
     dealer_leads: state.getDealerLeadReducer.leads,
     salesman_leads: state.getSalesLeadReducer.leads,
     dealer_token: state.loginReducer.token || state.loginReducer.user.token,
-    salesman_token: state.salesLoginReducer.user.token
+    salesman_token: state.salesLoginReducer.user.token,
+    dealer_notifications: state.getDealerNotificationsReducer.notifications,
+    salesman_notifications: state.getSalesmanNotificationReducer.notifications
   };
 };
 
-export default connect(mapStateToProps, { getSalesmans })(
-  React.memo(DealerDashboardMain)
-);
+export default connect(mapStateToProps, {
+  getSalesmans,
+  getDealerNotifications,
+  getSalesmanNotifications
+})(DealerDashboardMain);

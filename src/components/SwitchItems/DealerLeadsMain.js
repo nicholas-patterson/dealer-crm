@@ -18,7 +18,7 @@ const DealerLeadsMain = props => {
     return props.user === "dealer"
       ? props.getDealerLeads()
       : props.getSalesmanLeads();
-  }, []);
+  }, [props.user]);
 
   const handleLeadDelete = id => {
     props.deleteLead(id);
@@ -115,7 +115,7 @@ const mapStateToProps = state => {
     user: state.userReducer.user,
     leads: state.getDealerLeadReducer.leads,
     sales_leads: state.getSalesLeadReducer.leads,
-    dealer_id: state.loginReducer.id || state.loginReducer.user.id,
+    dealer_id: state.loginReducer.user.id,
     sales_dealer_id: state.salesLoginReducer.user.id,
     errors: state.getSalesLeadReducer.error
   };
@@ -129,4 +129,4 @@ export default connect(mapStateToProps, {
   deleteSalesmanLead,
   editSalesLead,
   clearError
-})(React.memo(DealerLeadsMain));
+})(DealerLeadsMain);

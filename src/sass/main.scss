@@ -21,6 +21,8 @@
 
 .page {
   position: relative;
+  left: 0;
+  right: 0;
 }
 
 .fade-appear,
@@ -37,4 +39,9 @@
 
 .fade-exit {
   opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transition: opacity 150ms linear;
 }

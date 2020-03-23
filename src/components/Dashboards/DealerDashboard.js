@@ -15,9 +15,8 @@ import {
   getSalesmans,
   addSalesLead
 } from "../../actions/index";
-import { navigate } from "@reach/router";
-
-// Select Menu
+import { navigate, Router } from "@reach/router";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const DealerDashboard = props => {
   useEffect(() => {
@@ -100,19 +99,82 @@ const DealerDashboard = props => {
     e.preventDefault();
   };
 
+  const customKey = props.location.pathname
+    .split("/")
+    .splice(1, 2)
+    .join("/");
+
+  console.log(props);
+  console.log(leadInfo);
+
   const pageSwitch = () => {
     switch (props.dash) {
       case "dashboard":
-        return <DealerDashboardMain />;
+        return (
+          // <TransitionGroup>
+          //   <CSSTransition
+          //     timeout={30000}
+          //     classNames="fade"
+          //     key={customKey}
+          //     exit={false}
+          //   >
+          <DealerDashboardMain />
+          //   </CSSTransition>
+          // </TransitionGroup>
+        );
       case "leads":
-        return <DealerLeadsMain />;
+        return (
+          // <TransitionGroup>
+          //   <CSSTransition
+          //     timeout={30000}
+          //     classNames="fade"
+          //     key={customKey}
+          //     exit={false}
+          //   >
+          <DealerLeadsMain />
+          //   </CSSTransition>
+          // </TransitionGroup>
+        );
 
       case "inventory":
-        return <DealerInventoryMain />;
+        return (
+          // <TransitionGroup>
+          //   <CSSTransition
+          //     timeout={30000}
+          //     classNames="fade"
+          //     key={customKey}
+          //     exit={false}
+          //   >
+          <DealerInventoryMain />
+          //   </CSSTransition>
+          // </TransitionGroup>
+        );
       case "account":
-        return <DealerAccountMain />;
+        return (
+          // <TransitionGroup>
+          //   <CSSTransition
+          //     timeout={30000}
+          //     classNames="fade"
+          //     key={customKey}
+          //     exit={false}
+          //   >
+          <DealerAccountMain />
+          //   </CSSTransition>
+          // </TransitionGroup>
+        );
       case "help":
-        return <DealerHelpMain />;
+        return (
+          // <TransitionGroup>
+          //   <CSSTransition
+          //     timeout={30000}
+          //     classNames="fade"
+          //     key={customKey}
+          //     exit={false}
+          //   >
+          <DealerHelpMain />
+          //   </CSSTransition>
+          // </TransitionGroup>
+        );
       default:
         return <DealerDashboardMain />;
     }
@@ -127,7 +189,6 @@ const DealerDashboard = props => {
         return (
           <Portal>
             <form className="leads-form" onSubmit={handleLeadsSubmit}>
-              {/* <h3 className="leads-form_title">Create A Lead..</h3> */}
               <div className="leads-field">
                 <input
                   type="text"
@@ -271,6 +332,7 @@ const DealerDashboard = props => {
                 >
                   <option value={null}>Select A Salesman</option>
                   {props.salesmans.map(salesman => {
+                    console.log(salesman);
                     return (
                       <option value={salesman.id} key={salesman.id}>
                         {salesman.salesman_firstname}{" "}
@@ -514,4 +576,4 @@ export default connect(mapStateToProps, {
   registerSalesman,
   getSalesmans,
   addSalesLead
-})(React.memo(DealerDashboard));
+})(DealerDashboard);

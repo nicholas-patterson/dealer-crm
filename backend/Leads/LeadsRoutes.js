@@ -34,7 +34,6 @@ router.get("/:id", async (req, res) => {
 
 // Add Lead For Dealer Session
 router.post("/add", async (req, res) => {
-  const io = req.app.get("socketio");
   console.log("BODDDDY", req.body);
   try {
     const newLead = await db.Lead.create({
@@ -49,10 +48,10 @@ router.post("/add", async (req, res) => {
       salesman_id: req.body.salesman_id,
       dealer_id: req.session.dealer_user.id
     });
-    res.status(201).json(newLead);
 
     // IF salesman_id IS NULL lead is not created for specific salesman. But if salesman_id is a number it's the id of the salesman from select menu value.
     console.log(req.body.salesman_id);
+    res.status(201).json(newLead);
     if (req.body.salesman_id) {
       emitter.emitToSalesman(req.body.salesman_id, "sales_lead", {
         lead: newLead,
@@ -96,7 +95,7 @@ router.post("/sales/add", async (req, res) => {
     console.log("NEW LEAD", req.body);
     emitter.emitToSalesman(req.session.sales_user.id, "lead_added", {
       lead: newLead,
-      messaage: "You added a new lead"
+      message: "You added a new lead"
     });
 
     res.status(201).json(newLead);
@@ -245,7 +244,7 @@ router.delete("/remove/sales/:id", (req, res) => {
         })
           .then(deletedLead => {
             if (deletedLead === 1) {
-              emitter.emitToDealer(lead.dealer_id, "lead_deleted", { lead });
+              emitter.emitToSalesman(lead.dealer_id, "lead_deleted", { lead }); // changed to emitToSalesman but double check
               res.status(200).json({ deletedLead: lead });
             }
             // Notification that salesman has deleted one of their leads

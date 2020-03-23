@@ -11,7 +11,7 @@ const {
   dealerSignInValidation,
   dealerPasswordUpdateValidation
 } = require("../middleware/validation");
-
+const { Op } = require("sequelize");
 // Get All Dealers
 router.get("/", async (req, res) => {
   try {
@@ -259,6 +259,32 @@ router.put("/password/update", dealerPasswordUpdateValidation, (req, res) => {
     .catch(err => {
       res.status(400).json({ warning: "Dealer not found" });
     });
+});
+
+// Get Dealer Notifications
+router.get("/notifications/all", async (req, res) => {
+  try {
+    const notifications = await db.DealerNotification.findAll({
+      where: {
+        dealer_id: req.session.dealer_user.id,
+        [Op.or]: [
+          { title: "dealer_lead" },
+          { title: "sales_lead" },
+          { title: "dealer_lead_updated" },
+          { title: "lead_deleted" },
+          { title: "new_inventory_added" },
+          { title: "new_inventory_deleted" },
+          { title: "used_inventory_added" },
+          { title: "used_inventory_deleted" },
+          { title: "new_salesman" }
+        ]
+      }
+    });
+    console.log(notifications);
+    res.status(200).json(notifications);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // Logout Dealer

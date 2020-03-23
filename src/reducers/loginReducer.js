@@ -12,13 +12,10 @@ export const loginReducer = (state = initialState, action) => {
     case "LOGIN_USER_START":
       return {
         ...state,
-        isLogged: false
-      };
-    case "CLEAR_ERROR":
-      return {
-        ...state,
+        isLogged: false,
         error: ""
       };
+
     case "LOGIN_USER_SUCCESS":
       return {
         ...state,
@@ -33,10 +30,17 @@ export const loginReducer = (state = initialState, action) => {
         error: action.payload.data.warning
       };
 
+    case "CLEAR_ERROR":
+      return {
+        ...state,
+        error: ""
+      };
+
     case "LOGOUT_USER_START":
       return {
         ...state,
-        isLogged: true
+        isLogged: true,
+        error: ""
       };
     case "LOGOUT_USER_SUCCESS":
       return {
@@ -55,34 +59,42 @@ export const loginReducer = (state = initialState, action) => {
     case "UPDATE_EMAIL_START":
       return {
         ...state,
-        isLogged: true
+        isLogged: true,
+        error: ""
       };
 
     case "UPDATE_EMAIL_SUCCESS":
       return {
-        ...state.user,
+        ...state,
         isLogged: true,
-        dealer_email: action.payload
+        user: {
+          ...state.user,
+          dealer_email: action.payload
+        }
       };
 
     case "UPDATE_EMAIL_FAILURE":
       return {
         ...state,
         isLogged: true,
-        error: action.payload
+        error: action.payload.data.warning
       };
 
     case "UPDATE_USERNAME_START":
       return {
         ...state,
-        isLogged: true
+        isLogged: true,
+        error: ""
       };
 
     case "UPDATE_USERNAME_SUCCESS":
       return {
-        ...state.user,
+        ...state,
         isLogged: true,
-        dealer_username: action.payload
+        user: {
+          ...state.user,
+          dealer_username: action.payload
+        }
       };
 
     case "UPDATE_USERNAME_FAILURE":
@@ -95,7 +107,8 @@ export const loginReducer = (state = initialState, action) => {
     case "UPDATE_PASSWORD_START":
       return {
         ...state,
-        isLogged: true
+        isLogged: true,
+        error: ""
       };
 
     case "UPDATE_PASSWORD_SUCCESS":
@@ -103,12 +116,6 @@ export const loginReducer = (state = initialState, action) => {
         ...state.user,
         //isLogged: true,
         dealer_password: action.payload
-      };
-
-    case "CLEAR_ERROR":
-      return {
-        ...state,
-        error: ""
       };
 
     case "UPDATE_PASSWORD_FAILURE":

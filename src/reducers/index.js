@@ -15,6 +15,8 @@ import { salesRegisterReducer } from "./salesRegisterReducer";
 import { getSalesLeadReducer } from "./getSalesLeadReducer";
 import { getSalesNewInventoryReducer } from "./getSalesNewInventoryReducer";
 import { getSalesUsedInventoryReducer } from "./getSalesUsedInventoryReducer";
+import { getDealerNotificationsReducer } from "./getDealerNotificationsReducer";
+import { getSalesmanNotificationReducer } from "./getSalesmanNotificationReducer";
 
 export default combineReducers({
   dealerNavigationReducer,
@@ -32,5 +34,7 @@ export default combineReducers({
   newInventoryReducer,
   salesRegisterReducer,
   getSalesNewInventoryReducer,
-  getSalesUsedInventoryReducer
+  getSalesUsedInventoryReducer,
+  getDealerNotificationsReducer,
+  getSalesmanNotificationReducer
 });

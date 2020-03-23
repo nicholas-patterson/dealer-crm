@@ -11,7 +11,8 @@ import {
   getDashboardLink,
   getLeadsLink,
   logoutUser,
-  logoutSalesman
+  logoutSalesman,
+  clearError
 } from "../actions";
 import { Link } from "@reach/router";
 import Portal from "./Portal";
@@ -22,22 +23,27 @@ const SideNav = props => {
 
   const handleDashboardClick = () => {
     props.getDashboardLink("dashboard");
+    props.clearError();
   };
 
   const handleLeadsClick = () => {
     props.getDashboardLink("leads");
+    props.clearError();
   };
 
   const handleInventoryClick = () => {
     props.getDashboardLink("inventory");
+    props.clearError();
   };
 
   const handleAccountClick = () => {
     props.getDashboardLink("account");
+    props.clearError();
   };
 
   const handleHelpClick = () => {
     props.getDashboardLink("help");
+    props.clearError();
   };
 
   const handleLogoutClick = () => {
@@ -200,5 +206,6 @@ export default connect(mapStateToProps, {
   getDashboardLink,
   getLeadsLink,
   logoutUser,
-  logoutSalesman
+  logoutSalesman,
+  clearError
 })(SideNav);

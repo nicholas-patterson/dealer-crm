@@ -6,6 +6,9 @@
 
   grid-template-columns: 1fr 5fr;
   grid-template-rows: 1fr;
+  @media (max-width: $mobile-width) {
+    display: block;
+  }
 
   .nav-container {
     position: relative;
@@ -29,10 +32,17 @@
     grid-row: 1/-1;
   }
 
+  .hide-nav {
+    display: none;
+  }
+
   .main-content-wrapper {
     grid-column: 2/-1;
     grid-row: 1/-1;
     padding: 1.5rem 4rem;
+    @media (max-width: $mobile-width) {
+      padding: 1.5rem 1rem;
+    }
   }
 
   .main-content-container {
@@ -46,15 +56,42 @@
     align-items: center;
     width: 100%;
     padding-bottom: 1.5rem;
+    .red-dot {
+      position: absolute;
+      right: 110px;
+      display: inline-block;
+    }
   }
 
   .console-recent-activity-container {
     display: flex;
     justify-content: space-between;
+    @media (max-width: $mobile-width) {
+      display: block;
+    }
+
+    @media (max-width: $tabletandlargephone-width) {
+      display: block;
+    }
+
+    @media (max-width: $desktop-width) {
+      display: block;
+    }
 
     .console {
       flex-basis: 50%;
       margin-right: 50px;
+      @media (max-width: $mobile-width) {
+        margin-right: 0;
+      }
+
+      @media (max-width: $tabletandlargephone-width) {
+        margin-right: 0;
+      }
+
+      @media (max-width: $desktop-width) {
+        margin-right: 0;
+      }
 
       &__heading {
         margin-top: 10rem;
@@ -62,6 +99,13 @@
         font-weight: 400;
         font-size: 2.7rem;
         letter-spacing: 1px;
+        @media (max-width: $mobile-width) {
+          font-size: 2rem;
+        }
+
+        @media (max-width: $tabletandlargephone-width) {
+          font-size: 2.3rem;
+        }
       }
 
       & .sales_bb {
@@ -97,6 +141,9 @@
         letter-spacing: 2px;
         font-weight: 300;
         cursor: pointer;
+        @media (max-width: $mobile-width) {
+          font-size: 1.5rem;
+        }
 
         &.dealer_border:hover {
           border: 2px solid #39c;
@@ -122,6 +169,14 @@
       font-weight: 400;
       font-size: 2.7rem;
       letter-spacing: 1px;
+      @media (max-width: $mobile-width) {
+        font-size: 2rem;
+        margin-top: 4rem;
+      }
+      @media (max-width: $tabletandlargephone-width) {
+        margin-top: 4rem;
+        font-size: 2.3rem;
+      }
     }
 
     & .sales_bb {
@@ -163,6 +218,17 @@
       border-radius: 4px;
       font-weight: 300;
       font-size: 1.5rem;
+      position: relative;
+      @media (max-width: $tabletandlargephone-width) {
+        font-size: 1.2rem;
+      }
+
+      .notif-close-btn {
+        position: absolute;
+        top: 4px;
+        right: 10px;
+        cursor: pointer;
+      }
 
       // & > :not(last-child) {
       //   margin-right: 2rem;
@@ -195,6 +261,9 @@
         color: #39c;
         font-size: 1.2rem;
         font-weight: 700;
+        @media (max-width: $tabletandlargephone-width) {
+          font-weight: 500;
+        }
       }
     }
   }

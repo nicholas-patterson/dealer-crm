@@ -1,14 +1,16 @@
 *,
 *::after,
 *::before {
-  margin: 0px;
+  margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
   // defines what 1rem is
   font-size: 62.5%;
+  position: relative;
+  margin: 0;
 }
 
 body {
@@ -17,6 +19,7 @@ body {
   background: #242c35;
   color: $color-white;
   font-size: 1.6rem;
+  position: relative;
 }
 
 a,

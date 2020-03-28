@@ -1,7 +1,6 @@
 const initialState = {
   isLogged: false,
   user: [],
-  //token: null,
   error: ""
 };
 
@@ -17,7 +16,6 @@ export const salesLoginReducer = (state = initialState, action) => {
         ...state,
         isLogged: true,
         user: action.payload
-        // token: action.payload.token
       };
 
     case "LOGIN_SALES_USER_FAILURE":
@@ -31,13 +29,11 @@ export const salesLoginReducer = (state = initialState, action) => {
       return {
         ...state,
         isLogged: true
-        //token: action.payload
       };
     case "LOGOUT_USER_SUCCESS":
       return {
         ...state,
         isLogged: false
-        //token: localStorage.clear()
       };
 
     case "LOGOUT_USER_FAILURE":

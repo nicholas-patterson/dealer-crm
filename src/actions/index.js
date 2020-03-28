@@ -402,9 +402,10 @@ export const deleteNewInv = (newInvId, picId) => {
 };
 
 export const newSearchFilter = term => {
+  console.log("TERM IN ACTION", term);
   return {
     type: "SEARCH_NEW_INV_SUCCESS",
-    payload: term
+    term
   };
 };
 
@@ -526,7 +527,11 @@ export const deleteSalesmanLead = lead_id => {
         withCredentials: true
       })
       .then(res => {
-        dispatch({ type: "DELETE_SALESMAN_LEAD_SUCCESS", payload: res.data });
+        console.log("RES IN DELETE SALES LEAD", res);
+        dispatch({
+          type: "DELETE_SALESMAN_LEAD_SUCCESS",
+          payload: res.data.deletedLead
+        });
       })
       .catch(err => {
         dispatch({
@@ -667,6 +672,58 @@ export const getSalesmanNotifications = () => {
       .catch(err => {
         dispatch({
           type: "GET_SALESMAN_NOTIFICATIONS_FAILURE",
+          payload: err.response
+        });
+      });
+  };
+};
+
+export const deleteDealerNotification = notifId => {
+  return dispatch => {
+    dispatch({ type: "DELETE_DEALER_NOTIF_START" });
+    axios
+      .delete(
+        `http://localhost:5000/api/dealer/remove/notification/${notifId}`,
+        {
+          withCredentials: true
+        }
+      )
+      .then(res => {
+        console.log(res.data);
+        dispatch({
+          type: "DELETE_DEALER_NOTIF_SUCCESS",
+          payload: res.data.deletedNotif
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: "DELETE_DEALER_NOTIF_FAILURE",
+          payload: err.response
+        });
+      });
+  };
+};
+
+export const deleteSalesmanNotification = notifId => {
+  return dispatch => {
+    dispatch({ type: "DELETE_SALESMAN_NOTIF_START" });
+    axios
+      .delete(
+        `http://localhost:5000/api/sales/remove/notification/${notifId}`,
+        {
+          withCredentials: true
+        }
+      )
+      .then(res => {
+        dispatch({
+          type: "DELETE_SALESMAN_NOTIF_SUCCESS",
+          payload: res.data.deletedNotif
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({
+          type: "DELETE_SALESMAN_NOTIF_FAILURE",
           payload: err.response
         });
       });

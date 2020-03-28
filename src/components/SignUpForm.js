@@ -70,7 +70,7 @@ const SignUpForm = props => {
 
   return (
     <>
-      <div className="wrapper">
+      <div className="signup-wrapper">
         {props.errors ? (
           <Banner title={props.errors} visibility={3000} />
         ) : null}

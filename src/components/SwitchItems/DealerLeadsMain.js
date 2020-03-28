@@ -12,8 +12,19 @@ import {
 import DealerSingleLeadMain from "./DealerSingleLeadMain";
 import SalesSingleLeadMain from "./SalesSingleLeadMain";
 import Banner from "react-js-banner";
+import { Howl, Howler } from "howler";
+import deletesound from "../../sounds/deletesound.mp3";
+import errorsound from "../../sounds/errorsound.mp3";
 
 const DealerLeadsMain = props => {
+  const global_delete_sound = new Howl({
+    src: deletesound
+  });
+
+  const global_error_sound = new Howl({
+    src: errorsound
+  });
+
   useEffect(() => {
     return props.user === "dealer"
       ? props.getDealerLeads()
@@ -22,12 +33,20 @@ const DealerLeadsMain = props => {
 
   const handleLeadDelete = id => {
     props.deleteLead(id);
+    global_delete_sound.play();
   };
 
   const handleSalesmanLeadDelete = id => {
     props.deleteSalesmanLead(id);
     props.clearError();
+    if (!props.errors) {
+      global_delete_sound.play();
+    } else {
+      global_error_sound.play();
+    }
   };
+
+  Howler.volume(0.5);
 
   return (
     <>
@@ -35,10 +54,6 @@ const DealerLeadsMain = props => {
         {props.errors ? (
           <Banner title={props.errors} visibleTime={3000} />
         ) : null}
-        <div className="header-dealer">
-          <div className="header-dealer__name">Dealership: Ford</div>
-          <div className="header-dealer__notifications">Notifications</div>
-        </div>
 
         <div
           className={
@@ -129,4 +144,4 @@ export default connect(mapStateToProps, {
   deleteSalesmanLead,
   editSalesLead,
   clearError
-})(DealerLeadsMain);
+})(React.memo(DealerLeadsMain));

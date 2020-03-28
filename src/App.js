@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { connect } from "react-redux";
-import { Router, Location } from "@reach/router";
+import { Router } from "@reach/router";
 import WelcomePage from "./components/WelcomePage";
 import SignUpForm from "./components/SignUpForm";
 import LoginForm from "./components/LogInForm";

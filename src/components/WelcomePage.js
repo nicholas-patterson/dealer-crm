@@ -20,7 +20,7 @@ const WelcomePage = () => {
             </p>
             <Link
               className="button button--get-started button--slide-up"
-              to="/"
+              to="/login"
             >
               Get Started
             </Link>
@@ -42,9 +42,10 @@ const WelcomePage = () => {
           <span role="img" aria-label="heart emoji">
             ❤️
           </span>{" "}
-          Nicholas Patterson
+          by: Nick Patterson
         </p>
       </footer>
+      {/* </div> */}
     </>
   );
 };

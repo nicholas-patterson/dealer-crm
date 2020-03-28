@@ -28,6 +28,26 @@ export const getSalesmanNotificationReducer = (
         error: action.payload
       };
 
+    case "DELETE_SALESMAN_NOTIF_START":
+      return {
+        ...state,
+        loading: true
+      };
+
+    case "DELETE_SALESMAN_NOTIF_SUCCESS":
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          notif => notif.id !== action.payload.id
+        )
+      };
+
+    case "DELETE_SALESMAN_NOTIF_FAILURE":
+      return {
+        ...state,
+        error: action.payload.status
+      };
+
     default:
       return state;
   }

@@ -94,7 +94,7 @@ router.post("/login", dealerSignInValidation, async (req, res) => {
       let d = JSON.parse(JSON.stringify(user));
       delete d.dealer_password;
       d.userRole = "dealer";
-      emitter.emitToDealer(d.id, "dealer_login", d);
+      //emitter.emitToDealer(d.id, "dealer_login", d); // Don't want that dealer_login in notifications table
 
       d.token = await jwt.sign(d, process.env.JWT_SECRET);
 
@@ -248,7 +248,6 @@ router.put("/password/update", dealerPasswordUpdateValidation, (req, res) => {
           { returning: true, where: { id: req.session.dealer_user.id } }
         )
           .then(([rowsUpdated, [pass]]) => {
-            console.log("INFO", { rowsUpdated, pass });
             res.status(201).json({ rowsUpdated, pass });
           })
           .catch(err => {
@@ -280,11 +279,44 @@ router.get("/notifications/all", async (req, res) => {
         ]
       }
     });
-    console.log(notifications);
+
     res.status(200).json(notifications);
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+// Delete Notification For Dealer
+router.delete("/remove/notification/:id", (req, res) => {
+  const { id } = req.params;
+  db.DealerNotification.findOne({
+    where: {
+      id
+    }
+  })
+    .then(notif => {
+      if (notif === null) {
+        res
+          .status(400)
+          .json({ warning: "Notification with given id was not found" });
+      }
+      return db.DealerNotification.destroy({
+        where: {
+          id
+        }
+      })
+        .then(deletedNotif => {
+          if (deletedNotif === 1) {
+            res.status(200).json({ deletedNotif: notif });
+          }
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 // Logout Dealer

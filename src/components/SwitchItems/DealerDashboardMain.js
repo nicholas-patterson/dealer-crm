@@ -4,14 +4,19 @@ import { connect } from "react-redux";
 import {
   getSalesmans,
   getDealerNotifications,
-  getSalesmanNotifications
+  getSalesmanNotifications,
+  deleteDealerNotification,
+  deleteSalesmanNotification
 } from "../../actions/index";
 import { mdiDeleteAlertOutline } from "@mdi/js";
 import { mdiBadgeAccountAlertOutline } from "@mdi/js";
 import { mdiCarConnected } from "@mdi/js";
 import { mdiAccountPlusOutline } from "@mdi/js";
 import Icon from "@mdi/react";
+import CloseIcon from "@material-ui/icons/Close";
 import Moment from "react-moment";
+import { Howl, Howler } from "howler";
+import deletesound from "../../sounds/deletesound.mp3";
 
 import io from "socket.io-client";
 
@@ -43,84 +48,55 @@ const DealerDashboardMain = props => {
     });
   }, [props.user === "dealer" ? props.dealer_leads : props.salesman_leads]);
 
-  console.log("DEALER_NOTIFICATIONS", props.dealer_notifications);
-  console.log("SALESMAN_NOTIFICATIONS", props.salesman_notifications);
-
   const renderIcon = notification => {
     if (notification.title === "dealer_lead") {
       return (
-        <Icon
-          path={mdiBadgeAccountAlertOutline}
-          title="Delete Lead"
-          size={1.5}
-          color="#39c"
-        />
+        <Icon path={mdiBadgeAccountAlertOutline} size={1.5} color="#39c" />
       );
     } else if (notification.title === "new_inventory_added") {
-      return (
-        <Icon
-          path={mdiCarConnected}
-          title="Delete Lead"
-          size={1.5}
-          color="#39c"
-        />
-      );
+      return <Icon path={mdiCarConnected} size={1.5} color="#39c" />;
     } else if (notification.title === "new_salesman") {
-      return (
-        <Icon
-          path={mdiAccountPlusOutline}
-          title="Delete Lead"
-          size={1.5}
-          color="#39c"
-        />
-      );
+      return <Icon path={mdiAccountPlusOutline} size={1.5} color="#39c" />;
     } else if (notification.title === "lead_deleted") {
-      return (
-        <Icon
-          path={mdiDeleteAlertOutline}
-          title="Delete Lead"
-          size={1.5}
-          color="#39c"
-        />
-      );
+      return <Icon path={mdiDeleteAlertOutline} size={1.5} color="#39c" />;
     } else if (notification.title === "sales_lead") {
       return (
-        <Icon
-          path={mdiBadgeAccountAlertOutline}
-          title="Delete Lead"
-          size={1.5}
-          color="#39c"
-        />
+        <Icon path={mdiBadgeAccountAlertOutline} size={1.5} color="#39c" />
       );
     } else if (notification.title === "lead_added") {
       return (
-        <Icon
-          path={mdiBadgeAccountAlertOutline}
-          title="Delete Lead"
-          size={1.5}
-          color="#39c"
-        />
+        <Icon path={mdiBadgeAccountAlertOutline} size={1.5} color="#39c" />
       );
+    } else if (notification.title === "new_inventory_deleted") {
+      return <Icon path={mdiDeleteAlertOutline} size={1.5} color="#39c" />;
+    } else if (notification.title === "used_inventory_deleted") {
+      return <Icon path={mdiDeleteAlertOutline} size={1.5} color="#39c" />;
+    } else if (notification.title === "used_inventory_added") {
+      return <Icon path={mdiCarConnected} size={1.5} color="#39c" />;
     }
   };
+
+  const sound = new Howl({
+    src: deletesound
+  });
+
+  const delDealerNotif = notification => {
+    props.deleteDealerNotification(notification.id);
+    sound.play();
+  };
+
+  const delSalesmanNotif = notification => {
+    props.deleteSalesmanNotification(notification.id);
+    sound.play();
+  };
+
+  Howler.volume(0.5);
+
+  console.log(props);
 
   return (
     <>
       <div>
-        {props.user === "salesman" ? (
-          <div className="header-dealer">
-            <div className="header-dealer__name">
-              Welcome, {props.salesman.salesman_username}
-            </div>
-            <div className="header-dealer__notifications">Notifications</div>
-          </div>
-        ) : (
-          <div className="header-dealer">
-            <div className="header-dealer__name">Dealership: Ford</div>
-            <div className="header-dealer__notifications">Notifications</div>
-          </div>
-        )}
-        {/* </div> */}
         {/* ACTION AND RECENT ACTIVITY BOXES */}
         <div className="console-recent-activity-container">
           {/* START CONSOLE */}
@@ -223,6 +199,10 @@ const DealerDashboardMain = props => {
                           </Moment>{" "}
                           ago
                         </div>
+                        <CloseIcon
+                          onClick={() => delDealerNotif(notification)}
+                          className="notif-close-btn"
+                        />
                       </div>
                     );
                   })
@@ -242,6 +222,10 @@ const DealerDashboardMain = props => {
                           </Moment>{" "}
                           ago
                         </div>
+                        <CloseIcon
+                          onClick={() => delSalesmanNotif(notification)}
+                          className="notif-close-btn"
+                        />
                       </div>
                     );
                   })}
@@ -272,5 +256,7 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   getSalesmans,
   getDealerNotifications,
-  getSalesmanNotifications
-})(DealerDashboardMain);
+  getSalesmanNotifications,
+  deleteDealerNotification,
+  deleteSalesmanNotification
+})(React.memo(DealerDashboardMain));

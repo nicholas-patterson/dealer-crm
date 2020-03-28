@@ -9,8 +9,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Portal from "../Portal";
 import { Link } from "@reach/router";
+import { Skeleton } from "@material-ui/lab";
 
-const DealerUsedInvSingle = ({ inv, idx, deleteUsedInv, classes, props }) => {
+const DealerUsedInvSingle = ({
+  inv,
+  idx,
+  deleteUsedInventory,
+  classes,
+  props
+}) => {
   const [modal, setModal] = useState(false);
   const [usedInvEdit, setUsedInvEdit] = useState({
     car_picture: props.usedInv[idx].car_picture || "",
@@ -198,39 +205,44 @@ const DealerUsedInvSingle = ({ inv, idx, deleteUsedInv, classes, props }) => {
           </form>
         </Portal>
       ) : null}
+
       <Slide>
-        <Card key={idx} className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image={inv.car_picture}
-              title={inv.make + " " + inv.model}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {inv.year} {inv.make} {inv.model}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {inv.info}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button onClick={handleUsedInvEdit} size="small" color="primary">
-              Edit
-            </Button>
-            <Button
-              onClick={() => deleteUsedInv(inv.id, inv.image_id)}
-              size="small"
-              color="primary"
-            >
-              Delete
-            </Button>
-          </CardActions>
-        </Card>
+        {props.loading ? (
+          <Skeleton height={248} width={270} variant="rect" animation="wave" />
+        ) : (
+          <Card key={idx} className={classes.root}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={inv.car_picture}
+                title={inv.make + " " + inv.model}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {inv.year} {inv.make} {inv.model}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {inv.info}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button onClick={handleUsedInvEdit} size="small" color="primary">
+                Edit
+              </Button>
+              <Button
+                onClick={() => deleteUsedInventory(inv.id, inv.image_id)}
+                size="small"
+                color="primary"
+              >
+                Delete
+              </Button>
+            </CardActions>
+          </Card>
+        )}
       </Slide>
     </>
   );
 };
 
-export default DealerUsedInvSingle;
+export default React.memo(DealerUsedInvSingle);

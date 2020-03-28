@@ -83,7 +83,10 @@ export const getSalesLeadReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        leads: state.leads.filter(lead => lead.id !== action.payload.id)
+        leads: state.leads.filter(lead => {
+          console.log("LEAD IN REDUCER", lead);
+          return lead.id !== action.payload.id;
+        })
       };
 
     case "DELETE_SALESMAN_LEAD_FAILURE":

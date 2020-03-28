@@ -7,6 +7,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import { Skeleton } from "@material-ui/lab";
 import Portal from "../Portal";
 import { Link } from "@reach/router";
 
@@ -200,38 +201,42 @@ const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
       ) : null}
 
       <Slide>
-        <Card key={idx} className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image={inv.car_picture}
-              title={inv.make + " " + inv.model}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {inv.year} {inv.make} {inv.model}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {inv.info}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button onClick={handleNewInvEdit} size="small" color="primary">
-              Edit
-            </Button>
-            <Button
-              onClick={() => deleteNewInv(inv.id, inv.image_id)}
-              size="small"
-              color="primary"
-            >
-              Delete
-            </Button>
-          </CardActions>
-        </Card>
+        {props.loading ? (
+          <Skeleton height={248} width={270} variant="rect" animation="wave" />
+        ) : (
+          <Card key={idx} className={classes.root}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={inv.car_picture}
+                title={inv.make + " " + inv.model}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {inv.year} {inv.make} {inv.model}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {inv.info}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button onClick={handleNewInvEdit} size="small" color="primary">
+                Edit
+              </Button>
+              <Button
+                onClick={() => deleteNewInv(inv.id, inv.image_id)}
+                size="small"
+                color="primary"
+              >
+                Delete
+              </Button>
+            </CardActions>
+          </Card>
+        )}
       </Slide>
     </>
   );
 };
 
-export default DealerNewInvSingle;
+export default React.memo(DealerNewInvSingle);

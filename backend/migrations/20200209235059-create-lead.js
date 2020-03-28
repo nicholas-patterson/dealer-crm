@@ -35,6 +35,9 @@ module.exports = {
       salesman_lead: {
         type: Sequelize.BOOLEAN
       },
+      salesman_id: {
+        type: Sequelize.INTEGER
+      },
       dealer_id: {
         type: Sequelize.INTEGER,
         references: {

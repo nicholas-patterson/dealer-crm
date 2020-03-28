@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "@reach/router";
 import Portal from "../Portal";
 import { connect } from "react-redux";
@@ -18,10 +18,10 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
+//import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import {
   CarouselProvider,
@@ -31,10 +31,13 @@ import {
   ButtonNext
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { Icon, InlineIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import searchIcon from "@iconify/icons-ei/search";
 import DealerNewInvSingle from "./DealerNewInvSingle";
 import DealerUsedInvSingle from "./DealerUsedInvSingle";
+import { Howl, Howler } from "howler";
+import addsound from "../../sounds/addsound.mp3";
+import deletesound from "../../sounds/deletesound.mp3";
 
 const useStyles = makeStyles({
   root: {
@@ -51,6 +54,13 @@ const useStyles = makeStyles({
 
 const DealerInventoryMain = props => {
   const classes = useStyles();
+  const inv_add_sound = new Howl({
+    src: addsound
+  });
+
+  const inv_delete_sound = new Howl({
+    src: deletesound
+  });
 
   // new inventory state search
   const [newInventory, setNewInventory] = useState({
@@ -88,14 +98,20 @@ const DealerInventoryMain = props => {
   });
 
   // new inventory search
-  const handleNewInventoryChange = e => {
-    setNewInventory({ ...newInventory, [e.target.name]: e.target.value });
-  };
+  // const handleNewInventoryChange = useCallback(
+  //   e => {
+  //     setNewInventory({ ...newInventory, [e.target.name]: e.target.value });
+  //   },
+  //   [newInventory, setNewInventory]
+  // );
 
   // used inventory search
-  const handleUsedInventoryChange = e => {
-    setUsedInventory({ ...usedInventory, [e.target.name]: e.target.value });
-  };
+  const handleUsedInventoryChange = useCallback(
+    e => {
+      setUsedInventory({ ...usedInventory, [e.target.name]: e.target.value });
+    },
+    [usedInventory, setUsedInventory]
+  );
 
   // on click for new inventory
   const handleNewInventoryAdd = e => {
@@ -111,10 +127,13 @@ const DealerInventoryMain = props => {
     });
   };
 
-  const handleNewInventorySearch = e => {
-    e.preventDefault();
-    props.newSearchFilter(newInventory);
-  };
+  const handleNewInventorySearch = useCallback(
+    e => {
+      e.preventDefault();
+      //props.newSearchFilter(newInventory);
+    },
+    [newInventory]
+  );
 
   // handleChange for usedInv picture
   const handleUsedInventoryPicture = e => {
@@ -133,6 +152,7 @@ const DealerInventoryMain = props => {
     formData.append("car_picture", usedInventoryAdd.car_picture);
     formData.append("upload_preset", "darwin");
     props.addImage(formData, usedInventoryAdd);
+    inv_add_sound.play();
     setUsedInventoryAdd({
       car_picture: "",
       year: "",
@@ -144,6 +164,12 @@ const DealerInventoryMain = props => {
     });
   };
 
+  // delete Used Inventory
+  const deleteUsedInventory = (invId, imageId) => {
+    props.deleteUsedInv(invId, imageId);
+    inv_delete_sound.play();
+  };
+
   // handleSubmit for New Inv Form
   const handleNewInventorySubmit = e => {
     e.preventDefault();
@@ -151,6 +177,7 @@ const DealerInventoryMain = props => {
     formData.append("car_picture", newInventoryAdd.car_picture);
     formData.append("upload_preset", "darwin");
     props.addNewImage(formData, newInventoryAdd);
+    inv_add_sound.play();
     setNewInventoryAdd({
       car_picture: "",
       year: "",
@@ -161,6 +188,8 @@ const DealerInventoryMain = props => {
       info: ""
     });
   };
+
+  Howler.volume(0.5);
 
   // Set inventory state to false
   const [showUsedInventoryModal, setShowUsedInventoryModal] = useState(false);
@@ -198,6 +227,11 @@ const DealerInventoryMain = props => {
       ? props.getUsedInventory() || props.getNewInventory()
       : props.getUsedInventorySales() || props.getNewInventorySales();
   }, []);
+
+  console.log("LOADING", props.loading);
+  console.log("HOW MANY", props.newInv.length);
+
+  console.log("PROPS.VALUE", ...props.value);
 
   return (
     <>
@@ -339,7 +373,7 @@ const DealerInventoryMain = props => {
                 encType={"multipart/form-data"}
                 onChange={handleNewInventoryPicture}
               />
-              <label for="car_picture">Upload file</label>
+              <label htmlFor="car_picture">Upload file</label>
               <span className="picture_url">
                 {newInventoryAdd.car_picture.name}
               </span>
@@ -447,11 +481,6 @@ const DealerInventoryMain = props => {
       ) : null}
       {/* Begins actual Inventory Page */}
       <div>
-        <div className="header-dealer">
-          <div className="header-dealer__name">Dealership: Ford</div>
-          <div className="header-dealer__notifications">Notifications</div>
-        </div>
-
         {/* New Inventory */}
 
         <div className="new--inventory">
@@ -482,8 +511,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={newInventory.new_year}
-                  onChange={handleNewInventoryChange}
+                  value={props.value.term}
+                  onChange={e => props.newSearchFilter(e.target.value)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Year</span>
@@ -498,8 +527,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={newInventory.new_make}
-                  onChange={handleNewInventoryChange}
+                  value={props.value.term}
+                  onChange={e => props.newSearchFilter(e.target.value)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Make</span>
@@ -513,8 +542,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={newInventory.new_model}
-                  onChange={handleNewInventoryChange}
+                  value={props.value.term}
+                  onChange={e => props.newSearchFilter(e.target.value)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Model</span>
@@ -767,7 +796,8 @@ const DealerInventoryMain = props => {
                           <DealerUsedInvSingle
                             inv={inv}
                             idx={idx}
-                            deleteUsedInv={props.deleteUsedInv}
+                            //deleteUsedInv={props.deleteUsedInv}
+                            deleteUsedInventory={deleteUsedInventory}
                             classes={classes}
                             props={props}
                           />
@@ -873,9 +903,9 @@ const mapStateToProps = state => {
     usedInv: state.usedInventoryReducer.inventory || [],
     sales_newInv: state.getSalesNewInventoryReducer.salesNewInventory || [],
     sales_usedInv: state.getSalesUsedInventoryReducer.salesUsedInventory || [],
-    loading: state.usedInventoryReducer.loading,
     user: state.userReducer.user,
-    loading: state.getSalesUsedInventoryReducer.loading
+    loading: state.imageReducer.loading,
+    value: state.newInventoryReducer.newInventory
   };
 };
 
@@ -891,4 +921,4 @@ export default connect(mapStateToProps, {
   getUsedInventorySales,
   editNewInventory,
   editUsedInventory
-})(DealerInventoryMain);
+})(React.memo(DealerInventoryMain));

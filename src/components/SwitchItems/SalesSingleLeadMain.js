@@ -217,4 +217,4 @@ const SalesSingleLeadMain = ({
   );
 };
 
-export default connect(null, null)(SalesSingleLeadMain);
+export default connect(null, null)(React.memo(SalesSingleLeadMain));

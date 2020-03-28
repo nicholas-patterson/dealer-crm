@@ -26,6 +26,27 @@ export const getDealerNotificationsReducer = (state = initialState, action) => {
         error: action.payload
       };
 
+    case "DELETE_DEALER_NOTIF_START":
+      return {
+        ...state,
+        loading: true
+      };
+
+    case "DELETE_DEALER_NOTIF_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        notifications: state.notifications.filter(notif => {
+          return notif.id !== action.payload.id;
+        })
+      };
+
+    case "DELETE_DEALER_NOTIF_FAILURE":
+      return {
+        ...state,
+        error: action.payload
+      };
+
     default:
       return state;
   }

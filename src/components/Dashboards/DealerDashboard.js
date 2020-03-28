@@ -15,10 +15,19 @@ import {
   getSalesmans,
   addSalesLead
 } from "../../actions/index";
-import { navigate, Router } from "@reach/router";
+import { navigate } from "@reach/router";
+import Badge from "@material-ui/core/Badge";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import Chip from "@material-ui/core/Chip";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Howl, Howler } from "howler";
+import addsound from "../../sounds/addsound.mp3";
+import MediaQuery from "react-responsive";
+import { useMediaQuery } from "react-responsive";
+import NavigationDrawer from "../NavigationDrawer";
 
 const DealerDashboard = props => {
+  const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
   useEffect(() => {
     return props.user === "dealer" ? props.getSalesmans() : undefined;
   }, []);
@@ -32,10 +41,11 @@ const DealerDashboard = props => {
     lead_city: "",
     lead_state: "",
     lead_type: "",
-    salesman_lead: 1,
+    salesman_lead: "1",
     salesman_id: null,
-    dealer_id: null || props.dealer_id
+    dealer_id: props.dealer_id || null
   });
+
   const [salesInfo, setSalesInfo] = useState({
     salesman_firstname: "",
     salesman_lastname: "",
@@ -55,21 +65,39 @@ const DealerDashboard = props => {
   const handleLeadChange = e => {
     setLeadInfo({ ...leadInfo, [e.target.name]: e.target.value });
   };
+
   // Handle Change for Salesman form
   const handleSalesChange = e => {
     setSalesInfo({ ...salesInfo, [e.target.name]: e.target.value });
   };
+
   // Handle Change for Manager form
   const handleManagerChange = e => {
     setManagerInfo({ ...managerInfo, [e.target.name]: e.target.value });
   };
 
+  const global_add_sound = new Howl({
+    src: addsound
+  });
+
+  // function to add lead and sound dealer
+  const addDealerLead = () => {
+    props.addLead(leadInfo, navigate);
+    global_add_sound.play();
+  };
+
+  const addSalesLead = () => {
+    props.addSalesLead(leadInfo, navigate);
+    global_add_sound.play();
+    console.log("LEAD INFO", leadInfo);
+  };
+
+  Howler.volume(0.5);
+
   //  handle Submit for new lead form
   const handleLeadsSubmit = e => {
     e.preventDefault();
-    props.user === "dealer"
-      ? props.addLead(leadInfo, navigate)
-      : props.addSalesLead(leadInfo, navigate);
+    props.user === "dealer" ? addDealerLead() : addSalesLead();
     setLeadInfo({
       lead_firstname: "",
       lead_lastname: "",
@@ -79,13 +107,17 @@ const DealerDashboard = props => {
       lead_city: "",
       lead_state: "",
       lead_type: "",
-      salesman_id: null
+      salesman_lead: "1",
+      salesman_id: null,
+      dealer_id: props.dealer_id || null
     });
   };
+
   // handle submit for new salesman form
   const handleSalesSubmit = e => {
     e.preventDefault();
     props.registerSalesman(salesInfo, navigate);
+    global_add_sound.play();
     setSalesInfo({
       salesman_firstname: "",
       salesman_lastname: "",
@@ -94,6 +126,7 @@ const DealerDashboard = props => {
       salesman_password: ""
     });
   };
+
   // handle submit for new manager form
   const handleManagerSubmit = e => {
     e.preventDefault();
@@ -104,77 +137,18 @@ const DealerDashboard = props => {
     .splice(1, 2)
     .join("/");
 
-  console.log(props);
-  console.log(leadInfo);
-
   const pageSwitch = () => {
     switch (props.dash) {
       case "dashboard":
-        return (
-          // <TransitionGroup>
-          //   <CSSTransition
-          //     timeout={30000}
-          //     classNames="fade"
-          //     key={customKey}
-          //     exit={false}
-          //   >
-          <DealerDashboardMain />
-          //   </CSSTransition>
-          // </TransitionGroup>
-        );
+        return <DealerDashboardMain />;
       case "leads":
-        return (
-          // <TransitionGroup>
-          //   <CSSTransition
-          //     timeout={30000}
-          //     classNames="fade"
-          //     key={customKey}
-          //     exit={false}
-          //   >
-          <DealerLeadsMain />
-          //   </CSSTransition>
-          // </TransitionGroup>
-        );
-
+        return <DealerLeadsMain />;
       case "inventory":
-        return (
-          // <TransitionGroup>
-          //   <CSSTransition
-          //     timeout={30000}
-          //     classNames="fade"
-          //     key={customKey}
-          //     exit={false}
-          //   >
-          <DealerInventoryMain />
-          //   </CSSTransition>
-          // </TransitionGroup>
-        );
+        return <DealerInventoryMain />;
       case "account":
-        return (
-          // <TransitionGroup>
-          //   <CSSTransition
-          //     timeout={30000}
-          //     classNames="fade"
-          //     key={customKey}
-          //     exit={false}
-          //   >
-          <DealerAccountMain />
-          //   </CSSTransition>
-          // </TransitionGroup>
-        );
+        return <DealerAccountMain />;
       case "help":
-        return (
-          // <TransitionGroup>
-          //   <CSSTransition
-          //     timeout={30000}
-          //     classNames="fade"
-          //     key={customKey}
-          //     exit={false}
-          //   >
-          <DealerHelpMain />
-          //   </CSSTransition>
-          // </TransitionGroup>
-        );
+        return <DealerHelpMain />;
       default:
         return <DealerDashboardMain />;
     }
@@ -317,7 +291,7 @@ const DealerDashboard = props => {
                   checked
                   name="salesman_lead"
                   value={leadInfo.salesman_lead}
-                  onChange={handleLeadChange}
+                  readOnly
                   placeholder="Type"
                 />
               ) : null}
@@ -330,7 +304,7 @@ const DealerDashboard = props => {
                   name="salesman_id"
                   value={leadInfo.salesman_id}
                 >
-                  <option value={null}>Select A Salesman</option>
+                  <option>Select A Salesman</option>
                   {props.salesmans.map(salesman => {
                     console.log(salesman);
                     return (
@@ -545,7 +519,7 @@ const DealerDashboard = props => {
   return (
     <>
       <div className="dealer-container">
-        <div className="nav-container">
+        <div className={isMobile ? "hide-nav" : "nav-container"}>
           <div className="nav-bar">
             <Logo />
             <SideNav />
@@ -553,7 +527,78 @@ const DealerDashboard = props => {
         </div>
 
         <div className="main-content-wrapper">
-          <div className="main-content-container">{pageSwitch()}</div>
+          <div className="main-content-container">
+            <TransitionGroup>
+              <CSSTransition
+                timeout={300}
+                classNames="fade"
+                key={customKey}
+                exit={false}
+              >
+                {
+                  <div>
+                    {props.user === "salesman" ? (
+                      <div className="header-dealer">
+                        <div className="header-dealer__name">
+                          <Chip
+                            style={{
+                              fontSize: "1.5rem",
+                              backgroundColor: "#39c"
+                            }}
+                            size="medium"
+                            label={
+                              "Welcome, " + props.salesman.salesman_username
+                            }
+                          />
+                        </div>
+                        <div className="header-dealer__notifications">
+                          <Badge
+                            badgeContent={
+                              props.user === "dealer"
+                                ? props.dealer_notifications.length
+                                : props.salesman_notifications.length
+                            }
+                            color="error"
+                            overlap="rectangle"
+                          >
+                            <NotificationsIcon fontSize="large" />
+                          </Badge>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="header-dealer">
+                        <div className="header-dealer__name">
+                          <NavigationDrawer />
+                          <Chip
+                            style={{
+                              fontSize: "1.5rem",
+                              backgroundColor: "#39c"
+                            }}
+                            size="large"
+                            label={"Dealership:" + props.dealership}
+                          />
+                        </div>
+                        <div className="header-dealer__notifications">
+                          <Badge
+                            badgeContent={
+                              props.user === "dealer"
+                                ? props.dealer_notifications.length
+                                : props.salesman_notifications.length
+                            }
+                            color="error"
+                            overlap="rectangle"
+                          >
+                            <NotificationsIcon fontSize="large" />
+                          </Badge>
+                        </div>
+                      </div>
+                    )}
+                    {pageSwitch()}
+                  </div>
+                }
+              </CSSTransition>
+            </TransitionGroup>
+          </div>
         </div>
       </div>
       {modalSwitch()}
@@ -567,7 +612,11 @@ const mapStateToProps = state => {
     user: state.userReducer.user,
     salesmans: state.addSalespersonReducer.person,
     dealer_id: state.salesLoginReducer.user.dealer_id,
-    leads: state.getDealerLeadReducer.leads
+    leads: state.getDealerLeadReducer.leads,
+    salesman: state.salesLoginReducer.user,
+    dealership: state.loginReducer.user.dealer_name,
+    dealer_notifications: state.getDealerNotificationsReducer.notifications,
+    salesman_notifications: state.getSalesmanNotificationReducer.notifications
   };
 };
 
@@ -576,4 +625,4 @@ export default connect(mapStateToProps, {
   registerSalesman,
   getSalesmans,
   addSalesLead
-})(DealerDashboard);
+})(React.memo(DealerDashboard));

@@ -26,7 +26,7 @@ const SalesLoginForm = props => {
 
   return (
     <>
-      <div className="wrapper">
+      <div className="login-wrapper">
         <div className="login-form">
           <Logo />
           <div className="login-form-container">

@@ -19,11 +19,7 @@ const Header = props => {
       <header className="header">
         <nav className="header__nav">
           <div className="logo--small">
-            <img
-              src={logoSmall}
-              alt="Auto Acuit logo"
-              style={{ height: "45px" }}
-            />
+            <img src={logoSmall} alt="Auto Acuit logo" />
           </div>
           <div className="header__nav__buttons">
             <div className="header__nav__button">

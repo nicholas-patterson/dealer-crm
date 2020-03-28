@@ -119,8 +119,6 @@ const dealerSignInValidation = async (req, res, next) => {
     }
   });
 
-  console.log(usernameCheck);
-
   if (username.length < 8 || username.length > 20) {
     res.status(400).json({ warning: "Please enter a valid usename" });
   } else if (!username) {
@@ -188,9 +186,6 @@ const salesmanUsernameValidation = async (req, res, next) => {
       salesman_username
     }
   });
-
-  console.log("USERNAME ?", usernameCheck);
-  console.log("------------------");
 
   if (!usernameRegex.test(salesman_username)) {
     res.status(400).json({

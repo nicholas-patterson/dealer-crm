@@ -31,7 +31,7 @@ const LogInForm = props => {
 
   return (
     <>
-      <div className="wrapper">
+      <div className="login-wrapper">
         {props.errors ? (
           <Banner title={props.errors} visibleTime={3000} />
         ) : null}
@@ -75,14 +75,28 @@ const LogInForm = props => {
                   Log In
                 </button>
               )}
+              <span className="sales-login-link">
+                Salesman Login{" "}
+                <Link
+                  onClick={handleSalesForm}
+                  style={{
+                    color: "white",
+                    borderBottom: "1px solid #39c"
+                  }}
+                  to="/saleslogin"
+                >
+                  Click Here
+                </Link>
+              </span>
             </form>
-            <span
+            {/* <span
               style={{
                 textAlign: "center",
                 display: "block",
                 fontWeight: 300,
                 paddingTop: "2rem"
               }}
+              className="sales-login-link"
             >
               Salesman Login{" "}
               <Link
@@ -95,7 +109,7 @@ const LogInForm = props => {
               >
                 Click Here
               </Link>
-            </span>
+            </span> */}
           </div>
         </div>
       </div>

@@ -65,7 +65,6 @@ router.post(
         salesman_email: req.body.salesman_email,
         dealer_id: req.session.dealer_user.id
       });
-      console.log("SALESMAN", newSalesman);
       let d = JSON.parse(JSON.stringify(newSalesman));
       d.userRole = "salesman";
       d.token = await jwt.sign(d, process.env.JWT_SECRET);
@@ -146,8 +145,8 @@ router.get("/all/leads", async (req, res) => {
         }
       ]
     });
-    res.status(200).json(leads);
     console.log(leads);
+    res.status(200).json(leads);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -201,7 +200,7 @@ router.get("/usedInventory/all", async (req, res) => {
         }
       ]
     });
-    console.log(usedInventory);
+
     res.status(200).json(usedInventory);
   } catch (err) {
     res.status(500).json(err);
@@ -222,11 +221,44 @@ router.get("/notifications/sales/all", async (req, res) => {
         ]
       }
     });
-    console.log(notifications);
+
     res.status(200).json(notifications);
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+// Delete Notification For Salesman
+router.delete("/remove/notification/:id", (req, res) => {
+  const { id } = req.params;
+  db.SalesmanNotification.findOne({
+    where: {
+      id
+    }
+  })
+    .then(notif => {
+      if (notif === null) {
+        res
+          .status(400)
+          .json({ warning: "Notification with given id was not found" });
+      }
+      return db.SalesmanNotification.destroy({
+        where: {
+          id
+        }
+      })
+        .then(deletedNotif => {
+          if (deletedNotif === 1) {
+            res.status(200).json({ deletedNotif: notif });
+          }
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 // Logout Salesman

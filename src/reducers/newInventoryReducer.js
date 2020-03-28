@@ -1,5 +1,6 @@
 const initialState = {
   newInventory: [],
+  term: "",
   loading: false,
   error: ""
 };
@@ -91,19 +92,28 @@ export const newInventoryReducer = (state = initialState, action) => {
       };
 
     case "SEARCH_NEW_INV_SUCCESS":
-      const result = state.newInventory.filter(newInv => {
+      const { term } = action;
+      const results = state.newInventory.filter(newInv => {
         if (
-          newInv.year === action.payload.new_year &&
-          newInv.make === action.payload.new_make &&
-          newInv.model === action.payload.new_model
+          newInv.year.includes(term) ||
+          newInv.make.includes(term) ||
+          newInv.model.includes(term)
         ) {
           return newInv;
         }
       });
+
+      let newInventory = results.map(inv => {
+        console.log(inv);
+        return inv;
+      });
+
+      console.log(results);
       return {
         ...state,
         loading: false,
-        newInventory: [...result]
+        term,
+        newInventory: [...newInventory]
       };
     default:
       return state;

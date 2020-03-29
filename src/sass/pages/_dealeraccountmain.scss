@@ -18,12 +18,34 @@
 .personal--information {
   width: 100%;
   display: flex;
+  @media (max-width: $tabletandlargephone-width) {
+    display: block;
+  }
+  @media (max-width: $mobile-width) {
+    display: block;
+  }
+
   &__desc {
     color: #e4e4e4;
     font-size: 1.7rem;
     font-weight: 300;
     width: 30%;
     padding-top: 2.7rem;
+
+    @media (max-width: $desktop-width) {
+      width: 50%;
+    }
+    @media (max-width: $tabletandlargephone-width) {
+      width: 100%;
+      padding-top: 0rem;
+      margin-bottom: 2.7rem;
+    }
+
+    @media (max-width: $mobile-width) {
+      width: 100%;
+      padding-top: 0rem;
+      margin-bottom: 2.7rem;
+    }
   }
 }
 
@@ -31,10 +53,30 @@
 .personal--information__form-section {
   width: 60%;
   margin-left: 10rem;
+
+  @media (max-width: $tabletandlargephone-width) {
+    margin-left: 0rem;
+    width: 100%;
+  }
+  @media (max-width: $mobile-width) {
+    margin-left: 0rem;
+    width: 100%;
+  }
   .personal--information__fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5rem;
+
+    @media (max-width: $desktop-width) {
+      display: block;
+    }
+    @media (max-width: $tabletandlargephone-width) {
+      display: block;
+    }
+
+    @media (max-width: $mobile-width) {
+      display: block;
+    }
 
     #last_name_grid_column {
       grid-column: 2/3;
@@ -60,11 +102,31 @@
     letter-spacing: 1px;
     font-size: 1.4rem;
     border: #2eb85c;
+
+    @media (max-width: $tabletandlargephone-width) {
+      width: 100%;
+      margin-top: 2rem;
+    }
+    @media (max-width: $mobile-width) {
+      width: 100%;
+      margin-top: 2rem;
+    }
   }
   .pi-field {
     width: 100%;
     position: relative;
     overflow: hidden;
+    @media (max-width: $desktop-width) {
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: $tabletandlargephone-width) {
+      margin-bottom: 2rem;
+    }
+    @media (max-width: $mobile-width) {
+      margin-bottom: 2rem;
+    }
+
     .input-group {
       width: 100%;
       color: white;
@@ -121,8 +183,6 @@
   color: $primary-blue;
 }
 
-/* Code for content name */
-
 .personal--information__form-section
   .pi-field
   input:focus
@@ -131,13 +191,7 @@
   transform: translateX(0%);
 }
 
-/* Reset For Birth Date: Removes default format text */
-input[type="date"]:in-range::-webkit-datetime-edit-year-field,
-input[type="date"]:in-range::-webkit-datetime-edit-month-field,
-input[type="date"]:in-range::-webkit-datetime-edit-day-field,
-input[type="date"]:in-range::-webkit-datetime-edit-text {
-  color: transparent;
-}
+// ***************************************************************************************************************************
 
 /* Email Address Styles*/
 
@@ -153,12 +207,34 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
 .email--address__information {
   width: 100%;
   display: flex;
+
+  @media (max-width: $tabletandlargephone-width) {
+    display: block;
+  }
+  @media (max-width: $mobile-width) {
+    display: block;
+  }
   .email--address__desc {
     color: #e4e4e4;
     font-size: 1.7rem;
     font-weight: 300;
     width: 30%;
     padding-top: 2.7rem;
+
+    @media (max-width: $desktop-width) {
+      width: 50%;
+    }
+    @media (max-width: $tabletandlargephone-width) {
+      width: 100%;
+      padding: 0rem;
+      margin-bottom: 2.7rem;
+    }
+
+    @media (max-width: $mobile-width) {
+      width: 100%;
+      padding: 0rem;
+      margin-bottom: 2.7rem;
+    }
   }
 }
 
@@ -167,6 +243,14 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
 .email--address__form-section {
   width: 60%;
   margin-left: 10rem;
+  @media (max-width: $tabletandlargephone-width) {
+    width: 100%;
+    margin-left: 0rem;
+  }
+  @media (max-width: $mobile-width) {
+    width: 100%;
+    margin-left: 0rem;
+  }
 
   .email--address__fields {
     .ea-submitBtn {
@@ -184,6 +268,17 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
       font-size: 1.4rem;
       border: #2eb85c;
       margin-top: 2.5rem;
+
+      @media (max-width: $desktop-width) {
+        margin-top: 0;
+      }
+      @media (max-width: $tabletandlargephone-width) {
+        width: 100%;
+      }
+
+      @media (max-width: $mobile-width) {
+        width: 100%;
+      }
     }
     .ea-field {
       width: 100%;
@@ -209,6 +304,18 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
         pointer-events: none;
         border-bottom: 1px solid white;
         color: white;
+
+        @media (max-width: $desktop-width) {
+          width: 100%;
+        }
+        @media (max-width: $tabletandlargephone-width) {
+          width: 100%;
+        }
+
+        @media (max-width: $mobile-width) {
+          width: 100%;
+        }
+
         &::after {
           content: "";
           position: absolute;
@@ -245,123 +352,6 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
   transform: translateY(-150%);
   font-size: 1.4rem;
   color: $primary-blue;
-}
-
-/* Pasword Section Styles*/
-
-.pw-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-.password--information {
-  width: 100%;
-  display: flex;
-  .password--information__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-/* Email Address Styles*/
-
-.ea-subtitle {
-  margin-top: 8rem;
-  font-weight: 400;
-  letter-spacing: 0.2rem;
-  border-bottom: 2px solid $primary-blue;
-  padding-bottom: 1.3rem;
-  margin-bottom: 4rem;
-}
-
-.email--address__information {
-  width: 100%;
-  display: flex;
-  .email--address__desc {
-    color: #e4e4e4;
-    font-size: 1.7rem;
-    font-weight: 300;
-    width: 30%;
-    padding-top: 2.7rem;
-  }
-}
-
-/* Form Styles */
-
-.email--address__form-section {
-  width: 60%;
-  margin-left: 10rem;
-
-  .email--address__fields {
-    .ea-submitBtn {
-      grid-column: 1/3;
-      width: 25%;
-      padding: 1.2rem 2rem;
-      text-align: center;
-      font-weight: 400;
-      text-transform: uppercase;
-      border-radius: 4px;
-      min-width: 8rem;
-      background: $primary_blue;
-      cursor: pointer;
-      letter-spacing: 1px;
-      font-size: 1.4rem;
-      border: #2eb85c;
-      margin-top: 2.5rem;
-    }
-    .ea-field {
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 3rem;
-      .ea-group {
-        width: 100%;
-        color: white;
-        font-size: 1.5rem;
-        padding-top: 2.7rem;
-        padding-bottom: 0.5rem;
-        border: none;
-        outline: none;
-        background-color: $background;
-      }
-      .ea-label-name {
-        position: absolute;
-        bottom: 0px;
-        left: 0;
-        width: 50%;
-        height: 100%;
-        pointer-events: none;
-        border-bottom: 1px solid white;
-        color: white;
-        &::after {
-          content: "";
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-bottom: 3px solid $primary-blue;
-          left: 0px;
-          bottom: -1px;
-          transform: translateX(-101%);
-          transition: all 0.3s ease;
-        }
-        .ea-content-name {
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          transition: all 0.3s ease;
-        }
-      }
-    }
-  }
 }
 
 /* Code for content-name */
@@ -386,9 +376,65 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
 .email--address__form .ea-field input:valid + .ea-label-name::after {
   transform: translateX(0%);
 }
+
+// **************************************************************************************************************************
+
+// ****************************************************************************************************************************
+
+.pw-subtitle {
+  margin-top: 8rem;
+  font-weight: 400;
+  letter-spacing: 0.2rem;
+  border-bottom: 2px solid $primary-blue;
+  padding-bottom: 1.3rem;
+  margin-bottom: 4rem;
+}
+
+.password--information {
+  width: 100%;
+  display: flex;
+  @media (max-width: $tabletandlargephone-width) {
+    display: block;
+  }
+  @media (max-width: $mobile-width) {
+    display: block;
+  }
+
+  .password--information__desc {
+    color: #e4e4e4;
+    font-size: 1.7rem;
+    font-weight: 300;
+    width: 30%;
+    padding-top: 2.7rem;
+
+    @media (max-width: $desktop-width) {
+      width: 50%;
+    }
+    @media (max-width: $tabletandlargephone-width) {
+      width: 100%;
+      padding: 0rem;
+      margin-bottom: 2.7rem;
+    }
+
+    @media (max-width: $mobile-width) {
+      width: 100%;
+      padding: 0rem;
+      margin-bottom: 2.7rem;
+    }
+  }
+}
+
 .password--information__form-section {
   width: 60%;
   margin-left: 10rem;
+  @media (max-width: $tabletandlargephone-width) {
+    margin-left: 0rem;
+    width: 100%;
+  }
+  @media (max-width: $mobile-width) {
+    margin-left: 0rem;
+    width: 100%;
+  }
 
   .password__information__fields {
     .pw-submitBtn {
@@ -406,6 +452,17 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
       font-size: 1.4rem;
       border: #2eb85c;
       margin-top: 2.5rem;
+      @media (max-width: $desktop-width) {
+        margin: 0;
+      }
+
+      @media (max-width: $tabletandlargephone-width) {
+        width: 100%;
+      }
+
+      @media (max-width: $mobile-width) {
+        width: 100%;
+      }
     }
     .pw-field {
       width: 100%;
@@ -431,6 +488,17 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
         pointer-events: none;
         border-bottom: 1px solid white;
         color: white;
+
+        @media (max-width: $desktop-width) {
+          width: 100%;
+        }
+        @media (max-width: $tabletandlargephone-width) {
+          width: 100%;
+        }
+
+        @media (max-width: $mobile-width) {
+          width: 100%;
+        }
         &::after {
           content: "";
           position: absolute;

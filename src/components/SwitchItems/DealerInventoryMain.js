@@ -38,6 +38,7 @@ import DealerUsedInvSingle from "./DealerUsedInvSingle";
 import { Howl, Howler } from "howler";
 import addsound from "../../sounds/addsound.mp3";
 import deletesound from "../../sounds/deletesound.mp3";
+import { useMediaQuery } from "react-responsive";
 
 const useStyles = makeStyles({
   root: {
@@ -53,6 +54,10 @@ const useStyles = makeStyles({
 });
 
 const DealerInventoryMain = props => {
+  const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
+  const isTabletorlargephone = useMediaQuery({ query: "(max-width: 720px)" });
+  const isDesktop = useMediaQuery({ query: "(max-width: 1024px)" });
+  const islaptopDesktop = useMediaQuery({ query: "(max-width: 1450px)" });
   const classes = useStyles();
   const inv_add_sound = new Howl({
     src: addsound
@@ -549,11 +554,6 @@ const DealerInventoryMain = props => {
                   <span className="content-name">Model</span>
                 </label>
               </div>
-              <Icon
-                onClick={handleNewInventorySearch}
-                className="newInv_search"
-                icon={searchIcon}
-              />
             </form>
           </div>
           {/* End of code for new inv search fields for dealers and salesmans */}
@@ -582,29 +582,45 @@ const DealerInventoryMain = props => {
                   naturalSlideHeight={100}
                   totalSlides={props.newInv.length}
                   orientation="horizontal"
-                  visibleSlides={3}
+                  visibleSlides={
+                    (isDesktop ? 2 : 3,
+                    isTabletorlargephone ? 1 : 3,
+                    isMobile ? 1 : 3)
+                  }
                   dragEnabled={false}
-                  touchEnabled={false}
+                  touchEnabled={
+                    (isTabletorlargephone ? true : false,
+                    isMobile ? true : false)
+                  }
                   style={{ position: "relative" }}
                 >
-                  <Slider style={{ marginTop: "3rem" }}>
+                  <Slider
+                    style={{ marginTop: "3rem" }}
+                    className={isDesktop ? "slider-margin-left" : null}
+                  >
                     {props.newInv &&
                       props.newInv.map((inv, idx) => {
                         return (
-                          <DealerNewInvSingle
-                            inv={inv}
-                            idx={idx}
-                            deleteNewInv={props.deleteNewInv}
-                            classes={classes}
-                            props={props}
-                          />
+                          <>
+                            <DealerNewInvSingle
+                              inv={inv}
+                              idx={idx}
+                              deleteNewInv={props.deleteNewInv}
+                              classes={classes}
+                              props={props}
+                            />
+                          </>
                         );
                       })}
                   </Slider>
-                  {props.newInv.length < 4 ? null : (
+                  {props.newInv.length < 4 ||
+                  isMobile ||
+                  isTabletorlargephone ? null : (
                     <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
                   )}
-                  {props.newInv.length < 4 ? null : (
+                  {props.newInv.length < 4 ||
+                  isMobile ||
+                  isTabletorlargephone ? null : (
                     <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
                   )}
                 </CarouselProvider>
@@ -626,12 +642,17 @@ const DealerInventoryMain = props => {
                 naturalSlideHeight={100}
                 totalSlides={props.sales_newInv.length}
                 orientation="horizontal"
-                visibleSlides={3}
+                visibleSlides={isMobile ? 1 : 3}
                 dragEnabled={false}
-                touchEnabled={false}
+                touchEnabled={
+                  (isMobile ? true : false, isTabletorlargephone ? true : false)
+                }
                 style={{ position: "relative" }}
               >
-                <Slider style={{ marginTop: "3rem" }}>
+                <Slider
+                  style={{ marginTop: "3rem" }}
+                  className={isDesktop ? "slider-margin-left" : null}
+                >
                   {props.sales_newInv &&
                     props.sales_newInv.map((inv, idx) => {
                       return (
@@ -660,29 +681,19 @@ const DealerInventoryMain = props => {
                                 </Typography>
                               </CardContent>
                             </CardActionArea>
-                            {/* <CardActions>
-                            <Button size="small" color="primary">
-                              Edit
-                            </Button>
-                            <Button
-                              onClick={() =>
-                                props.deleteNewInv(inv.id, inv.image_id)
-                              }
-                              size="small"
-                              color="primary"
-                            >
-                              Delete
-                            </Button>
-                          </CardActions> */}
                           </Card>
                         </Slide>
                       );
                     })}
                 </Slider>
-                {props.sales_newInv.length < 4 ? null : (
+                {props.sales_newInv.length < 4 ||
+                isMobile ||
+                isTabletorlargephone ? null : (
                   <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
                 )}
-                {props.sales_newInv.length < 4 ? null : (
+                {props.sales_newInv.length < 4 ||
+                isMobile ||
+                isTabletorlargephone ? null : (
                   <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
                 )}
               </CarouselProvider>
@@ -755,7 +766,6 @@ const DealerInventoryMain = props => {
                   <span className="content-name">Model</span>
                 </label>
               </div>
-              <Icon className="usedInv_search" icon={searchIcon} />
             </form>
           </div>
           {/* End of code for used inv search fields for dealers and salesmans */}
@@ -784,12 +794,18 @@ const DealerInventoryMain = props => {
                   naturalSlideHeight={100}
                   totalSlides={props.usedInv.length}
                   orientation="horizontal"
-                  visibleSlides={3}
+                  visibleSlides={isMobile ? 1 : 3}
                   dragEnabled={false}
-                  touchEnabled={false}
+                  touchEnabled={
+                    (isMobile ? true : false,
+                    isTabletorlargephone ? true : false)
+                  }
                   style={{ position: "relative" }}
                 >
-                  <Slider style={{ marginTop: "3rem" }}>
+                  <Slider
+                    style={{ marginTop: "3rem" }}
+                    className={isDesktop ? "slider-margin-left" : null}
+                  >
                     {props.usedInv &&
                       props.usedInv.map((inv, idx) => {
                         return (
@@ -804,10 +820,14 @@ const DealerInventoryMain = props => {
                         );
                       })}
                   </Slider>
-                  {props.usedInv.length < 4 ? null : (
+                  {props.usedInv.length < 4 ||
+                  isMobile ||
+                  isTabletorlargephone ? null : (
                     <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
                   )}
-                  {props.usedInv.length < 4 ? null : (
+                  {props.usedInv.length < 4 ||
+                  isMobile ||
+                  isTabletorlargephone ? null : (
                     <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
                   )}
                 </CarouselProvider>
@@ -829,16 +849,21 @@ const DealerInventoryMain = props => {
                 naturalSlideHeight={100}
                 totalSlides={props.sales_usedInv.length}
                 orientation="horizontal"
-                visibleSlides={3}
+                visibleSlides={isMobile ? 1 : 3}
                 dragEnabled={false}
-                touchEnabled={false}
+                touchEnabled={
+                  (isTabletorlargephone ? true : false, isMobile ? true : false)
+                }
                 style={{ position: "relative" }}
               >
-                <Slider style={{ marginTop: "3rem" }}>
+                <Slider
+                  style={{ marginTop: "3rem" }}
+                  className={isDesktop ? "slider-margin-left" : null}
+                >
                   {props.sales_usedInv &&
                     props.sales_usedInv.map((inv, idx) => {
                       return (
-                        <Slide>
+                        <Slide index={idx}>
                           <Card key={idx} className={classes.root}>
                             <CardActionArea>
                               <CardMedia
@@ -863,29 +888,19 @@ const DealerInventoryMain = props => {
                                 </Typography>
                               </CardContent>
                             </CardActionArea>
-                            {/* <CardActions>
-                            <Button size="small" color="primary">
-                              Edit
-                            </Button>
-                            <Button
-                              onClick={() =>
-                                props.deleteUsedInv(inv.id, inv.image_id)
-                              }
-                              size="small"
-                              color="primary"
-                            >
-                              Delete
-                            </Button>
-                          </CardActions> */}
                           </Card>
                         </Slide>
                       );
                     })}
                 </Slider>
-                {props.sales_usedInv.length < 4 ? null : (
+                {props.sales_usedInv.length < 4 ||
+                isMobile ||
+                isTabletorlargephone ? null : (
                   <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
                 )}
-                {props.sales_usedInv.length < 4 ? null : (
+                {props.sales_usedInv.length < 4 ||
+                isMobile ||
+                isTabletorlargephone ? null : (
                   <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
                 )}
               </CarouselProvider>

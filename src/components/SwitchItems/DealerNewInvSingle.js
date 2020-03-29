@@ -10,8 +10,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { Skeleton } from "@material-ui/lab";
 import Portal from "../Portal";
 import { Link } from "@reach/router";
+import { useMediaQuery } from "react-responsive";
 
 const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
+  const isTabletorlargephone = useMediaQuery({ query: "(max-width: 720px)" });
   const [modal, setModal] = useState(false);
   const [newInvEdit, setNewInvEdit] = useState({
     car_picture: props.newInv[idx].car_picture || "",
@@ -204,9 +206,18 @@ const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
         {props.loading ? (
           <Skeleton height={248} width={270} variant="rect" animation="wave" />
         ) : (
-          <Card key={idx} className={classes.root}>
+          <Card
+            key={idx}
+            style={
+              isTabletorlargephone
+                ? { maxWidth: "445px", width: "445px" }
+                : null
+            }
+            className={classes.root}
+          >
             <CardActionArea>
               <CardMedia
+                style={isTabletorlargephone ? { width: "445px" } : null}
                 className={classes.media}
                 image={inv.car_picture}
                 title={inv.make + " " + inv.model}

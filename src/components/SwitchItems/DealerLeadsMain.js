@@ -76,13 +76,11 @@ const DealerLeadsMain = props => {
 
           <table>
             <thead>
-              <tr>
-                <th>Full Name</th>
-                <th>Address</th>
-                <th>Type</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
+              <th>Full Name</th>
+              <th>Address</th>
+              <th>Type</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </thead>
             <td className="spaceunder"></td>
             <tbody>

@@ -571,10 +571,10 @@ const DealerDashboard = props => {
                           <NavigationDrawer />
                           <Chip
                             style={{
-                              fontSize: "1.5rem",
+                              fontSize: "1.2rem",
                               backgroundColor: "#39c"
                             }}
-                            size="large"
+                            size={isMobile ? "small" : "large"}
                             label={"Dealership:" + props.dealership}
                           />
                         </div>

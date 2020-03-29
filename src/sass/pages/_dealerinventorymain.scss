@@ -14,20 +14,15 @@
   }
 }
 
-.newInv_search {
-  display: inline-block;
-  font-size: 2.3rem;
-  color: #39c;
-  cursor: pointer;
-  top: 25%;
-  position: absolute;
-  left: 93%;
-}
-
 .new--inventory__results {
   margin-top: 8rem;
   font-size: 1.5rem;
   text-align: center;
+  h3 {
+    @media (max-width: $mobile-width) {
+      font-size: 1.3rem;
+    }
+  }
 
   & .newInventoryAddLink {
     display: inline-block;
@@ -41,12 +36,24 @@
 .form {
   display: flex;
   justify-content: space-around;
+  @media (max-width: $tabletandlargephone-width) {
+    flex-direction: column;
+  }
+  @media (max-width: $mobile-width) {
+    flex-direction: column;
+  }
 
   .field {
     width: 30%;
     position: relative;
     overflow: hidden;
     margin-top: 10rem;
+    @media (max-width: $tabletandlargephone-width) {
+      width: 100%;
+    }
+    @media (max-width: $mobile-width) {
+      width: 100%;
+    }
 
     input {
       width: 100%;
@@ -117,20 +124,15 @@
   }
 }
 
-.usedInv_search {
-  display: inline-block;
-  font-size: 2.3rem;
-  color: #39c;
-  cursor: pointer;
-  position: absolute;
-  left: 93%;
-  bottom: 14%;
-}
-
 .used--inventory__results {
   margin-top: 8rem;
   font-size: 1.5rem;
   text-align: center;
+  h3 {
+    @media (max-width: $mobile-width) {
+      font-size: 1.3rem;
+    }
+  }
 
   & .usedInventoryAddLink {
     display: inline-block;
@@ -144,12 +146,21 @@
 .form {
   display: flex;
   justify-content: space-around;
+  @media (max-width: $mobile-width) {
+    flex-direction: column;
+  }
 
   .field {
     width: 30%;
     position: relative;
     overflow: hidden;
     margin-top: 10rem;
+    @media (max-width: $tabletandlargephone-width) {
+      width: 100%;
+    }
+    @media (max-width: $mobile-width) {
+      width: 100%;
+    }
 
     input {
       width: 100%;
@@ -498,6 +509,14 @@
   line-height: 2px;
   font-size: 2rem;
   font-weight: 300;
+  @media (max-width: $desktop-width) {
+    left: 0.6%;
+    top: 30%;
+  }
+  @media (max-width: $mobile-width) {
+    left: -5.4%;
+    top: 35%;
+  }
 }
 
 .slide_nextBtn {
@@ -512,4 +531,15 @@
   line-height: 2px;
   font-size: 2rem;
   font-weight: 300;
+  @media (max-width: $desktop-width) {
+    left: 92.2%;
+    top: 30%;
+  }
+  @media (max-width: $mobile-width) {
+    top: 34%;
+  }
+}
+
+.slider-margin-left {
+  margin-left: 2.5rem;
 }

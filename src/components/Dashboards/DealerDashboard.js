@@ -317,16 +317,20 @@ const DealerDashboard = props => {
                 </select>
               ) : null}
 
-              <Link
-                className="leads-closeBtn"
-                to={props.user === "salesman" ? "/sales/dash" : "/dealer/dash"}
-              >
-                Close
-              </Link>
+              <div className="btn-group">
+                <Link
+                  className="leads-closeBtn"
+                  to={
+                    props.user === "salesman" ? "/sales/dash" : "/dealer/dash"
+                  }
+                >
+                  Close
+                </Link>
 
-              <button type="submit" className="leads-submitBtn">
-                Submit
-              </button>
+                <button type="submit" className="leads-submitBtn">
+                  Submit
+                </button>
+              </div>
             </form>
           </Portal>
         );
@@ -413,12 +417,14 @@ const DealerDashboard = props => {
                   <span className="salesperson-content-name">Email</span>
                 </label>
               </div>
-              <Link className="salesperson-closeBtn" to="/dealer/dash">
-                Close
-              </Link>
-              <button type="submit" className="salesperson-submitBtn">
-                Submit
-              </button>
+              <div className="sale-btn-group">
+                <Link className="salesperson-closeBtn" to="/dealer/dash">
+                  Close
+                </Link>
+                <button type="submit" className="salesperson-submitBtn">
+                  Submit
+                </button>
+              </div>
             </form>
           </Portal>
         );
@@ -540,12 +546,13 @@ const DealerDashboard = props => {
                     {props.user === "salesman" ? (
                       <div className="header-dealer">
                         <div className="header-dealer__name">
+                          <NavigationDrawer />
                           <Chip
                             style={{
                               fontSize: "1.5rem",
                               backgroundColor: "#39c"
                             }}
-                            size="medium"
+                            size={isMobile ? "small" : "large"}
                             label={
                               "Welcome, " + props.salesman.salesman_username
                             }

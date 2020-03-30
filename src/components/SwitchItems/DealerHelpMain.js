@@ -3,7 +3,15 @@ import React from "react";
 const DealerHelpMain = () => {
   return (
     <>
-      <h1>This is the Help Page</h1>
+      <h4 style={{ textAlign: "center", marginTop: "20rem" }}>
+        <span role="img" aria-label="under construction">
+          🚧
+        </span>{" "}
+        Help Page Coming Soon{" "}
+        <span role="img" aria-label="under construction">
+          🚧
+        </span>
+      </h4>
     </>
   );
 };

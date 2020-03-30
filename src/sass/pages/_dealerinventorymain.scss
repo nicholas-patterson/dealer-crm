@@ -226,6 +226,16 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   background: #ebe8e8;
+  @media (max-width: $tabletandlargephone-width) {
+    display: block;
+    margin: 4rem auto;
+  }
+  @media (max-width: $mobile-width) {
+    width: 100%;
+    display: block;
+    height: 100vh;
+    margin: 0;
+  }
 
   #picture_file {
     grid-column: 1/3;
@@ -258,6 +268,41 @@
     font-weight: 300;
   }
 
+  textarea[name="info"] {
+    @media (max-width: $tabletandlargephone-width) {
+      margin-top: 2rem;
+      width: 100%;
+      height: 10rem;
+    }
+    @media (max-width: $mobile-width) {
+      margin-top: 2rem;
+      width: 100%;
+      height: 10rem;
+    }
+  }
+
+  .used-inv-add-btn-group {
+    @media (max-width: $laptop-desktop-width) {
+      width: 99%;
+      margin: 0 auto;
+      grid-column: 1/3;
+    }
+    @media (max-width: $desktop-width) {
+      width: 99%;
+      margin: 0 auto;
+      grid-column: 1/3;
+    }
+    @media (max-width: $tabletandlargephone-width) {
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: $mobile-width) {
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
+
   .usedInv-submitBtn {
     margin-top: 4rem;
     width: 50%;
@@ -288,6 +333,19 @@
     letter-spacing: 1px;
     font-size: 1.4rem;
     color: black;
+    @media (max-width: $laptop-desktop-width) {
+      display: inline-block;
+    }
+
+    @media (max-width: $desktop-width) {
+      display: inline-block;
+    }
+    @media (max-width: $tabletandlargephone-width) {
+      display: inline-block;
+    }
+    @media (max-width: $mobile-width) {
+      display: inline-block;
+    }
   }
 
   .usedInv-field {
@@ -303,6 +361,12 @@
       border: none;
       outline: none;
       background-color: #ebe8e8;
+      @media (max-width: $tabletandlargephone-width) {
+        padding-top: 3.7rem;
+      }
+      @media (max-width: $mobile-width) {
+        padding-top: 3.7rem;
+      }
     }
     .usedInv-label-name {
       position: absolute;
@@ -365,6 +429,16 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   background: #ebe8e8;
+  @media (max-width: $tabletandlargephone-width) {
+    margin: 2.5rem auto;
+    display: block;
+  }
+  @media (max-width: $mobile-width) {
+    width: 100%;
+    margin: 0;
+    display: block;
+    height: 100vh;
+  }
 
   #picture_file {
     grid-column: 1/3;
@@ -397,6 +471,19 @@
     font-weight: 300;
   }
 
+  textarea[name="info"] {
+    @media (max-width: $tabletandlargephone-width) {
+      width: 100%;
+      height: 12rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: $mobile-width) {
+      width: 100%;
+      height: 12rem;
+      margin-top: 2rem;
+    }
+  }
+
   .newInv-submitBtn {
     margin-top: 4rem;
     width: 50%;
@@ -427,6 +514,20 @@
     letter-spacing: 1px;
     font-size: 1.4rem;
     color: black;
+
+    @media (max-width: $laptop-desktop-width) {
+      display: inline-block;
+    }
+
+    @media (max-width: $desktop-width) {
+      display: inline-block;
+    }
+    @media (max-width: $tabletandlargephone-width) {
+      display: inline-block;
+    }
+    @media (max-width: $mobile-width) {
+      display: inline-block;
+    }
   }
 
   .newInv-field {
@@ -442,6 +543,12 @@
       border: none;
       outline: none;
       background-color: #ebe8e8;
+      @media (max-width: $mobile-width) {
+        padding-top: 4.7rem;
+      }
+      @media (max-width: $tabletandlargephone-width) {
+        padding-top: 3.7rem;
+      }
     }
     .newInv-label-name {
       position: absolute;
@@ -469,6 +576,26 @@
         left: 0;
         transition: all 0.3s ease;
       }
+    }
+  }
+  .new-inv-add-btn-group {
+    @media (max-width: $laptop-desktop-width) {
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      grid-column: 1/3;
+    }
+    @media (max-width: $desktop-width) {
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      grid-column: 1/3;
+    }
+
+    @media (max-width: $mobile-width) {
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
     }
   }
 }
@@ -509,6 +636,10 @@
   line-height: 2px;
   font-size: 2rem;
   font-weight: 300;
+  @media (max-width: $laptop-desktop-width) {
+    left: 2.6%;
+    top: 29%;
+  }
   @media (max-width: $desktop-width) {
     left: 0.6%;
     top: 30%;
@@ -531,6 +662,12 @@
   line-height: 2px;
   font-size: 2rem;
   font-weight: 300;
+
+  @media (max-width: $laptop-desktop-width) {
+    top: 29%;
+    left: 93.2%;
+  }
+
   @media (max-width: $desktop-width) {
     left: 92.2%;
     top: 30%;
@@ -541,5 +678,5 @@
 }
 
 .slider-margin-left {
-  margin-left: 2.5rem;
+  margin-left: 5rem;
 }

@@ -143,7 +143,7 @@ const DealerDashboardMain = props => {
                 </Link>
               )}
 
-              {props.user === "salesman" ? null : (
+              {/* {props.user === "salesman" ? null : (
                 <Link
                   to="/dealer/dash/newmanager"
                   className={
@@ -156,7 +156,7 @@ const DealerDashboardMain = props => {
                 >
                   <p>Add New Manager</p>
                 </Link>
-              )}
+              )} */}
             </div>
           </div>
 

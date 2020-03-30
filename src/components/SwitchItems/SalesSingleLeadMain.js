@@ -191,21 +191,21 @@ const SalesSingleLeadMain = ({
         </Portal>
       ) : null}
       <tr>
-        <td>
+        <td data-label="Full Name">
           {lead.lead_firstname} {lead.lead_lastname}
         </td>
-        <td>
+        <td data-label="Address">
           {lead.lead_street}, {lead.lead_city}, {lead.lead_state}{" "}
         </td>
-        <td>{lead.lead_type}</td>
-        <td className="edit-style">
+        <td data-label="Type">{lead.lead_type}</td>
+        <td data-label="Edit" className="edit-style">
           <Icon
             onClick={handleSalesLeadEdit}
             className="edit-icon"
             icon={editOutline}
           />
         </td>
-        <td className="delete-style">
+        <td data-label="Delete" className="delete-style">
           <Icon
             onClick={() => handleSalesmanLeadDelete(lead.id)}
             className="del-icon"

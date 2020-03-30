@@ -98,8 +98,9 @@ const NavigationDrawer = props => {
     props.clearError();
   };
 
-  const handleLogoutClick = () => {
+  const handleLogoutClick = e => {
     //props.getDashboardLink("logout");
+    e.preventDefault();
     setModal(true);
   };
 
@@ -162,9 +163,7 @@ const NavigationDrawer = props => {
           button
           component={Link}
           to={
-            props.user === "salesman"
-              ? "/salesman/inventory"
-              : "/dealer/iventory"
+            props.user === "salesman" ? "/sales/inventory" : "/dealer/iventory"
           }
         >
           <ListItemIcon classes={{ root: classes.root }}>

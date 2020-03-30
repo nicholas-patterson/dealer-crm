@@ -54,10 +54,10 @@ const useStyles = makeStyles({
 });
 
 const DealerInventoryMain = props => {
-  const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
-  const isTabletorlargephone = useMediaQuery({ query: "(max-width: 720px)" });
-  const isDesktop = useMediaQuery({ query: "(max-width: 1024px)" });
-  const islaptopDesktop = useMediaQuery({ query: "(max-width: 1450px)" });
+  const isMobile = useMediaQuery({ query: "(min-width: 320px)" });
+  const isTabletorlargephone = useMediaQuery({ query: "(min-width: 720px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+  const islaptopDesktop = useMediaQuery({ query: "(min-width: 1400px)" });
   const classes = useStyles();
   const inv_add_sound = new Howl({
     src: addsound
@@ -233,10 +233,19 @@ const DealerInventoryMain = props => {
       : props.getUsedInventorySales() || props.getNewInventorySales();
   }, []);
 
-  console.log("LOADING", props.loading);
-  console.log("HOW MANY", props.newInv.length);
+  console.log("ISLAPTOPDESKTOP", islaptopDesktop);
 
-  console.log("PROPS.VALUE", ...props.value);
+  const visibleSlides = () => {
+    if (islaptopDesktop) {
+      return 3;
+    } else if (isDesktop) {
+      return 2;
+    } else if (isTabletorlargephone || isMobile) {
+      return 1;
+    }
+  };
+
+  console.log("VISIBLE SLIDES", visibleSlides());
 
   return (
     <>
@@ -348,17 +357,21 @@ const DealerInventoryMain = props => {
               value={usedInventoryAdd.info}
             ></textarea>
 
-            <Link
-              className="usedInv-closeBtn"
-              onClick={handleUsedInventoryCloseButton}
-              to={
-                props.user === "salesman" ? "/sales/dash" : "/dealer/inventory"
-              }
-            >
-              Close
-            </Link>
+            <div className="used-inv-add-btn-group">
+              <Link
+                className="usedInv-closeBtn"
+                onClick={handleUsedInventoryCloseButton}
+                to={
+                  props.user === "salesman"
+                    ? "/sales/dash"
+                    : "/dealer/inventory"
+                }
+              >
+                Close
+              </Link>
 
-            <button className="usedInv-submitBtn">Submit</button>
+              <button className="usedInv-submitBtn">Submit</button>
+            </div>
           </form>
         </Portal>
       ) : null}
@@ -468,19 +481,23 @@ const DealerInventoryMain = props => {
               onChange={handleNewInventoryAdd}
               name="info"
               value={newInventoryAdd.info}
-            ></textarea>
+            />
 
-            <Link
-              className="newInv-closeBtn"
-              onClick={handleNewInventoryCloseButton}
-              to={
-                props.user === "salesman" ? "/sales/dash" : "/dealer/inventory"
-              }
-            >
-              Close
-            </Link>
+            <div className="new-inv-add-btn-group">
+              <Link
+                className="newInv-closeBtn"
+                onClick={handleNewInventoryCloseButton}
+                to={
+                  props.user === "salesman"
+                    ? "/sales/dash"
+                    : "/dealer/inventory"
+                }
+              >
+                Close
+              </Link>
 
-            <button className="newInv-submitBtn">Submit</button>
+              <button className="newInv-submitBtn">Submit</button>
+            </div>
           </form>
         </Portal>
       ) : null}
@@ -582,16 +599,9 @@ const DealerInventoryMain = props => {
                   naturalSlideHeight={100}
                   totalSlides={props.newInv.length}
                   orientation="horizontal"
-                  visibleSlides={
-                    (isDesktop ? 2 : 3,
-                    isTabletorlargephone ? 1 : 3,
-                    isMobile ? 1 : 3)
-                  }
+                  visibleSlides={visibleSlides()}
                   dragEnabled={false}
-                  touchEnabled={
-                    (isTabletorlargephone ? true : false,
-                    isMobile ? true : false)
-                  }
+                  touchEnabled={true}
                   style={{ position: "relative" }}
                 >
                   <Slider
@@ -613,16 +623,12 @@ const DealerInventoryMain = props => {
                         );
                       })}
                   </Slider>
-                  {props.newInv.length < 4 ||
-                  isMobile ||
-                  isTabletorlargephone ? null : (
+                  {props.newInv.length > 4 && islaptopDesktop ? (
                     <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
-                  )}
-                  {props.newInv.length < 4 ||
-                  isMobile ||
-                  isTabletorlargephone ? null : (
+                  ) : null}
+                  {props.newInv.length > 4 && islaptopDesktop ? (
                     <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
-                  )}
+                  ) : null}
                 </CarouselProvider>
               </>
             )
@@ -642,11 +648,9 @@ const DealerInventoryMain = props => {
                 naturalSlideHeight={100}
                 totalSlides={props.sales_newInv.length}
                 orientation="horizontal"
-                visibleSlides={isMobile ? 1 : 3}
+                visibleSlides={visibleSlides()}
                 dragEnabled={false}
-                touchEnabled={
-                  (isMobile ? true : false, isTabletorlargephone ? true : false)
-                }
+                touchEnabled={true}
                 style={{ position: "relative" }}
               >
                 <Slider
@@ -686,16 +690,12 @@ const DealerInventoryMain = props => {
                       );
                     })}
                 </Slider>
-                {props.sales_newInv.length < 4 ||
-                isMobile ||
-                isTabletorlargephone ? null : (
+                {props.sales_newInv.length > 4 && islaptopDesktop ? (
                   <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
-                )}
-                {props.sales_newInv.length < 4 ||
-                isMobile ||
-                isTabletorlargephone ? null : (
+                ) : null}
+                {props.sales_newInv.length > 4 && islaptopDesktop ? (
                   <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
-                )}
+                ) : null}
               </CarouselProvider>
             </>
           )}
@@ -794,12 +794,9 @@ const DealerInventoryMain = props => {
                   naturalSlideHeight={100}
                   totalSlides={props.usedInv.length}
                   orientation="horizontal"
-                  visibleSlides={isMobile ? 1 : 3}
+                  visibleSlides={visibleSlides()}
                   dragEnabled={false}
-                  touchEnabled={
-                    (isMobile ? true : false,
-                    isTabletorlargephone ? true : false)
-                  }
+                  touchEnabled={true}
                   style={{ position: "relative" }}
                 >
                   <Slider
@@ -820,16 +817,12 @@ const DealerInventoryMain = props => {
                         );
                       })}
                   </Slider>
-                  {props.usedInv.length < 4 ||
-                  isMobile ||
-                  isTabletorlargephone ? null : (
+                  {props.usedInv.length > 4 && islaptopDesktop ? (
                     <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
-                  )}
-                  {props.usedInv.length < 4 ||
-                  isMobile ||
-                  isTabletorlargephone ? null : (
+                  ) : null}
+                  {props.usedInv.length > 4 && islaptopDesktop ? (
                     <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
-                  )}
+                  ) : null}
                 </CarouselProvider>
               </>
             )
@@ -849,11 +842,9 @@ const DealerInventoryMain = props => {
                 naturalSlideHeight={100}
                 totalSlides={props.sales_usedInv.length}
                 orientation="horizontal"
-                visibleSlides={isMobile ? 1 : 3}
+                visibleSlides={visibleSlides()}
                 dragEnabled={false}
-                touchEnabled={
-                  (isTabletorlargephone ? true : false, isMobile ? true : false)
-                }
+                touchEnabled={true}
                 style={{ position: "relative" }}
               >
                 <Slider
@@ -893,16 +884,12 @@ const DealerInventoryMain = props => {
                       );
                     })}
                 </Slider>
-                {props.sales_usedInv.length < 4 ||
-                isMobile ||
-                isTabletorlargephone ? null : (
+                {props.sales_usedInv.length > 4 && islaptopDesktop ? (
                   <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
-                )}
-                {props.sales_usedInv.length < 4 ||
-                isMobile ||
-                isTabletorlargephone ? null : (
+                ) : null}
+                {props.sales_usedInv.length > 4 && islaptopDesktop ? (
                   <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
-                )}
+                ) : null}
               </CarouselProvider>
             </>
           )}

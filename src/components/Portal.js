@@ -20,6 +20,7 @@ class Portal extends Component {
   render() {
     return ReactDOM.createPortal(
       <div
+        className="portal-styles"
         style={{
           position: "fixed",
           top: "0",

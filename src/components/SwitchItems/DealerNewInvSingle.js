@@ -14,6 +14,7 @@ import { useMediaQuery } from "react-responsive";
 
 const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
   const isTabletorlargephone = useMediaQuery({ query: "(max-width: 720px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
   const [modal, setModal] = useState(false);
   const [newInvEdit, setNewInvEdit] = useState({
     car_picture: props.newInv[idx].car_picture || "",
@@ -209,15 +210,19 @@ const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
           <Card
             key={idx}
             style={
-              isTabletorlargephone
+              (isTabletorlargephone
                 ? { maxWidth: "445px", width: "445px" }
-                : null
+                : null,
+              isMobile ? { maxWidth: "270px", width: "270px" } : null)
             }
             className={classes.root}
           >
             <CardActionArea>
               <CardMedia
-                style={isTabletorlargephone ? { width: "445px" } : null}
+                style={
+                  (isTabletorlargephone ? { width: "445px" } : null,
+                  isMobile ? { width: "270px" } : null)
+                }
                 className={classes.media}
                 image={inv.car_picture}
                 title={inv.make + " " + inv.model}

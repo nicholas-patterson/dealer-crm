@@ -5,6 +5,7 @@ import illustration from "../images/Nicholas-Illustration-Rev-2.png";
 import { Link } from "@reach/router";
 
 const WelcomePage = () => {
+  const copyrightYear = new Date().getFullYear();
   return (
     <>
       <Header />
@@ -35,7 +36,7 @@ const WelcomePage = () => {
         </div>
       </div>
       <footer className="footer">
-        <p className="footer__copyright">&copy; 2019 Auto Acuity</p>
+        <p className="footer__copyright">&copy; {copyrightYear} Auto Acuity</p>
         <p className="footer__privacy-policy">Privacy Policy</p>
         <p>
           Made with{" "}

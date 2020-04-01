@@ -20,7 +20,6 @@ const SalesLoginForm = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(user);
     props.salesLoginUser(user, navigate);
   };
 

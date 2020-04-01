@@ -51,7 +51,6 @@ const useStyles = makeStyles({
 });
 
 const NavigationDrawer = props => {
-  console.log("PROPS IN DRAWER", props);
   const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
   const [modal, setModal] = useState(false);
   const classes = useStyles();
@@ -59,8 +58,6 @@ const NavigationDrawer = props => {
   const [state, setState] = React.useState({
     left: false
   });
-
-  console.log(state);
 
   const toggleDrawer = (anchor, open) => event => {
     if (
@@ -287,7 +284,6 @@ const NavigationDrawer = props => {
 };
 
 const mapStateToProps = state => {
-  console.log(state.dealerNavigationReducer);
   return {
     link: state.dealerNavigationReducer.link,
     user: state.userReducer.user

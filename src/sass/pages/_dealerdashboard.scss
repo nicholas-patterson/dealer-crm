@@ -66,7 +66,7 @@
   .console-recent-activity-container {
     display: flex;
     justify-content: space-between;
-    @media (max-width: $mobile-width) {
+    @media (max-width: $desktop-width) {
       display: block;
     }
 
@@ -74,22 +74,22 @@
       display: block;
     }
 
-    @media (max-width: $desktop-width) {
+    @media (max-width: $mobile-width) {
       display: block;
     }
 
     .console {
       flex-basis: 50%;
       margin-right: 50px;
-      @media (max-width: $mobile-width) {
+
+      @media (max-width: $desktop-width) {
         margin-right: 0;
       }
-
       @media (max-width: $tabletandlargephone-width) {
         margin-right: 0;
       }
 
-      @media (max-width: $desktop-width) {
+      @media (max-width: $mobile-width) {
         margin-right: 0;
       }
 
@@ -99,12 +99,11 @@
         font-weight: 400;
         font-size: 2.7rem;
         letter-spacing: 1px;
-        @media (max-width: $mobile-width) {
-          font-size: 2rem;
-        }
-
         @media (max-width: $tabletandlargephone-width) {
           font-size: 2.3rem;
+        }
+        @media (max-width: $mobile-width) {
+          font-size: 2rem;
         }
       }
 

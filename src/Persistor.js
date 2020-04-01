@@ -3,7 +3,6 @@ import store from "redux-persist/es/storage/session"; // defaults to Session Sto
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./reducers";
-import logger from "redux-logger";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -17,7 +16,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 export default () => {
   let store = createStore(
     persistedReducer,
-    composeEnhancers(applyMiddleware(thunk, logger))
+    composeEnhancers(applyMiddleware(thunk))
   );
   let persistor = persistStore(store);
   return { store: store, persistor: persistor };

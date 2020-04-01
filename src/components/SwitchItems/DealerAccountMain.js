@@ -56,7 +56,6 @@ const DealerAccountMain = props => {
   // handle submit for email section
   const handleEmailSection = e => {
     e.preventDefault();
-    console.log("IN SUBMIT EMAIL", emailInformation);
     setEmailInformation({ dealer_password: "" });
   };
 
@@ -124,7 +123,6 @@ const DealerAccountMain = props => {
               <button
                 type="submit"
                 onClick={() => props.updateUsername(personalInformation)}
-                className="ea-submitBtn"
                 className="pi-submitBtn"
               >
                 Save
@@ -260,7 +258,6 @@ const DealerAccountMain = props => {
 };
 
 const mapStateToProps = state => {
-  console.log("MSTP", state);
   return {
     dealer: state.loginReducer.user.dealer_email,
     dealer_username: state.loginReducer.user.dealer_username,

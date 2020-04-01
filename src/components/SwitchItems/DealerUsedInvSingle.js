@@ -43,7 +43,6 @@ const DealerUsedInvSingle = ({
     formData.append("car_picture", usedInvEdit.car_picture);
     formData.append("upload_preset", "darwin");
     props.addImage(formData, usedInvEdit);
-    console.log("NEW INV IN SUBMIT", usedInvEdit);
     setUsedInvEdit({
       car_picture: "",
       year: "",

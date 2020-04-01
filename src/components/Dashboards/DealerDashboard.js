@@ -89,7 +89,6 @@ const DealerDashboard = props => {
   const addSalesLead = () => {
     props.addSalesLead(leadInfo, navigate);
     global_add_sound.play();
-    console.log("LEAD INFO", leadInfo);
   };
 
   Howler.volume(0.5);
@@ -306,7 +305,6 @@ const DealerDashboard = props => {
                 >
                   <option>Select A Salesman</option>
                   {props.salesmans.map(salesman => {
-                    console.log(salesman);
                     return (
                       <option value={salesman.id} key={salesman.id}>
                         {salesman.salesman_firstname}{" "}
@@ -552,7 +550,7 @@ const DealerDashboard = props => {
                               fontSize: "1.5rem",
                               backgroundColor: "#39c"
                             }}
-                            size={isMobile ? "small" : "large"}
+                            size={isMobile ? "small" : "medium"}
                             label={
                               "Welcome, " + props.salesman.salesman_username
                             }
@@ -581,7 +579,7 @@ const DealerDashboard = props => {
                               fontSize: "1.2rem",
                               backgroundColor: "#39c"
                             }}
-                            size={isMobile ? "small" : "large"}
+                            size={isMobile ? "small" : "medium"}
                             label={"Dealership:" + props.dealership}
                           />
                         </div>

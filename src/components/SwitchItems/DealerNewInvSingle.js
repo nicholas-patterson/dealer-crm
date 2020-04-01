@@ -40,7 +40,6 @@ const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
     formData.append("car_picture", newInvEdit.car_picture);
     formData.append("upload_preset", "darwin");
     props.addImage(formData, newInvEdit);
-    console.log("NEW INV IN SUBMIT", newInvEdit);
     setNewInvEdit({
       car_picture: "",
       year: "",
@@ -74,8 +73,6 @@ const DealerNewInvSingle = ({ inv, idx, deleteNewInv, classes, props }) => {
       info: ""
     });
   };
-
-  console.log("PROPS IN DNIS", props.newInv[idx].car_picture);
 
   return (
     <>

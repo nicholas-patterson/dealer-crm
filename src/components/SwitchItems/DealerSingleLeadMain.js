@@ -38,7 +38,6 @@ const DealerSingleLeadMain = ({
   //submits edited lead
   const handleLeadsEditSubmit = e => {
     e.preventDefault();
-    console.log("LEAD EDIT IN SUBMIT", leadEditInfo);
   };
 
   const handleEditLeadChange = e => {

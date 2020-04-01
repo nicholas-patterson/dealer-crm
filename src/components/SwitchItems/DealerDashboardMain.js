@@ -41,7 +41,6 @@ const DealerDashboardMain = props => {
 
   useEffect(() => {
     socket.on("message", message => {
-      console.log("SOCKET MESSAGE", message);
       props.user === "dealer"
         ? props.getDealerNotifications()
         : props.getSalesmanNotifications();
@@ -91,8 +90,6 @@ const DealerDashboardMain = props => {
   };
 
   Howler.volume(0.5);
-
-  console.log(props);
 
   return (
     <>
@@ -184,9 +181,9 @@ const DealerDashboardMain = props => {
             {/* Start of Recent Activity List */}
             <div className="recent-activity__items">
               {props.user === "dealer"
-                ? props.dealer_notifications.map(notification => {
+                ? props.dealer_notifications.map((notification, idx) => {
                     return (
-                      <div className="recent-activity__item">
+                      <div className="recent-activity__item" key={idx}>
                         <div className="recent-activity__item__box recent-activity__item__icon">
                           <span>{renderIcon(notification)}</span>
                         </div>
@@ -206,10 +203,9 @@ const DealerDashboardMain = props => {
                       </div>
                     );
                   })
-                : props.salesman_notifications.map(notification => {
-                    console.log(notification);
+                : props.salesman_notifications.map((notification, idx) => {
                     return (
-                      <div className="recent-activity__item">
+                      <div className="recent-activity__item" key={idx}>
                         <div className="recent-activity__item__box recent-activity__item__icon">
                           <span>{renderIcon(notification)}</span>
                         </div>

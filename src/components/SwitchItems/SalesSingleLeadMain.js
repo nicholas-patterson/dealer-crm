@@ -36,7 +36,6 @@ const SalesSingleLeadMain = ({
 
   const handleSalesLeadEditSubmit = e => {
     e.preventDefault();
-    console.log("LEAD EDIT IN SUBMIT", salesLeadEditInfo);
   };
 
   const handleEditSalesLeadChange = e => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
 import Portal from "../Portal";
 import { connect } from "react-redux";
@@ -7,14 +7,12 @@ import {
   addNewImage,
   getUsedInventory,
   getNewInventory,
-  newSearchFilter,
   deleteUsedInv,
   deleteNewInv,
   getNewInventorySales,
   getUsedInventorySales,
   editUsedInventory,
-  editNewInventory,
-  usedSearchFilter
+  editNewInventory
 } from "../../actions/index";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -84,6 +82,12 @@ const DealerInventoryMain = props => {
   // Filter Used Inventory
   const [filtUsedInv, setFiltUsedInv] = useState([]);
 
+  // Filter Sales New Inventory
+  const [filtSalesNewInv, setFiltSalesNewInv] = useState([]);
+
+  // Filter Sales Used Inventory
+  const [filtSalesUsedInv, setFiltSalesUsedInv] = useState([]);
+
   // used inventory state search
   const [searchUsedState, setSearchUsedState] = useState({
     used_year: "",
@@ -113,12 +117,12 @@ const DealerInventoryMain = props => {
     info: ""
   });
 
-  // new inventory search
+  // new inventory search for salesman too
   const handleSearchChange = e => {
     setSearchState({ ...searchState, [e.target.name]: e.target.value });
   };
 
-  // used inventory search
+  // used inventory search for salesman too
   const handleUsedSearchChange = e => {
     setSearchUsedState({ ...searchUsedState, [e.target.name]: e.target.value });
   };
@@ -133,6 +137,58 @@ const DealerInventoryMain = props => {
     setFiltUsedInv([...props.usedInv]);
   }, []);
 
+  // Use Effect for setting filtSalesNewInv state to sales new inv items
+  useEffect(() => {
+    setFiltSalesNewInv([...props.sales_newInv]);
+  }, []);
+
+  // Use Effect for setting filtSalesUsedInv state to sales used inv items
+  useEffect(() => {
+    setFiltSalesUsedInv([...props.sales_usedInv]);
+  }, []);
+
+  // Use Effect to filter through sales new inv and set inv to state if yr make or model changes
+  useEffect(() => {
+    const filteredSalesUsedInventory = props.sales_usedInv.filter(inv => {
+      if (
+        inv.year.includes(searchUsedState.used_year) &&
+        inv.make.includes(searchUsedState.used_make) &&
+        inv.model.includes(searchUsedState.used_model)
+      ) {
+        return inv;
+      }
+    });
+    setFiltSalesUsedInv([...filteredSalesUsedInventory]);
+  }, [
+    searchUsedState.used_year,
+    searchUsedState.used_make,
+    searchUsedState.used_model
+  ]);
+
+  // Use Effect to filter through sales new inv and set inv to state if yr make or model changes
+  useEffect(() => {
+    const filteredSalesNewInventory = props.sales_newInv.filter(inv => {
+      if (
+        inv.year.includes(searchState.new_year) &&
+        inv.make.includes(searchState.new_make) &&
+        inv.model.includes(searchState.new_model)
+      ) {
+        return inv;
+      }
+    });
+    setFiltSalesNewInv([...filteredSalesNewInventory]);
+  }, [searchState.new_year, searchState.new_make, searchState.new_model]);
+
+  // After I delete this updates the filteredSalesUsedInv with the new contents of the props.sales_usedInv arr
+  useEffect(() => {
+    setFiltSalesUsedInv([...props.sales_usedInv]);
+  }, [props.sales_usedInv]);
+
+  // After I delete this updates the filteredSalesNewInv with the new contents of the props.sales_newInv arr
+  useEffect(() => {
+    setFiltSalesNewInv([...props.sales_newInv]);
+  }, [props.sales_newInv]);
+
   // Use Effect to filter through newInv and set inv to state if year make or model changes
   useEffect(() => {
     const filteredNewInventory = props.newInv.filter(inv => {
@@ -145,7 +201,6 @@ const DealerInventoryMain = props => {
       }
     });
     setFiltNewInv([...filteredNewInventory]);
-    console.log("INV INV", filtNewInv);
   }, [searchState.new_year, searchState.new_make, searchState.new_model]);
 
   // After I delete this updates the filteredInv with the new contents of the props.newInv arr
@@ -288,7 +343,7 @@ const DealerInventoryMain = props => {
   useEffect(() => {
     props.user === "dealer"
       ? props.getUsedInventory() || props.getNewInventory()
-      : props.getUsedInventorySales() && props.getNewInventorySales();
+      : props.getUsedInventorySales() || props.getNewInventorySales();
   }, [props.newInv.length]);
 
   const visibleSlides = () => {
@@ -300,9 +355,6 @@ const DealerInventoryMain = props => {
       return 1;
     }
   };
-
-  console.log("INV", props.newInv);
-  console.log("FILTERED INV", filtNewInv);
 
   return (
     <>
@@ -667,7 +719,7 @@ const DealerInventoryMain = props => {
                     searchState.new_model === ""
                       ? props.newInv.map((inv, idx) => {
                           return (
-                            <>
+                            <React.Fragment key={idx}>
                               <DealerNewInvSingle
                                 inv={inv}
                                 idx={idx}
@@ -675,12 +727,12 @@ const DealerInventoryMain = props => {
                                 classes={classes}
                                 props={props}
                               />
-                            </>
+                            </React.Fragment>
                           );
                         })
                       : filtNewInv.map((inv, idx) => {
                           return (
-                            <>
+                            <React.Fragment key={idx}>
                               <DealerNewInvSingle
                                 inv={inv}
                                 idx={idx}
@@ -688,7 +740,7 @@ const DealerInventoryMain = props => {
                                 classes={classes}
                                 props={props}
                               />
-                            </>
+                            </React.Fragment>
                           );
                         })}
                   </Slider>
@@ -726,38 +778,72 @@ const DealerInventoryMain = props => {
                   style={{ marginTop: "3rem" }}
                   className={isDesktop ? "slider-margin-left" : null}
                 >
-                  {props.sales_newInv &&
-                    props.sales_newInv.map((inv, idx) => {
-                      return (
-                        <Slide>
-                          <Card key={idx} className={classes.root}>
-                            <CardActionArea>
-                              <CardMedia
-                                className={classes.media}
-                                image={inv.car_picture}
-                                title={inv.make + " " + inv.model}
-                              />
-                              <CardContent>
-                                <Typography
-                                  gutterBottom
-                                  variant="h5"
-                                  component="h2"
-                                >
-                                  {inv.year} {inv.make} {inv.model}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  color="textSecondary"
-                                  component="p"
-                                >
-                                  {inv.info}
-                                </Typography>
-                              </CardContent>
-                            </CardActionArea>
-                          </Card>
-                        </Slide>
-                      );
-                    })}
+                  {searchState.new_year === "" &&
+                  searchState.new_make === "" &&
+                  searchState.new_model === ""
+                    ? props.sales_newInv &&
+                      props.sales_newInv.map((inv, idx) => {
+                        return (
+                          <Slide key={idx}>
+                            <Card key={idx} className={classes.root}>
+                              <CardActionArea>
+                                <CardMedia
+                                  className={classes.media}
+                                  image={inv.car_picture}
+                                  title={inv.make + " " + inv.model}
+                                />
+                                <CardContent>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="h2"
+                                  >
+                                    {inv.year} {inv.make} {inv.model}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                  >
+                                    {inv.info}
+                                  </Typography>
+                                </CardContent>
+                              </CardActionArea>
+                            </Card>
+                          </Slide>
+                        );
+                      })
+                    : filtSalesNewInv.map((inv, idx) => {
+                        return (
+                          <Slide key={idx}>
+                            <Card key={idx} className={classes.root}>
+                              <CardActionArea>
+                                <CardMedia
+                                  className={classes.media}
+                                  image={inv.car_picture}
+                                  title={inv.make + " " + inv.model}
+                                />
+                                <CardContent>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="h2"
+                                  >
+                                    {inv.year} {inv.make} {inv.model}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                  >
+                                    {inv.info}
+                                  </Typography>
+                                </CardContent>
+                              </CardActionArea>
+                            </Card>
+                          </Slide>
+                        );
+                      })}
                 </Slider>
                 {props.sales_newInv.length > 4 && islaptopDesktop ? (
                   <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
@@ -877,7 +963,7 @@ const DealerInventoryMain = props => {
                     searchUsedState.used_model === ""
                       ? props.usedInv.map((inv, idx) => {
                           return (
-                            <>
+                            <React.Fragment key={idx}>
                               <DealerUsedInvSingle
                                 inv={inv}
                                 idx={idx}
@@ -885,12 +971,12 @@ const DealerInventoryMain = props => {
                                 classes={classes}
                                 props={props}
                               />
-                            </>
+                            </React.Fragment>
                           );
                         })
                       : filtUsedInv.map((inv, idx) => {
                           return (
-                            <>
+                            <React.Fragment key={idx}>
                               <DealerUsedInvSingle
                                 inv={inv}
                                 idx={idx}
@@ -898,7 +984,7 @@ const DealerInventoryMain = props => {
                                 classes={classes}
                                 props={props}
                               />
-                            </>
+                            </React.Fragment>
                           );
                         })}
                   </Slider>
@@ -936,38 +1022,72 @@ const DealerInventoryMain = props => {
                   style={{ marginTop: "3rem" }}
                   className={isDesktop ? "slider-margin-left" : null}
                 >
-                  {props.sales_usedInv &&
-                    props.sales_usedInv.map((inv, idx) => {
-                      return (
-                        <Slide index={idx}>
-                          <Card key={idx} className={classes.root}>
-                            <CardActionArea>
-                              <CardMedia
-                                className={classes.media}
-                                image={inv.car_picture}
-                                title={inv.make + " " + inv.model}
-                              />
-                              <CardContent>
-                                <Typography
-                                  gutterBottom
-                                  variant="h5"
-                                  component="h2"
-                                >
-                                  {inv.year} {inv.make} {inv.model}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  color="textSecondary"
-                                  component="p"
-                                >
-                                  {inv.info}
-                                </Typography>
-                              </CardContent>
-                            </CardActionArea>
-                          </Card>
-                        </Slide>
-                      );
-                    })}
+                  {searchUsedState.used_year === "" &&
+                  searchUsedState.used_make === "" &&
+                  searchUsedState.used_model === ""
+                    ? props.sales_usedInv &&
+                      props.sales_usedInv.map((inv, idx) => {
+                        return (
+                          <Slide index={idx} key={idx}>
+                            <Card key={idx} className={classes.root}>
+                              <CardActionArea>
+                                <CardMedia
+                                  className={classes.media}
+                                  image={inv.car_picture}
+                                  title={inv.make + " " + inv.model}
+                                />
+                                <CardContent>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="h2"
+                                  >
+                                    {inv.year} {inv.make} {inv.model}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                  >
+                                    {inv.info}
+                                  </Typography>
+                                </CardContent>
+                              </CardActionArea>
+                            </Card>
+                          </Slide>
+                        );
+                      })
+                    : filtSalesUsedInv.map((inv, idx) => {
+                        return (
+                          <Slide index={idx} key={idx}>
+                            <Card key={idx} className={classes.root}>
+                              <CardActionArea>
+                                <CardMedia
+                                  className={classes.media}
+                                  image={inv.car_picture}
+                                  title={inv.make + " " + inv.model}
+                                />
+                                <CardContent>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="h2"
+                                  >
+                                    {inv.year} {inv.make} {inv.model}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                  >
+                                    {inv.info}
+                                  </Typography>
+                                </CardContent>
+                              </CardActionArea>
+                            </Card>
+                          </Slide>
+                        );
+                      })}
                 </Slider>
                 {props.sales_usedInv.length > 4 && islaptopDesktop ? (
                   <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
@@ -1001,12 +1121,10 @@ export default connect(mapStateToProps, {
   addNewImage,
   getUsedInventory,
   getNewInventory,
-  newSearchFilter,
   deleteUsedInv,
   deleteNewInv,
   getNewInventorySales,
   getUsedInventorySales,
   editNewInventory,
-  editUsedInventory,
-  usedSearchFilter
+  editUsedInventory
 })(React.memo(DealerInventoryMain));

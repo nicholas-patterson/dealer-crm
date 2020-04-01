@@ -13,15 +13,14 @@ import {
   getNewInventorySales,
   getUsedInventorySales,
   editUsedInventory,
-  editNewInventory
+  editNewInventory,
+  usedSearchFilter
 } from "../../actions/index";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-//import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-//import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import {
   CarouselProvider,
@@ -31,15 +30,14 @@ import {
   ButtonNext
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { Icon } from "@iconify/react";
-import searchIcon from "@iconify/icons-ei/search";
 import DealerNewInvSingle from "./DealerNewInvSingle";
 import DealerUsedInvSingle from "./DealerUsedInvSingle";
+import { useMediaQuery } from "react-responsive";
 import { Howl, Howler } from "howler";
 import addsound from "../../sounds/addsound.mp3";
 import deletesound from "../../sounds/deletesound.mp3";
-import { useMediaQuery } from "react-responsive";
 
+// Material-ui  Make Styles
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -54,27 +52,40 @@ const useStyles = makeStyles({
 });
 
 const DealerInventoryMain = props => {
+  // React Reaponsive Media Queries
   const isMobile = useMediaQuery({ query: "(min-width: 320px)" });
   const isTabletorlargephone = useMediaQuery({ query: "(min-width: 720px)" });
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const islaptopDesktop = useMediaQuery({ query: "(min-width: 1400px)" });
+
+  // Mui Classes
   const classes = useStyles();
+
+  // Add Sound Howl
   const inv_add_sound = new Howl({
     src: addsound
   });
 
+  // Delete Sound Howl
   const inv_delete_sound = new Howl({
     src: deletesound
   });
 
   // new inventory state search
-  const [newInventory, setNewInventory] = useState({
+  const [searchState, setSearchState] = useState({
     new_year: "",
     new_make: "",
     new_model: ""
   });
+
+  // Filter New Inventory
+  const [filtNewInv, setFiltNewInv] = useState([]);
+
+  // Filter Used Inventory
+  const [filtUsedInv, setFiltUsedInv] = useState([]);
+
   // used inventory state search
-  const [usedInventory, setUsedInventory] = useState({
+  const [searchUsedState, setSearchUsedState] = useState({
     used_year: "",
     used_make: "",
     used_model: ""
@@ -103,26 +114,74 @@ const DealerInventoryMain = props => {
   });
 
   // new inventory search
-  // const handleNewInventoryChange = useCallback(
-  //   e => {
-  //     setNewInventory({ ...newInventory, [e.target.name]: e.target.value });
-  //   },
-  //   [newInventory, setNewInventory]
-  // );
+  const handleSearchChange = e => {
+    setSearchState({ ...searchState, [e.target.name]: e.target.value });
+  };
 
   // used inventory search
-  const handleUsedInventoryChange = useCallback(
-    e => {
-      setUsedInventory({ ...usedInventory, [e.target.name]: e.target.value });
-    },
-    [usedInventory, setUsedInventory]
-  );
+  const handleUsedSearchChange = e => {
+    setSearchUsedState({ ...searchUsedState, [e.target.name]: e.target.value });
+  };
+
+  // Use Effect for Setting filtNewInv state to new inventory items
+  useEffect(() => {
+    setFiltNewInv([...props.newInv]);
+  }, []);
+
+  // Use Effect for Setting filtUsedInv state to used inventory items
+  useEffect(() => {
+    setFiltUsedInv([...props.usedInv]);
+  }, []);
+
+  // Use Effect to filter through newInv and set inv to state if year make or model changes
+  useEffect(() => {
+    const filteredNewInventory = props.newInv.filter(inv => {
+      if (
+        inv.year.includes(searchState.new_year) &&
+        inv.make.includes(searchState.new_make) &&
+        inv.model.includes(searchState.new_model)
+      ) {
+        return inv;
+      }
+    });
+    setFiltNewInv([...filteredNewInventory]);
+    console.log("INV INV", filtNewInv);
+  }, [searchState.new_year, searchState.new_make, searchState.new_model]);
+
+  // After I delete this updates the filteredInv with the new contents of the props.newInv arr
+  useEffect(() => {
+    setFiltNewInv([...props.newInv]);
+  }, [props.newInv]);
+
+  // After I delete this updates the filteredUsedInv with the new contents of the props.usedInv arr
+  useEffect(() => {
+    setFiltUsedInv([...props.usedInv]);
+  }, [props.usedInv]);
+
+  // Use Effect to filter through newInv and set inv to state if year make or model changes
+  useEffect(() => {
+    const filteredUsedInventory = props.usedInv.filter(inv => {
+      if (
+        inv.year.includes(searchUsedState.used_year) &&
+        inv.make.includes(searchUsedState.used_make) &&
+        inv.model.includes(searchUsedState.used_model)
+      ) {
+        return inv;
+      }
+    });
+    setFiltUsedInv([...filteredUsedInventory]);
+  }, [
+    searchUsedState.used_year,
+    searchUsedState.used_make,
+    searchUsedState.used_model
+  ]);
 
   // on click for new inventory
   const handleNewInventoryAdd = e => {
     setShowNewInventoryModal(true);
     setNewInventoryAdd({ ...newInventoryAdd, [e.target.name]: e.target.value });
   };
+
   // on click for used inventory
   const handleUsedInventoryAdd = e => {
     setShowUsedInventoryModal(true);
@@ -131,14 +190,6 @@ const DealerInventoryMain = props => {
       [e.target.name]: e.target.value
     });
   };
-
-  const handleNewInventorySearch = useCallback(
-    e => {
-      e.preventDefault();
-      //props.newSearchFilter(newInventory);
-    },
-    [newInventory]
-  );
 
   // handleChange for usedInv picture
   const handleUsedInventoryPicture = e => {
@@ -173,6 +224,13 @@ const DealerInventoryMain = props => {
   const deleteUsedInventory = (invId, imageId) => {
     props.deleteUsedInv(invId, imageId);
     inv_delete_sound.play();
+  };
+
+  // delete Used Inventory
+  const deleteNewInventory = (invId, imageId) => {
+    props.deleteNewInv(invId, imageId);
+    inv_delete_sound.play();
+    setSearchState({ new_year: "", new_make: "", new_model: "" });
   };
 
   // handleSubmit for New Inv Form
@@ -230,10 +288,8 @@ const DealerInventoryMain = props => {
   useEffect(() => {
     props.user === "dealer"
       ? props.getUsedInventory() || props.getNewInventory()
-      : props.getUsedInventorySales() || props.getNewInventorySales();
-  }, []);
-
-  console.log("ISLAPTOPDESKTOP", islaptopDesktop);
+      : props.getUsedInventorySales() && props.getNewInventorySales();
+  }, [props.newInv.length]);
 
   const visibleSlides = () => {
     if (islaptopDesktop) {
@@ -245,7 +301,8 @@ const DealerInventoryMain = props => {
     }
   };
 
-  console.log("VISIBLE SLIDES", visibleSlides());
+  console.log("INV", props.newInv);
+  console.log("FILTERED INV", filtNewInv);
 
   return (
     <>
@@ -521,10 +578,7 @@ const DealerInventoryMain = props => {
 
           {/* New Inventory Search form for dealers and salesman */}
           <div className="new--inventory__form">
-            <form
-              className="new--inventory__fields form"
-              onSubmit={handleNewInventorySearch}
-            >
+            <form className="new--inventory__fields form">
               <div className="field">
                 <input
                   type="text"
@@ -533,8 +587,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={props.value.term}
-                  onChange={e => props.newSearchFilter(e.target.value)}
+                  value={searchState.new_year}
+                  onChange={e => handleSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Year</span>
@@ -549,8 +603,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={props.value.term}
-                  onChange={e => props.newSearchFilter(e.target.value)}
+                  value={searchState.new_make}
+                  onChange={e => handleSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Make</span>
@@ -564,8 +618,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={props.value.term}
-                  onChange={e => props.newSearchFilter(e.target.value)}
+                  value={searchState.new_model}
+                  onChange={e => handleSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Model</span>
@@ -608,25 +662,40 @@ const DealerInventoryMain = props => {
                     style={{ marginTop: "3rem" }}
                     className={isDesktop ? "slider-margin-left" : null}
                   >
-                    {props.newInv &&
-                      props.newInv.map((inv, idx) => {
-                        return (
-                          <>
-                            <DealerNewInvSingle
-                              inv={inv}
-                              idx={idx}
-                              deleteNewInv={props.deleteNewInv}
-                              classes={classes}
-                              props={props}
-                            />
-                          </>
-                        );
-                      })}
+                    {searchState.new_year === "" &&
+                    searchState.new_make === "" &&
+                    searchState.new_model === ""
+                      ? props.newInv.map((inv, idx) => {
+                          return (
+                            <>
+                              <DealerNewInvSingle
+                                inv={inv}
+                                idx={idx}
+                                deleteNewInv={deleteNewInventory}
+                                classes={classes}
+                                props={props}
+                              />
+                            </>
+                          );
+                        })
+                      : filtNewInv.map((inv, idx) => {
+                          return (
+                            <>
+                              <DealerNewInvSingle
+                                inv={inv}
+                                idx={idx}
+                                deleteNewInv={deleteNewInventory}
+                                classes={classes}
+                                props={props}
+                              />
+                            </>
+                          );
+                        })}
                   </Slider>
-                  {props.newInv.length > 4 && islaptopDesktop ? (
+                  {props.newInv.length > 4 || islaptopDesktop ? (
                     <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
                   ) : null}
-                  {props.newInv.length > 4 && islaptopDesktop ? (
+                  {props.newInv.length > 4 || islaptopDesktop ? (
                     <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
                   ) : null}
                 </CarouselProvider>
@@ -729,8 +798,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={usedInventory.used_year}
-                  onChange={handleUsedInventoryChange}
+                  value={searchUsedState.used_year}
+                  onChange={e => handleUsedSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Year</span>
@@ -744,8 +813,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={usedInventory.used_make}
-                  onChange={handleUsedInventoryChange}
+                  value={searchUsedState.used_make}
+                  onChange={e => handleUsedSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Make</span>
@@ -759,8 +828,8 @@ const DealerInventoryMain = props => {
                   autoComplete="off"
                   required
                   className="input-group"
-                  value={usedInventory.used_model}
-                  onChange={handleUsedInventoryChange}
+                  value={searchUsedState.used_model}
+                  onChange={e => handleUsedSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Model</span>
@@ -803,24 +872,40 @@ const DealerInventoryMain = props => {
                     style={{ marginTop: "3rem" }}
                     className={isDesktop ? "slider-margin-left" : null}
                   >
-                    {props.usedInv &&
-                      props.usedInv.map((inv, idx) => {
-                        return (
-                          <DealerUsedInvSingle
-                            inv={inv}
-                            idx={idx}
-                            //deleteUsedInv={props.deleteUsedInv}
-                            deleteUsedInventory={deleteUsedInventory}
-                            classes={classes}
-                            props={props}
-                          />
-                        );
-                      })}
+                    {searchUsedState.used_year === "" &&
+                    searchUsedState.used_make === "" &&
+                    searchUsedState.used_model === ""
+                      ? props.usedInv.map((inv, idx) => {
+                          return (
+                            <>
+                              <DealerUsedInvSingle
+                                inv={inv}
+                                idx={idx}
+                                deleteUsedInventory={deleteUsedInventory}
+                                classes={classes}
+                                props={props}
+                              />
+                            </>
+                          );
+                        })
+                      : filtUsedInv.map((inv, idx) => {
+                          return (
+                            <>
+                              <DealerUsedInvSingle
+                                inv={inv}
+                                idx={idx}
+                                deleteUsedInventory={deleteUsedInventory}
+                                classes={classes}
+                                props={props}
+                              />
+                            </>
+                          );
+                        })}
                   </Slider>
-                  {props.usedInv.length > 4 && islaptopDesktop ? (
+                  {props.usedInv.length > 4 || islaptopDesktop ? (
                     <ButtonBack className="slide_backBtn">&lt;</ButtonBack>
                   ) : null}
-                  {props.usedInv.length > 4 && islaptopDesktop ? (
+                  {props.usedInv.length > 4 || islaptopDesktop ? (
                     <ButtonNext className="slide_nextBtn">&gt;</ButtonNext>
                   ) : null}
                 </CarouselProvider>
@@ -906,8 +991,8 @@ const mapStateToProps = state => {
     sales_newInv: state.getSalesNewInventoryReducer.salesNewInventory || [],
     sales_usedInv: state.getSalesUsedInventoryReducer.salesUsedInventory || [],
     user: state.userReducer.user,
-    loading: state.imageReducer.loading,
-    value: state.newInventoryReducer.newInventory
+    loading: state.imageReducer.loading
+    //value: state.newInventoryReducer.newInventory,
   };
 };
 
@@ -922,5 +1007,6 @@ export default connect(mapStateToProps, {
   getNewInventorySales,
   getUsedInventorySales,
   editNewInventory,
-  editUsedInventory
+  editUsedInventory,
+  usedSearchFilter
 })(React.memo(DealerInventoryMain));

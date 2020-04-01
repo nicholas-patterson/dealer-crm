@@ -25,22 +25,6 @@ export const getSalesNewInventoryReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload
       };
-
-    case "SEARCH_NEW_INV_SUCCESS":
-      const result = state.salesNewInventory.filter(newInv => {
-        if (
-          newInv.year === action.payload.new_year &&
-          newInv.make === action.payload.new_make &&
-          newInv.model === action.payload.new_model
-        ) {
-          return newInv;
-        }
-      });
-      return {
-        ...state,
-        loading: false,
-        salesNewInventory: [...result]
-      };
     default:
       return state;
   }

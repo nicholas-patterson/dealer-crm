@@ -39,7 +39,6 @@ const SignUpForm = props => {
     props.registerUser(form, navigate);
     props.getUserType("dealer");
     props.clearError();
-    console.log(form);
   };
 
   const formSwitch = () => {

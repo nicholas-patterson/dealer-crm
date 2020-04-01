@@ -401,21 +401,6 @@ export const deleteNewInv = (newInvId, picId) => {
   };
 };
 
-export const newSearchFilter = term => {
-  console.log("TERM IN ACTION", term);
-  return {
-    type: "SEARCH_NEW_INV_SUCCESS",
-    term
-  };
-};
-
-export const usedSearchFilter = term => {
-  return {
-    type: "SEARCH_USED_INV_SUCCESS",
-    payload: term
-  };
-};
-
 // Update Email For Dealer --DONE
 export const updateEmail = newEmail => {
   return dispatch => {
@@ -465,7 +450,6 @@ export const updateUsername = newUsername => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN USERNAME", res.data.updatedUsername);
         dispatch({
           type: "UPDATE_USERNAME_SUCCESS",
           payload: res.data.updatedUsername.dealer_username
@@ -527,7 +511,6 @@ export const deleteSalesmanLead = lead_id => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN DELETE SALES LEAD", res);
         dispatch({
           type: "DELETE_SALESMAN_LEAD_SUCCESS",
           payload: res.data.deletedLead
@@ -571,7 +554,6 @@ export const getUsedInventorySales = () => {
         withCredentials: true
       })
       .then(res => {
-        console.log("RES IN ACTION USED INV SALES", res);
         dispatch({
           type: "GET_SALESMAN_USED_INVENTORY_SUCCESS",
           payload: res.data.Dealer.Inventories
@@ -596,7 +578,6 @@ export const editNewInventory = (invId, updatedInv) => {
         }
       )
       .then(res => {
-        console.log("RES IN EDIT NEW INV ACTION", res.data);
         dispatch({
           type: "EDIT_NEW_INV_SUCCESS",
           payload: res.data.updatedInventory
@@ -621,7 +602,6 @@ export const editUsedInventory = (invId, updatedInv) => {
         }
       )
       .then(res => {
-        console.log("RES IN EDIT USED", res);
         dispatch({
           type: "EDIT_USED_INV_SUCCESS",
           payload: res.data.updatedInventory
@@ -663,7 +643,6 @@ export const getSalesmanNotifications = () => {
         withCredentials: true
       })
       .then(res => {
-        console.log(res);
         dispatch({
           type: "GET_SALESMAN_NOTIFICATIONS_SUCCESS",
           payload: res.data
@@ -689,7 +668,6 @@ export const deleteDealerNotification = notifId => {
         }
       )
       .then(res => {
-        console.log(res.data);
         dispatch({
           type: "DELETE_DEALER_NOTIF_SUCCESS",
           payload: res.data.deletedNotif
@@ -721,7 +699,6 @@ export const deleteSalesmanNotification = notifId => {
         });
       })
       .catch(err => {
-        console.log(err);
         dispatch({
           type: "DELETE_SALESMAN_NOTIF_FAILURE",
           payload: err.response

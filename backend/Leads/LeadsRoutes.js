@@ -47,7 +47,6 @@ router.post("/add", async (req, res) => {
       lead_type: req.body.lead_type,
       salesman_id: req.body.salesman_id,
       dealer_id: req.session.dealer_user.id
-      // might have to put salesman_lead here too idk yet
     });
 
     // IF salesman_id IS NULL lead is not created for specific salesman. But if salesman_id is a number it's the id of the salesman from select menu value.

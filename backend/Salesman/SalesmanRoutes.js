@@ -145,6 +145,9 @@ router.get("/all/leads", async (req, res) => {
         }
       ]
     });
+    if (!leads) {
+      res.status(400).json({ warning: "No leads found" });
+    }
     console.log(leads);
     res.status(200).json(leads);
   } catch (err) {

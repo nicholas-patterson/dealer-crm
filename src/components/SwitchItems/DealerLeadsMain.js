@@ -55,15 +55,6 @@ const DealerLeadsMain = props => {
           <Banner title={props.errors} visibleTime={3000} />
         ) : null}
 
-        <div
-          className={
-            "view-all-box " +
-            (props.user === "salesman" ? "sales_view_box" : "dealer_view_box")
-          }
-        >
-          <p>View All</p>
-        </div>
-
         <div className="leads">
           <div
             className={

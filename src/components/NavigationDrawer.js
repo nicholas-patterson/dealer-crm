@@ -25,7 +25,7 @@ import {
   getDashboardLink,
   clearError,
   logoutSalesman,
-  logoutUser
+  logoutUser,
 } from "../actions/index";
 import Portal from "./Portal";
 import { navigate } from "@reach/router";
@@ -33,33 +33,33 @@ import { navigate } from "@reach/router";
 const useStyles = makeStyles({
   root: {
     color: "#39c",
-    fontSize: "2rem"
+    fontSize: "2rem",
   },
   primary: {
     fontSize: "1.7rem",
-    color: "#e4e4e4"
+    color: "#e4e4e4",
   },
   paper: {
-    backgroundColor: "#242c35"
+    backgroundColor: "#242c35",
   },
   list: {
-    width: 250
+    width: 250,
   },
   fullList: {
-    width: "auto"
-  }
+    width: "auto",
+  },
 });
 
-const NavigationDrawer = props => {
+const NavigationDrawer = (props) => {
   const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
   const [modal, setModal] = useState(false);
   const classes = useStyles();
 
   const [state, setState] = React.useState({
-    left: false
+    left: false,
   });
 
-  const toggleDrawer = (anchor, open) => event => {
+  const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -95,7 +95,7 @@ const NavigationDrawer = props => {
     props.clearError();
   };
 
-  const handleLogoutClick = e => {
+  const handleLogoutClick = (e) => {
     //props.getDashboardLink("logout");
     e.preventDefault();
     setModal(true);
@@ -105,10 +105,10 @@ const NavigationDrawer = props => {
     setModal(false);
   };
 
-  const list = anchor => (
+  const list = (anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.list]: anchor === "left"
+        [classes.list]: anchor === "left",
       })}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
@@ -117,7 +117,7 @@ const NavigationDrawer = props => {
       <div className="drawer-image">
         <img
           style={{
-            paddingTop: "2rem"
+            paddingTop: "2rem",
           }}
           src={siteImage}
           alt="site logo"
@@ -225,7 +225,7 @@ const NavigationDrawer = props => {
 
   return (
     <>
-      <MediaQuery maxDeviceWidth={320}>
+      <MediaQuery maxDeviceWidth={414}>
         {modal ? (
           <Portal>
             <div className="logout_confirm__box">
@@ -257,7 +257,7 @@ const NavigationDrawer = props => {
             </div>
           </Portal>
         ) : null}
-        {["left"].map(anchor => (
+        {["left"].map((anchor) => (
           <React.Fragment key={anchor}>
             <IconButton
               color="inherit"
@@ -283,10 +283,10 @@ const NavigationDrawer = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     link: state.dealerNavigationReducer.link,
-    user: state.userReducer.user
+    user: state.userReducer.user,
   };
 };
 
@@ -294,5 +294,5 @@ export default connect(mapStateToProps, {
   getDashboardLink,
   clearError,
   logoutSalesman,
-  logoutUser
+  logoutUser,
 })(NavigationDrawer, withStyles(useStyles));

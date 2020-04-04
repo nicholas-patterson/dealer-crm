@@ -230,6 +230,11 @@
     display: block;
     margin: 4rem auto;
   }
+  @media (max-width: $large-mobile-width) {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+  }
   @media (max-width: $mobile-width) {
     width: 100%;
     display: block;
@@ -432,6 +437,11 @@
   @media (max-width: $tabletandlargephone-width) {
     margin: 2.5rem auto;
     display: block;
+  }
+  @media (max-width: $large-mobile-width) {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
   }
   @media (max-width: $mobile-width) {
     width: 100%;

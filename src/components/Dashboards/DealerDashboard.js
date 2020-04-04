@@ -13,7 +13,7 @@ import {
   addLead,
   registerSalesman,
   getSalesmans,
-  addSalesLead
+  addSalesLead,
 } from "../../actions/index";
 import { navigate } from "@reach/router";
 import Badge from "@material-ui/core/Badge";
@@ -26,8 +26,9 @@ import MediaQuery from "react-responsive";
 import { useMediaQuery } from "react-responsive";
 import NavigationDrawer from "../NavigationDrawer";
 
-const DealerDashboard = props => {
+const DealerDashboard = (props) => {
   const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
+  const isLargeMobile = useMediaQuery({ query: "(max-width: 414px)" });
   useEffect(() => {
     return props.user === "dealer" ? props.getSalesmans() : undefined;
   }, []);
@@ -43,7 +44,7 @@ const DealerDashboard = props => {
     lead_type: "",
     salesman_lead: "1",
     salesman_id: null,
-    dealer_id: props.dealer_id || null
+    dealer_id: props.dealer_id || null,
   });
 
   const [salesInfo, setSalesInfo] = useState({
@@ -51,33 +52,33 @@ const DealerDashboard = props => {
     salesman_lastname: "",
     salesman_email: "",
     salesman_username: "",
-    salesman_password: ""
+    salesman_password: "",
   });
   const [managerInfo, setManagerInfo] = useState({
     first_name: "",
     last_name: "",
     email: "",
     username: "",
-    password: ""
+    password: "",
   });
 
   // Handle Change for lead form
-  const handleLeadChange = e => {
+  const handleLeadChange = (e) => {
     setLeadInfo({ ...leadInfo, [e.target.name]: e.target.value });
   };
 
   // Handle Change for Salesman form
-  const handleSalesChange = e => {
+  const handleSalesChange = (e) => {
     setSalesInfo({ ...salesInfo, [e.target.name]: e.target.value });
   };
 
   // Handle Change for Manager form
-  const handleManagerChange = e => {
+  const handleManagerChange = (e) => {
     setManagerInfo({ ...managerInfo, [e.target.name]: e.target.value });
   };
 
   const global_add_sound = new Howl({
-    src: addsound
+    src: addsound,
   });
 
   // function to add lead and sound dealer
@@ -94,7 +95,7 @@ const DealerDashboard = props => {
   Howler.volume(0.5);
 
   //  handle Submit for new lead form
-  const handleLeadsSubmit = e => {
+  const handleLeadsSubmit = (e) => {
     e.preventDefault();
     props.user === "dealer" ? addDealerLead() : addSalesLead();
     setLeadInfo({
@@ -108,12 +109,12 @@ const DealerDashboard = props => {
       lead_type: "",
       salesman_lead: "1",
       salesman_id: null,
-      dealer_id: props.dealer_id || null
+      dealer_id: props.dealer_id || null,
     });
   };
 
   // handle submit for new salesman form
-  const handleSalesSubmit = e => {
+  const handleSalesSubmit = (e) => {
     e.preventDefault();
     props.registerSalesman(salesInfo, navigate);
     global_add_sound.play();
@@ -122,19 +123,16 @@ const DealerDashboard = props => {
       salesman_lastname: "",
       salesman_email: "",
       salesman_username: "",
-      salesman_password: ""
+      salesman_password: "",
     });
   };
 
   // handle submit for new manager form
-  const handleManagerSubmit = e => {
+  const handleManagerSubmit = (e) => {
     e.preventDefault();
   };
 
-  const customKey = props.location.pathname
-    .split("/")
-    .splice(1, 2)
-    .join("/");
+  const customKey = props.location.pathname.split("/").splice(1, 2).join("/");
 
   const pageSwitch = () => {
     switch (props.dash) {
@@ -304,7 +302,7 @@ const DealerDashboard = props => {
                   value={leadInfo.salesman_id}
                 >
                   <option>Select A Salesman</option>
-                  {props.salesmans.map(salesman => {
+                  {props.salesmans.map((salesman) => {
                     return (
                       <option value={salesman.id} key={salesman.id}>
                         {salesman.salesman_firstname}{" "}
@@ -523,7 +521,9 @@ const DealerDashboard = props => {
   return (
     <>
       <div className="dealer-container">
-        <div className={isMobile ? "hide-nav" : "nav-container"}>
+        <div
+          className={isMobile || isLargeMobile ? "hide-nav" : "nav-container"}
+        >
           <div className="nav-bar">
             <Logo />
             <SideNav />
@@ -548,7 +548,7 @@ const DealerDashboard = props => {
                           <Chip
                             style={{
                               fontSize: "1.5rem",
-                              backgroundColor: "#39c"
+                              backgroundColor: "#39c",
                             }}
                             size={isMobile ? "small" : "medium"}
                             label={
@@ -577,7 +577,7 @@ const DealerDashboard = props => {
                           <Chip
                             style={{
                               fontSize: "1.2rem",
-                              backgroundColor: "#39c"
+                              backgroundColor: "#39c",
                             }}
                             size={isMobile ? "small" : "medium"}
                             label={"Dealership:" + props.dealership}
@@ -611,7 +611,7 @@ const DealerDashboard = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     dash: state.dealerNavigationReducer.link,
     user: state.userReducer.user,
@@ -621,7 +621,7 @@ const mapStateToProps = state => {
     salesman: state.salesLoginReducer.user,
     dealership: state.loginReducer.user.dealer_name,
     dealer_notifications: state.getDealerNotificationsReducer.notifications,
-    salesman_notifications: state.getSalesmanNotificationReducer.notifications
+    salesman_notifications: state.getSalesmanNotificationReducer.notifications,
   };
 };
 
@@ -629,5 +629,5 @@ export default connect(mapStateToProps, {
   addLead,
   registerSalesman,
   getSalesmans,
-  addSalesLead
+  addSalesLead,
 })(React.memo(DealerDashboard));

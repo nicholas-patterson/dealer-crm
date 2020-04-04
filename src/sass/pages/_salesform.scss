@@ -12,6 +12,14 @@
     margin: 10rem auto;
   }
 
+  @media (max-width: $large-mobile-width) {
+    width: 100%;
+    padding: 2rem;
+    margin: 0;
+    display: block;
+    height: 100vh;
+  }
+
   @media (max-width: $mobile-width) {
     width: 100%;
     padding: 2rem;

@@ -59,6 +59,9 @@
   font-weight: 300;
   letter-spacing: 1px;
   text-transform: uppercase;
+  @media (max-width: $large-mobile-width) {
+    font-size: 1.8rem;
+  }
   @media (max-width: $mobile-width) {
     font-size: 1.8rem;
   }
@@ -120,6 +123,9 @@
     @media (max-width: $tabletandlargephone-width) {
       width: 45%;
     }
+    @media (max-width: $large-mobile-width) {
+      width: 75%;
+    }
 
     @media (max-width: $mobile-width) {
       width: 80%;
@@ -137,6 +143,9 @@
     transition: background 200ms ease-in-out;
     cursor: not-allowed;
     pointer-events: none;
+    @media (max-width: $large-mobile-width) {
+      width: 40%;
+    }
     @media (max-width: $mobile-width) {
       width: 50%;
       padding: 1rem 4rem;

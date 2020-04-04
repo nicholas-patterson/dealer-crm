@@ -16,6 +16,13 @@
     //display: block;
     margin: 4rem auto;
   }
+
+  @media (max-width: $large-mobile-width) {
+    margin: 0;
+    display: block;
+    width: 100%;
+    height: 100vh;
+  }
   @media (max-width: $mobile-width) {
     margin: 0rem;
     display: block;
@@ -160,6 +167,10 @@
       margin-right: 0rem;
     }
 
+    @media (max-width: $large-mobile-width) {
+      margin-right: 0rem;
+    }
+
     @media (max-width: $mobile-width) {
       margin-right: 0rem;
     }
@@ -179,6 +190,10 @@
       background-color: #ebe8e8;
       @media (max-width: $tabletandlargephone-width) {
         padding-top: 3rem;
+      }
+
+      @media (max-width: $large-mobile-width) {
+        padding-top: 3.4rem;
       }
 
       @media (max-width: $mobile-width) {

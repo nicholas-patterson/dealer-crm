@@ -1,8 +1,12 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 const DealerHelpMain = () => {
   return (
     <>
+      <Helmet>
+        <title>Auto Acuity | Help</title>
+      </Helmet>
       <h4 style={{ textAlign: "center", marginTop: "20rem" }}>
         <span role="img" aria-label="under construction">
           🚧

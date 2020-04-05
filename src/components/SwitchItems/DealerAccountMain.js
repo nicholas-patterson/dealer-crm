@@ -4,74 +4,78 @@ import {
   updateEmail,
   updatePassword,
   updateUsername,
-  clearError
+  clearError,
 } from "../../actions";
 import Banner from "react-js-banner";
+import { Helmet } from "react-helmet";
 
-const DealerAccountMain = props => {
+const DealerAccountMain = (props) => {
   const [personalInformation, setPersonalInformation] = useState({
     dealer_username: props.dealer_username || "",
-    dealer_password: ""
+    dealer_password: "",
   });
 
   const [emailInformation, setEmailInformation] = useState({
     dealer_email: props.dealer || "",
-    dealer_password: ""
+    dealer_password: "",
   });
 
   const [passwordInformation, setPasswordInformation] = useState({
     curent_password: "",
     new_password: "",
-    confirm_new_password: ""
+    confirm_new_password: "",
   });
 
-  const handlePersonalInformationChange = e => {
+  const handlePersonalInformationChange = (e) => {
     setPersonalInformation({
       ...personalInformation,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handlePersonalInformationSection = e => {
+  const handlePersonalInformationSection = (e) => {
     e.preventDefault();
     setPersonalInformation({ dealer_password: "" });
   };
 
   // handle change for email section
-  const handleEmailInformation = e => {
+  const handleEmailInformation = (e) => {
     setEmailInformation({
       ...emailInformation,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   // handle change for password section
-  const handlePasswordInformation = e => {
+  const handlePasswordInformation = (e) => {
     setPasswordInformation({
       ...passwordInformation,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   // handle submit for email section
-  const handleEmailSection = e => {
+  const handleEmailSection = (e) => {
     e.preventDefault();
     setEmailInformation({ dealer_password: "" });
   };
 
   // handle Submit for Password Section
-  const handlePasswordSection = e => {
+  const handlePasswordSection = (e) => {
     e.preventDefault();
     props.clearError();
     setPasswordInformation({
       current_password: "",
       new_password: "",
-      confirm_new_password: ""
+      confirm_new_password: "",
     });
   };
 
   return (
     <>
+      <Helmet>
+        <title>Auto Acuity | Account</title>
+      </Helmet>
       {props.errors ? <Banner title={props.errors} visibleTime={3000} /> : null}
       <div>
         <h2 className="pi-title">My Details</h2>
@@ -257,11 +261,11 @@ const DealerAccountMain = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     dealer: state.loginReducer.user.dealer_email,
     dealer_username: state.loginReducer.user.dealer_username,
-    errors: state.loginReducer.error
+    errors: state.loginReducer.error,
   };
 };
 
@@ -269,5 +273,5 @@ export default connect(mapStateToProps, {
   updateEmail,
   updatePassword,
   updateUsername,
-  clearError
+  clearError,
 })(DealerAccountMain);

@@ -12,7 +12,7 @@ import {
   getNewInventorySales,
   getUsedInventorySales,
   editUsedInventory,
-  editNewInventory
+  editNewInventory,
 } from "../../actions/index";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -25,7 +25,7 @@ import {
   Slider,
   Slide,
   ButtonBack,
-  ButtonNext
+  ButtonNext,
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import DealerNewInvSingle from "./DealerNewInvSingle";
@@ -34,6 +34,7 @@ import { useMediaQuery } from "react-responsive";
 import { Howl, Howler } from "howler";
 import addsound from "../../sounds/addsound.mp3";
 import deletesound from "../../sounds/deletesound.mp3";
+import { Helmet } from "react-helmet";
 
 // Material-ui  Make Styles
 const useStyles = makeStyles({
@@ -41,15 +42,15 @@ const useStyles = makeStyles({
     maxWidth: 345,
     overflowWrap: "break-word",
     width: 270,
-    boxShadow: "4px 4px 4px solid black"
+    boxShadow: "4px 4px 4px solid black",
   },
   media: {
     height: 140,
-    width: 270
-  }
+    width: 270,
+  },
 });
 
-const DealerInventoryMain = props => {
+const DealerInventoryMain = (props) => {
   // React Reaponsive Media Queries
   const isMobile = useMediaQuery({ query: "(min-width: 320px)" });
   const isTabletorlargephone = useMediaQuery({ query: "(min-width: 720px)" });
@@ -61,19 +62,19 @@ const DealerInventoryMain = props => {
 
   // Add Sound Howl
   const inv_add_sound = new Howl({
-    src: addsound
+    src: addsound,
   });
 
   // Delete Sound Howl
   const inv_delete_sound = new Howl({
-    src: deletesound
+    src: deletesound,
   });
 
   // new inventory state search
   const [searchState, setSearchState] = useState({
     new_year: "",
     new_make: "",
-    new_model: ""
+    new_model: "",
   });
 
   // Filter New Inventory
@@ -92,7 +93,7 @@ const DealerInventoryMain = props => {
   const [searchUsedState, setSearchUsedState] = useState({
     used_year: "",
     used_make: "",
-    used_model: ""
+    used_model: "",
   });
 
   // used inventory add state
@@ -103,7 +104,7 @@ const DealerInventoryMain = props => {
     model: "",
     price: "",
     miles: "",
-    info: ""
+    info: "",
   });
 
   // new inventory add state
@@ -114,16 +115,16 @@ const DealerInventoryMain = props => {
     model: "",
     price: "",
     miles: "",
-    info: ""
+    info: "",
   });
 
   // new inventory search for salesman too
-  const handleSearchChange = e => {
+  const handleSearchChange = (e) => {
     setSearchState({ ...searchState, [e.target.name]: e.target.value });
   };
 
   // used inventory search for salesman too
-  const handleUsedSearchChange = e => {
+  const handleUsedSearchChange = (e) => {
     setSearchUsedState({ ...searchUsedState, [e.target.name]: e.target.value });
   };
 
@@ -149,7 +150,7 @@ const DealerInventoryMain = props => {
 
   // Use Effect to filter through sales new inv and set inv to state if yr make or model changes
   useEffect(() => {
-    const filteredSalesUsedInventory = props.sales_usedInv.filter(inv => {
+    const filteredSalesUsedInventory = props.sales_usedInv.filter((inv) => {
       if (
         inv.year.includes(searchUsedState.used_year) &&
         inv.make.includes(searchUsedState.used_make) &&
@@ -162,12 +163,12 @@ const DealerInventoryMain = props => {
   }, [
     searchUsedState.used_year,
     searchUsedState.used_make,
-    searchUsedState.used_model
+    searchUsedState.used_model,
   ]);
 
   // Use Effect to filter through sales new inv and set inv to state if yr make or model changes
   useEffect(() => {
-    const filteredSalesNewInventory = props.sales_newInv.filter(inv => {
+    const filteredSalesNewInventory = props.sales_newInv.filter((inv) => {
       if (
         inv.year.includes(searchState.new_year) &&
         inv.make.includes(searchState.new_make) &&
@@ -191,7 +192,7 @@ const DealerInventoryMain = props => {
 
   // Use Effect to filter through newInv and set inv to state if year make or model changes
   useEffect(() => {
-    const filteredNewInventory = props.newInv.filter(inv => {
+    const filteredNewInventory = props.newInv.filter((inv) => {
       if (
         inv.year.includes(searchState.new_year) &&
         inv.make.includes(searchState.new_make) &&
@@ -215,7 +216,7 @@ const DealerInventoryMain = props => {
 
   // Use Effect to filter through newInv and set inv to state if year make or model changes
   useEffect(() => {
-    const filteredUsedInventory = props.usedInv.filter(inv => {
+    const filteredUsedInventory = props.usedInv.filter((inv) => {
       if (
         inv.year.includes(searchUsedState.used_year) &&
         inv.make.includes(searchUsedState.used_make) &&
@@ -228,36 +229,36 @@ const DealerInventoryMain = props => {
   }, [
     searchUsedState.used_year,
     searchUsedState.used_make,
-    searchUsedState.used_model
+    searchUsedState.used_model,
   ]);
 
   // on click for new inventory
-  const handleNewInventoryAdd = e => {
+  const handleNewInventoryAdd = (e) => {
     setShowNewInventoryModal(true);
     setNewInventoryAdd({ ...newInventoryAdd, [e.target.name]: e.target.value });
   };
 
   // on click for used inventory
-  const handleUsedInventoryAdd = e => {
+  const handleUsedInventoryAdd = (e) => {
     setShowUsedInventoryModal(true);
     setUsedInventoryAdd({
       ...usedInventoryAdd,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   // handleChange for usedInv picture
-  const handleUsedInventoryPicture = e => {
+  const handleUsedInventoryPicture = (e) => {
     setUsedInventoryAdd({ car_picture: e.target.files[0] });
   };
 
   // handlechange for newInv picture
-  const handleNewInventoryPicture = e => {
+  const handleNewInventoryPicture = (e) => {
     setNewInventoryAdd({ car_picture: e.target.files[0] });
   };
 
   // handle Submit for Used Inv form
-  const handleUsedInventorySubmit = e => {
+  const handleUsedInventorySubmit = (e) => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("car_picture", usedInventoryAdd.car_picture);
@@ -271,7 +272,7 @@ const DealerInventoryMain = props => {
       model: "",
       price: "",
       miles: "",
-      info: ""
+      info: "",
     });
   };
 
@@ -289,7 +290,7 @@ const DealerInventoryMain = props => {
   };
 
   // handleSubmit for New Inv Form
-  const handleNewInventorySubmit = e => {
+  const handleNewInventorySubmit = (e) => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("car_picture", newInventoryAdd.car_picture);
@@ -303,7 +304,7 @@ const DealerInventoryMain = props => {
       model: "",
       price: "",
       miles: "",
-      info: ""
+      info: "",
     });
   };
 
@@ -323,7 +324,7 @@ const DealerInventoryMain = props => {
       model: "",
       price: "",
       miles: "",
-      info: ""
+      info: "",
     });
   };
 
@@ -336,7 +337,7 @@ const DealerInventoryMain = props => {
       model: "",
       price: "",
       miles: "",
-      info: ""
+      info: "",
     });
   };
 
@@ -358,6 +359,9 @@ const DealerInventoryMain = props => {
 
   return (
     <>
+      <Helmet>
+        <title>Auto Acuity | Inventory</title>
+      </Helmet>
       {/* Used Inventory Modal to Add Inventory only for dealer */}
       {showUsedInventoryModal ? (
         <Portal>
@@ -640,7 +644,7 @@ const DealerInventoryMain = props => {
                   required
                   className="input-group"
                   value={searchState.new_year}
-                  onChange={e => handleSearchChange(e)}
+                  onChange={(e) => handleSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Year</span>
@@ -656,7 +660,7 @@ const DealerInventoryMain = props => {
                   required
                   className="input-group"
                   value={searchState.new_make}
-                  onChange={e => handleSearchChange(e)}
+                  onChange={(e) => handleSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Make</span>
@@ -671,7 +675,7 @@ const DealerInventoryMain = props => {
                   required
                   className="input-group"
                   value={searchState.new_model}
-                  onChange={e => handleSearchChange(e)}
+                  onChange={(e) => handleSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Model</span>
@@ -885,7 +889,7 @@ const DealerInventoryMain = props => {
                   required
                   className="input-group"
                   value={searchUsedState.used_year}
-                  onChange={e => handleUsedSearchChange(e)}
+                  onChange={(e) => handleUsedSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Year</span>
@@ -900,7 +904,7 @@ const DealerInventoryMain = props => {
                   required
                   className="input-group"
                   value={searchUsedState.used_make}
-                  onChange={e => handleUsedSearchChange(e)}
+                  onChange={(e) => handleUsedSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Make</span>
@@ -915,7 +919,7 @@ const DealerInventoryMain = props => {
                   required
                   className="input-group"
                   value={searchUsedState.used_model}
-                  onChange={e => handleUsedSearchChange(e)}
+                  onChange={(e) => handleUsedSearchChange(e)}
                 />
                 <label htmlFor="inputField" className="label-name">
                   <span className="content-name">Model</span>
@@ -1104,14 +1108,14 @@ const DealerInventoryMain = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     newInv: state.newInventoryReducer.newInventory || [],
     usedInv: state.usedInventoryReducer.inventory || [],
     sales_newInv: state.getSalesNewInventoryReducer.salesNewInventory || [],
     sales_usedInv: state.getSalesUsedInventoryReducer.salesUsedInventory || [],
     user: state.userReducer.user,
-    loading: state.imageReducer.loading
+    loading: state.imageReducer.loading,
     //value: state.newInventoryReducer.newInventory,
   };
 };
@@ -1126,5 +1130,5 @@ export default connect(mapStateToProps, {
   getNewInventorySales,
   getUsedInventorySales,
   editNewInventory,
-  editUsedInventory
+  editUsedInventory,
 })(React.memo(DealerInventoryMain));

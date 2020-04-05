@@ -7,7 +7,7 @@ import {
   getSalesmanLeads,
   deleteSalesmanLead,
   editSalesLead,
-  clearError
+  clearError,
 } from "../../actions/index";
 import DealerSingleLeadMain from "./DealerSingleLeadMain";
 import SalesSingleLeadMain from "./SalesSingleLeadMain";
@@ -15,14 +15,15 @@ import Banner from "react-js-banner";
 import { Howl, Howler } from "howler";
 import deletesound from "../../sounds/deletesound.mp3";
 import errorsound from "../../sounds/errorsound.mp3";
+import { Helmet } from "react-helmet";
 
-const DealerLeadsMain = props => {
+const DealerLeadsMain = (props) => {
   const global_delete_sound = new Howl({
-    src: deletesound
+    src: deletesound,
   });
 
   const global_error_sound = new Howl({
-    src: errorsound
+    src: errorsound,
   });
 
   useEffect(() => {
@@ -31,12 +32,12 @@ const DealerLeadsMain = props => {
       : props.getSalesmanLeads();
   }, [props.user]);
 
-  const handleLeadDelete = id => {
+  const handleLeadDelete = (id) => {
     props.deleteLead(id);
     global_delete_sound.play();
   };
 
-  const handleSalesmanLeadDelete = id => {
+  const handleSalesmanLeadDelete = (id) => {
     props.deleteSalesmanLead(id);
     props.clearError();
     if (!props.errors) {
@@ -50,6 +51,9 @@ const DealerLeadsMain = props => {
 
   return (
     <>
+      <Helmet>
+        <title>Auto Acuity | Leads</title>
+      </Helmet>
       <div>
         {props.errors ? (
           <Banner title={props.errors} visibleTime={3000} />
@@ -114,14 +118,14 @@ const DealerLeadsMain = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
     leads: state.getDealerLeadReducer.leads,
     sales_leads: state.getSalesLeadReducer.leads,
     dealer_id: state.loginReducer.user.id,
     sales_dealer_id: state.salesLoginReducer.user.id,
-    errors: state.getSalesLeadReducer.error
+    errors: state.getSalesLeadReducer.error,
   };
 };
 
@@ -132,5 +136,5 @@ export default connect(mapStateToProps, {
   editLead,
   deleteSalesmanLead,
   editSalesLead,
-  clearError
+  clearError,
 })(React.memo(DealerLeadsMain));

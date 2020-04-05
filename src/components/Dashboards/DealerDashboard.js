@@ -25,6 +25,7 @@ import addsound from "../../sounds/addsound.mp3";
 import MediaQuery from "react-responsive";
 import { useMediaQuery } from "react-responsive";
 import NavigationDrawer from "../NavigationDrawer";
+import { Helmet } from "react-helmet";
 
 const DealerDashboard = (props) => {
   const isMobile = useMediaQuery({ query: "(max-width: 320px)" });
@@ -520,6 +521,9 @@ const DealerDashboard = (props) => {
 
   return (
     <>
+      <Helmet>
+        <title>Auto Acuity | Dashboard</title>
+      </Helmet>
       <div className="dealer-container">
         <div
           className={isMobile || isLargeMobile ? "hide-nav" : "nav-container"}

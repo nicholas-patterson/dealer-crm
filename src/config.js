@@ -1,4 +1,4 @@
-const production = false; // set it to true when deploy to server
+const production = true; // set it to true when deploy to server
 
 export const websocketUrl = production
   ? "http://206.189.235.148"

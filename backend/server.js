@@ -16,7 +16,7 @@ io.adapter(
 io.use(
   socketioJwt.authorize({
     secret: process.env.JWT_SECRET,
-    handshake: true
+    handshake: true,
   })
 );
 
@@ -33,7 +33,11 @@ const RedisStore = require("connect-redis")(session);
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000"
+    //origin: "http://localhost:3000", // change to production IP
+    origin:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "http://206.189.235.148",
   })
 );
 
@@ -47,8 +51,8 @@ const sessionMiddleware = session({
     host: "localhost",
     port: 6379,
     client: client,
-    ttl: 86400 // 1 day
-  })
+    ttl: 86400, // 1 day
+  }),
 });
 
 app.use(sessionMiddleware);

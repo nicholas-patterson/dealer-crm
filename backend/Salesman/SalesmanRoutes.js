@@ -6,7 +6,7 @@ const {
   salesmanEmailValidation,
   salesmanPasswordValidation,
   salesmanSignupValidation,
-  salesmanUsernameValidation
+  salesmanUsernameValidation,
 } = require("../middleware/validation");
 const emitter = require("../config/io");
 const { Op } = require("sequelize");
@@ -21,8 +21,8 @@ router.get("/salesmans", async (req, res) => {
         "salesman_lastname",
         "salesman_username",
         "salesman_email",
-        "dealer_id"
-      ]
+        "dealer_id",
+      ],
     });
     res.status(200).json(salesmans);
   } catch (err) {
@@ -36,8 +36,8 @@ router.get("/:id", async (req, res) => {
   try {
     const salesman = await db.Salesman.findOne({
       where: {
-        id
-      }
+        id,
+      },
     });
     res.status(200).json(salesman);
   } catch (err) {
@@ -63,7 +63,7 @@ router.post(
         salesman_username: req.body.salesman_username,
         salesman_password: hash,
         salesman_email: req.body.salesman_email,
-        dealer_id: req.session.dealer_user.id
+        dealer_id: req.session.dealer_user.id,
       });
       let d = JSON.parse(JSON.stringify(newSalesman));
       d.userRole = "salesman";
@@ -71,7 +71,7 @@ router.post(
 
       emitter.emitToDealer(req.session.dealer_user.id, "new_salesman", {
         salesman: newSalesman,
-        message: "You added a new salesman"
+        message: "You added a new salesman",
       });
 
       res.status(201).json(d);
@@ -87,8 +87,8 @@ router.post("/login", async (req, res) => {
   try {
     const salesman = await db.Salesman.findOne({
       where: {
-        salesman_username: salesman_username
-      }
+        salesman_username: salesman_username,
+      },
     });
     const comparePass = bcrypt.compareSync(
       salesman_password,
@@ -119,10 +119,10 @@ router.get("/all/leads", async (req, res) => {
         "salesman_firstname",
         "salesman_lastname",
         "salesman_username",
-        "salesman_email"
+        "salesman_email",
       ],
       where: {
-        id: req.session.sales_user.id
+        id: req.session.sales_user.id,
       },
       include: [
         {
@@ -140,15 +140,15 @@ router.get("/all/leads", async (req, res) => {
             "lead_type",
             "salesman_lead",
             "dealer_id",
-            "salesman_id"
-          ]
-        }
-      ]
+            "salesman_id",
+          ],
+        },
+      ],
     });
     if (!leads) {
       res.status(400).json({ warning: "No leads found" });
     }
-    console.log(leads);
+
     res.status(200).json(leads);
   } catch (err) {
     res.status(500).json(err);
@@ -163,18 +163,18 @@ router.get("/newInventory/all", async (req, res) => {
         "salesman_firstname",
         "salesman_lastname",
         "salesman_username",
-        "salesman_email"
+        "salesman_email",
       ],
       include: [
         {
           model: db.Dealer,
           include: [
             {
-              model: db.NewInventory
-            }
-          ]
-        }
-      ]
+              model: db.NewInventory,
+            },
+          ],
+        },
+      ],
     });
     res.status(200).json(newInventory);
   } catch (err) {
@@ -190,18 +190,18 @@ router.get("/usedInventory/all", async (req, res) => {
         "salesman_firstname",
         "salesman_lastname",
         "salesman_username",
-        "salesman_email"
+        "salesman_email",
       ],
       include: [
         {
           model: db.Dealer,
           include: [
             {
-              model: db.Inventory
-            }
-          ]
-        }
-      ]
+              model: db.Inventory,
+            },
+          ],
+        },
+      ],
     });
 
     res.status(200).json(usedInventory);
@@ -220,9 +220,9 @@ router.get("/notifications/sales/all", async (req, res) => {
           { title: "sales_lead" },
           { title: "lead_added" },
           { title: "sales_lead_updated" },
-          { title: "lead_deleted" }
-        ]
-      }
+          { title: "lead_deleted" },
+        ],
+      },
     });
 
     res.status(200).json(notifications);
@@ -236,10 +236,10 @@ router.delete("/remove/notification/:id", (req, res) => {
   const { id } = req.params;
   db.SalesmanNotification.findOne({
     where: {
-      id
-    }
+      id,
+    },
   })
-    .then(notif => {
+    .then((notif) => {
       if (notif === null) {
         res
           .status(400)
@@ -247,19 +247,19 @@ router.delete("/remove/notification/:id", (req, res) => {
       }
       return db.SalesmanNotification.destroy({
         where: {
-          id
-        }
+          id,
+        },
       })
-        .then(deletedNotif => {
+        .then((deletedNotif) => {
           if (deletedNotif === 1) {
             res.status(200).json({ deletedNotif: notif });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           res.status(500).json(err);
         });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json(err);
     });
 });
@@ -267,7 +267,7 @@ router.delete("/remove/notification/:id", (req, res) => {
 // Logout Salesman
 router.get("/logout/salesman", (req, res) => {
   if (req.session) {
-    req.session.destroy(error => {
+    req.session.destroy((error) => {
       if (error) {
         res.status(500).json({ error: "Server could not log you out" });
       } else {

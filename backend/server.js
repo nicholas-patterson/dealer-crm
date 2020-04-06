@@ -57,7 +57,8 @@ const sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 app.use( express.static( `${__dirname}/../build` ) );
-const path = require('path')app.get('*', (req, res)=>{  res.sendFile(path.join(__dirname, '../build/index.html'));})
+const path = require('path');
+app.get('*', (req, res)=>{  res.sendFile(path.join(__dirname, '../build/index.html'));})
 
 // Routes
 const dealerRouter = require("./Dealers/DealerRoutes");

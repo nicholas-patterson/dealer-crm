@@ -1,56 +1,57 @@
 import axios from "axios";
+import { actionUrl } from "../config";
 
 // -- DONE
-export const getDashboardLink = link => {
+export const getDashboardLink = (link) => {
   return {
     type: "FETCH_DASHBOARD_LINK_SUCCESS",
-    payload: link
+    payload: link,
   };
 };
 
 // -- DONE
-export const getLeadsLink = link => {
+export const getLeadsLink = (link) => {
   return {
     type: "FETCH_DASHBOARD_LINK_SUCCESS",
-    payload: link
+    payload: link,
   };
 };
 // --DONE
-export const getInventoryLink = link => {
+export const getInventoryLink = (link) => {
   return {
     type: "FETCH_DASHBOARD_LINK_SUCCESS",
-    payload: link
+    payload: link,
   };
 };
 
 // Get user type --DONE
-export const getUserType = user => {
+export const getUserType = (user) => {
   return {
     type: "FETCH_USER_TYPE",
-    payload: user
+    payload: user,
   };
 };
 
 export const clearError = () => {
   return {
-    type: "CLEAR_ERROR"
+    type: "CLEAR_ERROR",
   };
 };
 
 // Register DEALER Action --DONE
 export const registerUser = (user, navigate) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "REG_USER_START" });
     axios
-      .post("http://localhost:5000/api/dealer/register", user)
-      .then(res => {
+      .post(`${actionUrl}/api/dealer/register`, user)
+      .then((res) => {
         dispatch({ type: "REG_USER_SUCCESS", payload: res.data });
         navigate("/login");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: "REG_USER_FAILURE",
-          payload: err.response
+          payload: err.response,
         });
       });
   };
@@ -58,19 +59,19 @@ export const registerUser = (user, navigate) => {
 
 // Register SALESMAN ACTION --DONE
 export const registerSalesman = (user, navigate) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "REG_SALESMAN_START" });
     axios
-      .post("http://localhost:5000/api/sales/register", user, {
-        withCredentials: true
+      .post(`${actionUrl}/api/sales/register`, user, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "REG_SALESMAN_SUCCESS", payload: res.data });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: "REG_SALESMAN_FAILURE",
-          payload: err.response
+          payload: err.response,
         });
       });
   };
@@ -78,51 +79,51 @@ export const registerSalesman = (user, navigate) => {
 
 /// Login DEALER User Action --DONE
 export const loginUser = (user, navigate) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "LOGIN_USER_START" });
     axios
-      .post("http://localhost:5000/api/dealer/login", user, {
-        withCredentials: true
+      .post(`${actionUrl}/api/dealer/login`, user, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data });
         navigate("/dealer/dash");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "LOGIN_USER_FAILURE", payload: err.response });
       });
   };
 };
 
-export const logoutUser = navigate => {
-  return dispatch => {
+export const logoutUser = (navigate) => {
+  return (dispatch) => {
     dispatch({ type: "LOGOUT_USER_START" });
     axios
-      .get("http://localhost:5000/api/dealer/logout/user", {
-        withCredentials: true
+      .get(`${actionUrl}/api/dealer/logout/user`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "LOGOUT_USER_SUCCESS", payload: res.data });
         navigate("/");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "LOGOUT_USER_FAILURE", payload: err.response });
       });
   };
 };
 
-export const logoutSalesman = navigate => {
-  return dispatch => {
+export const logoutSalesman = (navigate) => {
+  return (dispatch) => {
     dispatch({ type: "LOGOUT_SALES_START" });
     axios
-      .get("http://localhost:5000/api/sales/logout/salesman", {
-        withCredentials: true
+      .get(`${actionUrl}/api/sales/logout/salesman`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "LOGOUT_SALES_SUCCESS", payload: res.data });
         navigate("/");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "LOGOUT_SALES_FAILURE", payload: err.response });
       });
   };
@@ -130,17 +131,17 @@ export const logoutSalesman = navigate => {
 
 // Login SALESMAN User Action --DONE
 export const salesLoginUser = (user, navigate) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "LOGIN_SALES_USER_START" });
     axios
-      .post("http://localhost:5000/api/sales/login", user, {
-        withCredentials: true
+      .post(`${actionUrl}/api/sales/login`, user, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "LOGIN_SALES_USER_SUCCESS", payload: res.data });
         navigate("/sales");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "LOGIN_SALES_USER_FAILURE", payload: err.response });
       });
   };
@@ -148,16 +149,16 @@ export const salesLoginUser = (user, navigate) => {
 
 // GET ALL SALESMAN --DONE
 export const getSalesmans = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_SALESMANS_START" });
     axios
-      .get("http://localhost:5000/api/sales/salesmans", {
-        withCredentials: true
+      .get(`${actionUrl}/api/sales/salesmans`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "GET_SALESMANS_SUCCESS", payload: res.data });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "GET_SALESMANS_FAILURE", payload: err.response });
       });
   };
@@ -165,16 +166,16 @@ export const getSalesmans = () => {
 
 // Get Leads by Dealer -- DONE
 export const getDealerLeads = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_DEALER_LEADS_START" });
     axios
-      .get("http://localhost:5000/api/dealer/all/leads", {
-        withCredentials: true
+      .get(`${actionUrl}/api/dealer/all/leads`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "GET_DEALER_LEADS_SUCCESS", payload: res.data.Leads });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "GET_DEALER_LEADS_FAILURE", payload: err.repsonse });
       });
   };
@@ -182,17 +183,17 @@ export const getDealerLeads = () => {
 
 // Add New Lead Action For Dealer --DONE
 export const addLead = (lead, navigate) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "ADD_LEAD_START" });
     axios
-      .post("http://localhost:5000/api/leads/add", lead, {
-        withCredentials: true
+      .post(`${actionUrl}/api/leads/add`, lead, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "ADD_LEAD_SUCCESS", payload: res.data });
         navigate("/dealer/dash");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "ADD_LEAD_FAILURE", payload: err.response });
       });
   };
@@ -200,37 +201,37 @@ export const addLead = (lead, navigate) => {
 
 //Add New Lead Action For Salesman --DONE
 export const addSalesLead = (lead, navigate) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "ADD_SALES_LEAD_START" });
     axios
-      .post("http://localhost:5000/api/leads/sales/add", lead, {
-        withCredentials: true
+      .post(`${actionUrl}/api/leads/sales/add`, lead, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "ADD_SALES_LEAD_SUCCESS", payload: res.data });
         navigate("/sales/dash");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "ADD_SALES_LEAD_FAILURE", payload: err.response });
       });
   };
 };
 
 // Delete Lead Action --DONE
-export const deleteLead = id => {
-  return dispatch => {
+export const deleteLead = (id) => {
+  return (dispatch) => {
     dispatch({ type: "DELETE_LEAD_START" });
     axios
-      .delete(`http://localhost:5000/api/leads/remove/${id}`, {
-        withCredentials: true
+      .delete(`${actionUrl}/api/leads/remove/${id}`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "DELETE_LEAD_SUCCESS",
-          payload: res.data.deletedLead
+          payload: res.data.deletedLead,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "DELETE_LEAD_FAILURE", payload: err.response });
       });
   };
@@ -238,16 +239,16 @@ export const deleteLead = id => {
 
 // Edit Lead Action -- DONE
 export const editLead = (id, updatedInfo) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "EDIT_LEAD_START" });
     axios
-      .put(`http://localhost:5000/api/leads/update/${id}`, updatedInfo, {
-        withCredentials: true
+      .put(`${actionUrl}/api/leads/update/${id}`, updatedInfo, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "EDIT_LEAD_SUCCESS", payload: res.data.updatedBook });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "EDIT_LEAD_FAILURE", payload: err.response });
       });
   };
@@ -255,26 +256,26 @@ export const editLead = (id, updatedInfo) => {
 
 // Add Image Action and Add Used Inventory For Dealer --DONE
 export const addImage = (imageData, usedInv) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "ADD_IMAGE_START" });
     axios
-      .post("http://localhost:5000/api/image/add", imageData, {
-        withCredentials: true
+      .post(`${actionUrl}/api/image/add`, imageData, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "ADD_IMAGE_SUCCESS", payload: res.data });
         return axios
-          .post("http://localhost:5000/api/usedInventory/add", usedInv, {
-            withCredentials: true
+          .post(`${actionUrl}/api/usedInventory/add`, usedInv, {
+            withCredentials: true,
           })
-          .then(res => {
+          .then((res) => {
             dispatch({ type: "ADD_USED_INV_SUCCESS", payload: res.data });
           })
-          .catch(err => {
+          .catch((err) => {
             dispatch({ type: "ADD_USED_INV_FAILURE", payload: err.response });
           });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "ADD_IMAGE_FAILURE", payload: err.response });
       });
   };
@@ -282,16 +283,16 @@ export const addImage = (imageData, usedInv) => {
 
 // Get Used Inventory Action For Dealer --DONE
 export const getUsedInventory = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_USED_INV_START" });
     axios
-      .get("http://localhost:5000/api/usedInventory/all/view", {
-        withCredentials: true
+      .get(`${actionUrl}/api/usedInventory/all/view`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "GET_USED_INV_SUCCESS", payload: res.data });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "GET_USED_INV_FAILURE", payload: err.resonse });
       });
   };
@@ -299,43 +300,43 @@ export const getUsedInventory = () => {
 
 // Add NewImage and New Inventory For Dealer --DONE
 export const addNewImage = (image, newInv) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "ADD_IMAGE_START" });
     axios
-      .post("http://localhost:5000/api/image/add", image, {
-        withCredentials: true
+      .post(`${actionUrl}/api/image/add`, image, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "ADD_IMAGE_SUCCESS", payload: res.data });
         return axios
-          .post("http://localhost:5000/api/newInventory/add", newInv, {
-            withCredentials: true
+          .post(`${actionUrl}/api/newInventory/add`, newInv, {
+            withCredentials: true,
           })
-          .then(res => {
+          .then((res) => {
             dispatch({ type: "ADD_NEW_INV_SUCCESS", payload: res.data });
           })
-          .catch(err => {
+          .catch((err) => {
             dispatch({ type: "ADD_NEW_INV_FAILURE", payload: err.response });
           });
       })
-      .catch(err => {
-        dispatch({ type: "ADD_IMAHE_FAILURE", payload: err.response });
+      .catch((err) => {
+        dispatch({ type: "ADD_IMAGE_FAILURE", payload: err.response });
       });
   };
 };
 
 //Get New Inventory Action For Dealer --DONE
 export const getNewInventory = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_NEW_INV_START" });
     axios
-      .get("http://localhost:5000/api/newInventory/all/view", {
-        withCredentials: true
+      .get(`${actionUrl}/api/newInventory/all/view`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "GET_NEW_INV_SUCCESS", payload: res.data });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "GET_NEW_INV_FAILURE", payload: err.response });
       });
   };
@@ -343,29 +344,29 @@ export const getNewInventory = () => {
 
 //Delete Used Inventory and Image Action For Dealer --DONE
 export const deleteUsedInv = (usedInvId, picId) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "DELETE_USED_INV_START" });
     axios
-      .delete(`http://localhost:5000/api/usedInventory/delete/${usedInvId}`, {
-        withCredentials: true
+      .delete(`${actionUrl}/api/usedInventory/delete/${usedInvId}`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "DELETE_USED_INV_SUCCESS",
-          payload: res.data.deletedInventory
+          payload: res.data.deletedInventory,
         });
         return axios
-          .delete(`http://localhost:5000/api/image/delete/${picId}`, {
-            withCredentials: true
+          .delete(`${actionUrl}/api/image/delete/${picId}`, {
+            withCredentials: true,
           })
-          .then(res => {
+          .then((res) => {
             dispatch({ type: "DELETE_IMAGE_SUCCESS", payload: res.data });
           })
-          .catch(err => {
+          .catch((err) => {
             dispatch({ type: "DELETE_IMAGE_FAILURE", payload: err.response });
           });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "DELETE_USED_INV_FAILURE", payload: err.response });
       });
   };
@@ -373,89 +374,89 @@ export const deleteUsedInv = (usedInvId, picId) => {
 
 //Delete New Inventory and Image Action For Dealer --DONE
 export const deleteNewInv = (newInvId, picId) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "DELETE_NEW_INV_START" });
     axios
-      .delete(`http://localhost:5000/api/newInventory/delete/${newInvId}`, {
-        withCredentials: true
+      .delete(`${actionUrl}/api/newInventory/delete/${newInvId}`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "DELETE_NEW_INV_SUCCESS",
-          payload: res.data.deletedInventory
+          payload: res.data.deletedInventory,
         });
         return axios
-          .delete(`http://localhost:5000/api/image/delete/${picId}`, {
-            withCredentials: true
+          .delete(`${actionUrl}/api/image/delete/${picId}`, {
+            withCredentials: true,
           })
-          .then(res => {
+          .then((res) => {
             dispatch({ type: "DELETE_IMAGE_SUCCESS", payload: res.data });
           })
-          .catch(err => {
+          .catch((err) => {
             dispatch({ type: "DELETE_IMAGE_FAILURE", payload: err.response });
           });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "DELETE_NEW_INV_FAILURE", payload: err.response });
       });
   };
 };
 
 // Update Email For Dealer --DONE
-export const updateEmail = newEmail => {
-  return dispatch => {
+export const updateEmail = (newEmail) => {
+  return (dispatch) => {
     dispatch({ type: "UPDATE_EMAIL_START" });
     axios
-      .put("http://localhost:5000/api/dealer/email/update", newEmail, {
-        withCredentials: true
+      .put(`${actionUrl}/api/dealer/email/update`, newEmail, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "UPDATE_EMAIL_SUCCESS",
-          payload: res.data.updatedEmail.dealer_email
+          payload: res.data.updatedEmail.dealer_email,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "UPDATE_EMAIL_FAILURE", payload: err.response });
       });
   };
 };
 
 // Update Password For Dealer --DONE
-export const updatePassword = newPassword => {
-  return dispatch => {
+export const updatePassword = (newPassword) => {
+  return (dispatch) => {
     dispatch({ type: "UPDATE_EMAIL_START" });
     axios
-      .put("http://localhost:5000/api/dealer/password/update", newPassword, {
-        withCredentials: true
+      .put(`${actionUrl}/api/dealer/password/update`, newPassword, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "UPDATE_PASSWORD_SUCCESS",
-          payload: res.data.pass.dealer_password
+          payload: res.data.pass.dealer_password,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "UPDATE_PASSWORD_FAILURE", payload: err.response });
       });
   };
 };
 
 //Update Username For Dealer
-export const updateUsername = newUsername => {
-  return dispatch => {
+export const updateUsername = (newUsername) => {
+  return (dispatch) => {
     dispatch({ type: "UPDATE_USERNAME_START" });
     axios
-      .put("http://localhost:5000/api/dealer/username/update", newUsername, {
-        withCredentials: true
+      .put(`${actionUrl}/api/dealer/username/update`, newUsername, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "UPDATE_USERNAME_SUCCESS",
-          payload: res.data.updatedUsername.dealer_username
+          payload: res.data.updatedUsername.dealer_username,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "UPDATE_USERNAME_FAILURE", payload: err.response });
       });
   };
@@ -463,19 +464,19 @@ export const updateUsername = newUsername => {
 
 // Get Leads by Salesman For Salesman --DONE
 export const getSalesmanLeads = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_SALES_LEADS_START" });
     axios
-      .get("http://localhost:5000/api/sales/all/leads", {
-        withCredentials: true
+      .get(`${actionUrl}/api/sales/all/leads`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "GET_SALES_LEADS_SUCCESS",
-          payload: res.data.Leads
+          payload: res.data.Leads,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "GET_SALES_LEADS_FAILURE", payload: err.response });
       });
   };
@@ -483,43 +484,39 @@ export const getSalesmanLeads = () => {
 
 // Edit Salesman Leads For Salesman --DONE
 export const editSalesLead = (lead_id, lead_info) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "EDIT_SALES_LEADS_START" });
     axios
-      .put(
-        `http://localhost:5000/api/leads/update/sales/${lead_id}`,
-        lead_info,
-        {
-          withCredentials: true
-        }
-      )
-      .then(res => {
+      .put(`${actionUrl}/api/leads/update/sales/${lead_id}`, lead_info, {
+        withCredentials: true,
+      })
+      .then((res) => {
         dispatch({ type: "EDIT_SALES_LEADS_SUCCESS", payload: res.data });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "EDIT_SALES_LEADS_FAILURE", payload: err.response });
       });
   };
 };
 
 // Delete Salesman Lead For Salesman -- DONE
-export const deleteSalesmanLead = lead_id => {
-  return dispatch => {
+export const deleteSalesmanLead = (lead_id) => {
+  return (dispatch) => {
     dispatch({ type: "DELETE_SALESMAN_LEAD_START" });
     axios
-      .delete(`http://localhost:5000/api/leads/remove/sales/${lead_id}`, {
-        withCredentials: true
+      .delete(`${actionUrl}/api/leads/remove/sales/${lead_id}`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "DELETE_SALESMAN_LEAD_SUCCESS",
-          payload: res.data.deletedLead
+          payload: res.data.deletedLead,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: "DELETE_SALESMAN_LEAD_FAILURE",
-          payload: err.response
+          payload: err.response,
         });
       });
   };
@@ -527,19 +524,19 @@ export const deleteSalesmanLead = lead_id => {
 
 // Get All Dealer New Inventory For Salesman
 export const getNewInventorySales = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_SALESMAN_NEW_INVENTORY_START" });
     axios
-      .get("http://localhost:5000/api/sales/newInventory/all", {
-        withCredentials: true
+      .get(`${actionUrl}/api/sales/newInventory/all`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "GET_SALESMAN_NEW_INVENTORY_SUCCESS",
-          payload: res.data.Dealer.NewInventories
+          payload: res.data.Dealer.NewInventories,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "GET_SALESMAN_NEW_INVENTORY_FAILURE", payload: err });
       });
   };
@@ -547,19 +544,19 @@ export const getNewInventorySales = () => {
 
 // Get All Dealer Used Inventory For Salesman
 export const getUsedInventorySales = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_SALESMAN_USED_INVENTORY_START" });
     axios
-      .get("http://localhost:5000/api/sales/usedInventory/all", {
-        withCredentials: true
+      .get(`${actionUrl}/api/sales/usedInventory/all`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "GET_SALESMAN_USED_INVENTORY_SUCCESS",
-          payload: res.data.Dealer.Inventories
+          payload: res.data.Dealer.Inventories,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "GET_SALESMAN_USED_INVENTORY_FAILURE", payload: err });
       });
   };
@@ -567,23 +564,19 @@ export const getUsedInventorySales = () => {
 
 // Edit New Inv Route
 export const editNewInventory = (invId, updatedInv) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "EDIT_NEW_INV_START" });
     axios
-      .put(
-        `http://localhost:5000/api/newInventory/update/newInv/${invId}`,
-        updatedInv,
-        {
-          withCredentials: true
-        }
-      )
-      .then(res => {
+      .put(`${actionUrl}/api/newInventory/update/newInv/${invId}`, updatedInv, {
+        withCredentials: true,
+      })
+      .then((res) => {
         dispatch({
           type: "EDIT_NEW_INV_SUCCESS",
-          payload: res.data.updatedInventory
+          payload: res.data.updatedInventory,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "EDIT_NEW_INV_FAILURE", payload: err.response });
       });
   };
@@ -591,117 +584,111 @@ export const editNewInventory = (invId, updatedInv) => {
 
 // Edit Used Inv Route
 export const editUsedInventory = (invId, updatedInv) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "EDIT_USED_INV_START" });
     axios
       .put(
-        `http://localhost:5000/api/usedInventory/update/usedInv/${invId}`,
+        `${actionUrl}/api/usedInventory/update/usedInv/${invId}`,
         updatedInv,
         {
-          withCredentials: true
+          withCredentials: true,
         }
       )
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "EDIT_USED_INV_SUCCESS",
-          payload: res.data.updatedInventory
+          payload: res.data.updatedInventory,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "EDIT_USED_INV_FAILURE", payload: err.reponse });
       });
   };
 };
 
 export const getDealerNotifications = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_DEALER_NOTIFICATIONS_START" });
     axios
-      .get("http://localhost:5000/api/dealer/notifications/all", {
-        withCredentials: true
+      .get(`${actionUrl}/api/dealer/notifications/all`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "GET_DEALER_NOTIFICATIONS_SUCCESS",
-          payload: res.data
+          payload: res.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: "GET_DEALER_NOTIFICATIONS_FAILURE",
-          payload: err.response
+          payload: err.response,
         });
       });
   };
 };
 
 export const getSalesmanNotifications = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: "GET_SALESMAN_NOTIFICATIONS_START" });
     axios
-      .get("http://localhost:5000/api/sales/notifications/sales/all", {
-        withCredentials: true
+      .get(`${actionUrl}/api/sales/notifications/sales/all`, {
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: "GET_SALESMAN_NOTIFICATIONS_SUCCESS",
-          payload: res.data
+          payload: res.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: "GET_SALESMAN_NOTIFICATIONS_FAILURE",
-          payload: err.response
+          payload: err.response,
         });
       });
   };
 };
 
-export const deleteDealerNotification = notifId => {
-  return dispatch => {
+export const deleteDealerNotification = (notifId) => {
+  return (dispatch) => {
     dispatch({ type: "DELETE_DEALER_NOTIF_START" });
     axios
-      .delete(
-        `http://localhost:5000/api/dealer/remove/notification/${notifId}`,
-        {
-          withCredentials: true
-        }
-      )
-      .then(res => {
+      .delete(`${actionUrl}/api/dealer/remove/notification/${notifId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
         dispatch({
           type: "DELETE_DEALER_NOTIF_SUCCESS",
-          payload: res.data.deletedNotif
+          payload: res.data.deletedNotif,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: "DELETE_DEALER_NOTIF_FAILURE",
-          payload: err.response
+          payload: err.response,
         });
       });
   };
 };
 
-export const deleteSalesmanNotification = notifId => {
-  return dispatch => {
+export const deleteSalesmanNotification = (notifId) => {
+  return (dispatch) => {
     dispatch({ type: "DELETE_SALESMAN_NOTIF_START" });
     axios
-      .delete(
-        `http://localhost:5000/api/sales/remove/notification/${notifId}`,
-        {
-          withCredentials: true
-        }
-      )
-      .then(res => {
+      .delete(`${actionUrl}/api/sales/remove/notification/${notifId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
         dispatch({
           type: "DELETE_SALESMAN_NOTIF_SUCCESS",
-          payload: res.data.deletedNotif
+          payload: res.data.deletedNotif,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: "DELETE_SALESMAN_NOTIF_FAILURE",
-          payload: err.response
+          payload: err.response,
         });
       });
   };

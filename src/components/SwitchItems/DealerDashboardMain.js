@@ -6,7 +6,7 @@ import {
   getDealerNotifications,
   getSalesmanNotifications,
   deleteDealerNotification,
-  deleteSalesmanNotification
+  deleteSalesmanNotification,
 } from "../../actions/index";
 import { mdiDeleteAlertOutline } from "@mdi/js";
 import { mdiBadgeAccountAlertOutline } from "@mdi/js";
@@ -17,16 +17,18 @@ import CloseIcon from "@material-ui/icons/Close";
 import Moment from "react-moment";
 import { Howl, Howler } from "howler";
 import deletesound from "../../sounds/deletesound.mp3";
+import { websocketUrl } from "../../config";
 
 import io from "socket.io-client";
 
-const DealerDashboardMain = props => {
-  const socket = io("http://localhost:5000", {
+const DealerDashboardMain = (props) => {
+  // Coming from server ip address
+  const socket = io(websocketUrl, {
     transports: ["websocket"],
     multiplex: false,
     query: `token=${
       props.user === "dealer" ? props.dealer_token : props.salesman_token
-    }`
+    }`,
   });
 
   useEffect(() => {
@@ -40,14 +42,14 @@ const DealerDashboardMain = props => {
   }, []);
 
   useEffect(() => {
-    socket.on("message", message => {
+    socket.on("message", (message) => {
       props.user === "dealer"
         ? props.getDealerNotifications()
         : props.getSalesmanNotifications();
     });
   }, [props.user === "dealer" ? props.dealer_leads : props.salesman_leads]);
 
-  const renderIcon = notification => {
+  const renderIcon = (notification) => {
     if (notification.title === "dealer_lead") {
       return (
         <Icon path={mdiBadgeAccountAlertOutline} size={1.5} color="#39c" />
@@ -76,15 +78,15 @@ const DealerDashboardMain = props => {
   };
 
   const sound = new Howl({
-    src: deletesound
+    src: deletesound,
   });
 
-  const delDealerNotif = notification => {
+  const delDealerNotif = (notification) => {
     props.deleteDealerNotification(notification.id);
     sound.play();
   };
 
-  const delSalesmanNotif = notification => {
+  const delSalesmanNotif = (notification) => {
     props.deleteSalesmanNotification(notification.id);
     sound.play();
   };
@@ -236,7 +238,7 @@ const DealerDashboardMain = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
     salesman: state.salesLoginReducer.user,
@@ -245,7 +247,7 @@ const mapStateToProps = state => {
     dealer_token: state.loginReducer.token || state.loginReducer.user.token,
     salesman_token: state.salesLoginReducer.user.token,
     dealer_notifications: state.getDealerNotificationsReducer.notifications,
-    salesman_notifications: state.getSalesmanNotificationReducer.notifications
+    salesman_notifications: state.getSalesmanNotificationReducer.notifications,
   };
 };
 
@@ -254,5 +256,5 @@ export default connect(mapStateToProps, {
   getDealerNotifications,
   getSalesmanNotifications,
   deleteDealerNotification,
-  deleteSalesmanNotification
+  deleteSalesmanNotification,
 })(React.memo(DealerDashboardMain));

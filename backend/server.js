@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -37,7 +38,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
-        : "http://206.189.235.148",
+        : "http://206.189.235.148:5000",
   })
 );
 
@@ -56,9 +57,10 @@ const sessionMiddleware = session({
 });
 
 app.use(sessionMiddleware);
-app.use( express.static( `${__dirname}/../build` ) );
-const path = require('path');
-app.get('*', (req, res)=>{  res.sendFile(path.join(__dirname, '../build/index.html'));})
+
+// static www file use express
+const wwwPath = path.join(__dirname, "www");
+app.use("/", express.static(wwwPath));
 
 // Routes
 const dealerRouter = require("./Dealers/DealerRoutes");
